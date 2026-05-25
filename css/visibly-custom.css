@@ -2859,9 +2859,9 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
 
   .visibly-top-info-bar__inner {
     justify-content: space-between;
-    gap: 10px;
+    gap: 12px;
     min-height: 52px;
-    padding: 8px 14px;
+    padding: 8px 16px;
   }
 
   .visibly-top-info-bar__desktop-text {
@@ -2878,13 +2878,20 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
   }
 
   .visibly-top-info-bar__text {
+    flex: 1 1 auto;
     min-width: 0;
     font-weight: 500;
     line-height: 1.2;
   }
 
   .visibly-top-info-bar__link {
-    padding: 7px 10px;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    min-width: 86px;
+    max-width: 34vw;
+    padding: 7px 12px;
+    text-align: center;
+    line-height: 1.1;
   }
 
   html,
