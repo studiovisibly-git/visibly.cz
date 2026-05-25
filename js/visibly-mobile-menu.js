@@ -22,6 +22,7 @@
     }
 
     function lockPageScroll() {
+      wrapper.classList.add("visibly-menu-is-open");
       if (isOpen) return;
       scrollY = window.scrollY || window.pageYOffset || 0;
       body.classList.add("visibly-mobile-menu-open");
@@ -30,6 +31,7 @@
     }
 
     function unlockPageScroll() {
+      wrapper.classList.remove("visibly-menu-is-open");
       if (!isOpen) return;
       body.classList.remove("visibly-mobile-menu-open");
       body.style.top = "";
