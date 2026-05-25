@@ -77,6 +77,24 @@
     display: block;
   }
 
+  body.visibly-mobile-menu-open .navigation-wrapper .navigation-content,
+  body.visibly-mobile-menu-open .navigation-wrapper .navigation-link,
+  body.visibly-mobile-menu-open .navigation-wrapper .navigation-text,
+  body.visibly-mobile-menu-open .navigation-wrapper .visibly-menu-note {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  body.visibly-mobile-menu-open .navigation-wrapper .navigation-link {
+    display: flex !important;
+    color: #000 !important;
+  }
+
+  body.visibly-mobile-menu-open .navigation-wrapper .navigation-text {
+    color: #000 !important;
+  }
+
   .navigation-wrapper .hamburger-menu._2 {
     background-color: transparent !important;
     border: 0 !important;
