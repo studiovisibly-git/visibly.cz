@@ -43,7 +43,9 @@
   }
 
   .navigation-wrapper .hamburger-menu._2 {
-    border: 0;
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
   }
 
   .navigation-wrapper .hamburger-menu._2 .dots,
@@ -52,23 +54,23 @@
   }
 
   .navigation-wrapper .hamburger-menu._2 .dots {
-    opacity: 1;
-    transform: scale(1);
+    opacity: 1 !important;
+    transform: scale(1) !important;
   }
 
   .navigation-wrapper .hamburger-menu._2 .remove {
-    opacity: 0;
-    transform: scale(.65);
+    opacity: 0 !important;
+    transform: scale(.65) !important;
   }
 
   .navigation-wrapper.visibly-menu-is-open .hamburger-menu._2 .dots {
-    opacity: 0;
-    transform: scale(.65);
+    opacity: 0 !important;
+    transform: scale(.65) !important;
   }
 
   .navigation-wrapper.visibly-menu-is-open .hamburger-menu._2 .remove {
-    opacity: 1;
-    transform: scale(1);
+    opacity: 1 !important;
+    transform: scale(1) !important;
   }
 }
 

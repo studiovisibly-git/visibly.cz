@@ -252,6 +252,18 @@ Do not create custom button layouts for article CTAs, sticky CTAs, final CTAs, s
 
 The shared circle hover animation is defined globally in `css/visibly-custom.css`; future buttons should inherit it by reusing the existing Circle button classes.
 
+## Git workflow
+
+Do not automatically create commits.
+Do not automatically push changes to GitHub.
+
+Commits and pushes are allowed only after an explicit user request, for example:
+- "commitni to"
+- "pošli to do gitu"
+- "pushni na GitHub"
+
+During normal implementation work, leave changes as local uncommitted modifications.
+
 ## Realization Detail Sticky CTA
 
 Every realization detail page must include the shared sticky CTA wrapper.
