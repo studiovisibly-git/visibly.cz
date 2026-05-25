@@ -59,25 +59,30 @@
   };
 
   var breadcrumbLinks = {
-    "Domů": "/index.html",
-    "Kontakt": "/kontakt.html",
-    "Tisk": "/tisk.html",
-    "Polepy": "/polepy.html",
-    "Reklama": "/reklama.html",
-    "Realizace": "/realizace.html",
-    "Technologie": "/technologie.html",
-    "O nás": "/o-nas.html",
-    "Cookies": "/cookies.html",
-    "Průvodce": "/pruvodce.html",
-    "Textil": "/potisk-textilu.html",
-    "Grafika": "/grafika-a-vizualni-identita.html",
-    "Webdesign": "/webdesign.html",
-    "Reklamní plochy": "/reklamni-plochy-opava.html"
+    "Domů": "/",
+    "Kontakt": "/kontakt",
+    "Tisk": "/tisk",
+    "Polepy": "/polepy",
+    "Reklama": "/reklama",
+    "Realizace": "/realizace",
+    "Technologie": "/technologie",
+    "O nás": "/o-nas",
+    "Cookies": "/cookies",
+    "Průvodce": "/pruvodce",
+    "Textil": "/potisk-textilu",
+    "Grafika": "/grafika-a-vizualni-identita",
+    "Webdesign": "/webdesign",
+    "Reklamní plochy": "/reklamni-plochy-opava"
   };
 
   function getCurrentFile() {
-    var path = window.location.pathname.replace(/^\/+/, "");
-    return path === "" ? "index.html" : path;
+    var path = window.location.pathname.replace(/^\/+/, "").replace(/\/$/, "");
+
+    if (path === "" || path === "index" || path === "index.html") {
+      return "index.html";
+    }
+
+    return /\.html$/i.test(path) ? path : path + ".html";
   }
 
   function humanizeFileName(file) {
@@ -102,7 +107,7 @@
       return "#home";
     }
 
-    return breadcrumbLinks[label] || "index.html";
+    return breadcrumbLinks[label] || "/";
   }
 
   function renderBreadcrumb(container) {

@@ -80,7 +80,7 @@
     var kicker = getData(element, "data-hero-kicker", "Tisk").toLowerCase();
     var text = getData(element, "data-hero-text", "");
     var buttonLabel = getData(element, "data-hero-button-label", "");
-    var buttonUrl = getData(element, "data-hero-button-url", "kontakt.html");
+    var buttonUrl = getData(element, "data-hero-button-url", "/kontakt");
     var scrollText = getData(element, "data-hero-scroll-text", "Scroll");
     var scrollTarget = getData(element, "data-hero-scroll-target", "#sluzby");
     var image = imageMap[kicker] || imageMap.tisk;

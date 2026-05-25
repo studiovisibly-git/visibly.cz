@@ -5,7 +5,7 @@
     phoneLabel: "Zavolat",
     phoneUrl: "tel:+420603750631",
     buttonLabel: "Poptat",
-    buttonUrl: "/kontakt.html"
+    buttonUrl: "/kontakt"
   };
 
   function getValue(element, name, fallback) {
