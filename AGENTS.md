@@ -77,6 +77,16 @@ Each page must have:
 - meaningful alt text
 - working internal links
 
+## SEO sitemap source
+
+Use `visibly-seo-sitemap.md` as the source of truth for the planned SEO structure, service hierarchy, URL priorities, and future page creation.
+
+When creating or changing service, locality, realization category, technology, or SEO landing pages:
+- check the intended page against `visibly-seo-sitemap.md`,
+- keep copy and internal links aligned with that structure,
+- update `mapa-webu.html` so newly created pages become links and planned pages remain clearly marked as not created yet,
+- if a clean URL directory exists for the page, update its `index.html` copy as well.
+
 ## Webflow export rules
 - Preserve Webflow-generated class names where possible.
 - Preserve `webflow.js` and existing interaction attributes.
