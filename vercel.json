@@ -4,6 +4,61 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/old-home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pages/about",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pages/work",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/category/branding",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/category/website",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/product/single-page-website",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/product/multi-page-website",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/product/printing-package",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/paypal-checkout",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/checkout",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/order-confirmation",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
