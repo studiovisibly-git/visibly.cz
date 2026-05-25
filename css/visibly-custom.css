@@ -61,6 +61,22 @@
     padding-bottom: 44px;
   }
 
+  .navigation-wrapper .hamburger .menu-text:first-child {
+    display: block;
+  }
+
+  .navigation-wrapper .hamburger .menu-text:last-child {
+    display: none;
+  }
+
+  body.visibly-mobile-menu-open .navigation-wrapper .hamburger .menu-text:first-child {
+    display: none;
+  }
+
+  body.visibly-mobile-menu-open .navigation-wrapper .hamburger .menu-text:last-child {
+    display: block;
+  }
+
   .navigation-wrapper .hamburger-menu._2 {
     background-color: transparent !important;
     border: 0 !important;
@@ -84,12 +100,12 @@
     pointer-events: none;
   }
 
-  .navigation-wrapper.visibly-menu-is-open .hamburger-menu._2::before {
+  body.visibly-mobile-menu-open .navigation-wrapper .hamburger-menu._2::before {
     opacity: 1;
     transform: translate(-50%, -50%) rotate(45deg) scale(1);
   }
 
-  .navigation-wrapper.visibly-menu-is-open .hamburger-menu._2::after {
+  body.visibly-mobile-menu-open .navigation-wrapper .hamburger-menu._2::after {
     opacity: 1;
     transform: translate(-50%, -50%) rotate(-45deg) scale(1);
   }
@@ -111,24 +127,28 @@
   }
 
   .navigation-wrapper .hamburger-menu._2 .lottie-animation {
+    display: none !important;
     opacity: 0 !important;
     pointer-events: none !important;
     transform: scale(.9) !important;
+    visibility: hidden !important;
   }
 
-  .navigation-wrapper.visibly-menu-is-open .hamburger-menu._2 .dots {
+  body.visibly-mobile-menu-open .navigation-wrapper .hamburger-menu._2 .dots {
     opacity: 0 !important;
     transform: scale(0) !important;
   }
 
-  .navigation-wrapper.visibly-menu-is-open .hamburger-menu._2 .remove {
+  body.visibly-mobile-menu-open .navigation-wrapper .hamburger-menu._2 .remove {
     opacity: 0 !important;
     transform: scale(0) !important;
   }
 
-  .navigation-wrapper.visibly-menu-is-open .hamburger-menu._2 .lottie-animation {
+  body.visibly-mobile-menu-open .navigation-wrapper .hamburger-menu._2 .lottie-animation {
+    display: block !important;
     opacity: 1 !important;
     transform: scale(1) !important;
+    visibility: visible !important;
   }
 }
 

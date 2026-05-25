@@ -35,9 +35,11 @@
       setStyle(close, "opacity", "0");
       setStyle(close, "transform", "scale(0)");
 
+      setStyle(lottie, "display", open ? "block" : "none");
       setStyle(lottie, "opacity", open ? "1" : "0");
       setStyle(lottie, "transform", open ? "scale(1)" : "scale(.9)");
       setStyle(lottie, "pointerEvents", "none");
+      setStyle(lottie, "visibility", open ? "visible" : "hidden");
     }
 
     function menuIsVisible() {
@@ -60,10 +62,28 @@
     function unlockPageScroll() {
       setIconState(false);
       if (!isOpen) return;
+      var lockedTop = parseInt(body.style.top, 10);
+      var restoreY = lockedTop < 0 ? Math.abs(lockedTop) : scrollY;
+      var previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = "auto";
       body.classList.remove("visibly-mobile-menu-open");
       body.style.top = "";
-      window.scrollTo(0, scrollY);
+      window.scrollTo(0, restoreY);
+      window.requestAnimationFrame(function () {
+        window.scrollTo(0, restoreY);
+        document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      });
       isOpen = false;
+    }
+
+    function closeMenuNow() {
+      menu.style.display = "none";
+      unlockPageScroll();
+    }
+
+    function openMenuNow() {
+      menu.style.display = "flex";
+      lockPageScroll();
     }
 
     function update() {
@@ -95,6 +115,16 @@
     window.setTimeout(update, 500);
     window.addEventListener("resize", update);
     window.addEventListener("scroll", setMenuTop, { passive: true });
+    hamburger.addEventListener("click", function (event) {
+      if (window.innerWidth > 991) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if (isOpen || menuIsVisible()) {
+        closeMenuNow();
+      } else {
+        openMenuNow();
+      }
+    }, true);
     document.addEventListener("click", function () {
       window.setTimeout(update, 0);
       window.setTimeout(update, 320);
