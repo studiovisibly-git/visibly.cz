@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "sync:partials": "node scripts/sync-partials.js"
+    "sync:partials": "node scripts/sync-partials.js && node scripts/generate-sitemap.js",
+    "generate:sitemap": "node scripts/generate-sitemap.js"
   }
 }

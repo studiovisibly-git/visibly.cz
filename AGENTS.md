@@ -85,7 +85,20 @@ When creating or changing service, locality, realization category, technology, o
 - check the intended page against `visibly-seo-sitemap.md`,
 - keep copy and internal links aligned with that structure,
 - update `mapa-webu.html` so newly created pages become links and planned pages remain clearly marked as not created yet,
+- run `npm run generate:sitemap` so `sitemap.xml` automatically includes newly created public pages,
 - if a clean URL directory exists for the page, update its `index.html` copy as well.
+
+## XML sitemap
+
+The XML sitemap is generated from public static HTML pages by `scripts/generate-sitemap.js`.
+
+Do not edit `sitemap.xml` manually. Run:
+
+```text
+npm run generate:sitemap
+```
+
+The generator must exclude Webflow demo/template pages, checkout/payment pages, error pages, partials, and duplicate `.html` files when a clean URL directory version exists.
 
 ## Webflow export rules
 - Preserve Webflow-generated class names where possible.
