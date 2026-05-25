@@ -8,6 +8,41 @@
   --visibly-container-padding-mobile: 20px;
 }
 
+@media screen and (max-width: 991px) {
+  html {
+    --visibly-mobile-menu-top: calc(var(--visibly-top-info-bar-height, 0px) + 100px);
+  }
+
+  body.visibly-mobile-menu-open {
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
+  }
+
+  .navigation-wrapper .menu {
+    top: var(--visibly-mobile-menu-top);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: auto;
+    max-height: calc(100dvh - var(--visibly-mobile-menu-top));
+    min-height: 0;
+    align-items: flex-start;
+    padding-top: 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .navigation-wrapper .menu > .container._2 {
+    min-height: 100%;
+    padding-top: 0;
+    padding-bottom: 44px;
+  }
+}
+
 html {
   --visibly-ease: cubic-bezier(.22, 1, .36, 1);
   --visibly-duration-fast: 260ms;

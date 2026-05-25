@@ -228,6 +228,7 @@ for (const file of htmlFiles) {
   );
 
   next = ensureScript(next, file, "js/visibly-top-info-bar.js", topInfoBarStart);
+  next = ensureScript(next, file, "js/visibly-mobile-menu.js", headerStart, true);
   next = ensureScript(next, file, "js/visibly-page-hero.js", pageHeroStart, true);
 
   if (next !== original) {
