@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "sync:partials": "node scripts/sync-partials.js"
+  }
+}
