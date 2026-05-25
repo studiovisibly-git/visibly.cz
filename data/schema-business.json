@@ -1,0 +1,67 @@
+{
+  "name": "Visibly",
+  "legalName": "studio visibly s.r.o.",
+  "alternateName": "visibly.cz",
+  "schemaTypes": [
+    "LocalBusiness",
+    "ProfessionalService",
+    "PrintShop"
+  ],
+  "description": "Visibly je tiskárna a výrobní reklamní studio z Opavy. Tiskneme a vyrábíme reklamu, která je vidět.",
+  "url": "https://www.visibly.cz/",
+  "logo": "https://www.visibly.cz/images/visbly.svg",
+  "image": null,
+  "email": "chci@visibly.cz",
+  "telephone": "+420603750631",
+  "address": {
+    "streetAddress": "Komárovská 2662/2",
+    "addressLocality": "Opava",
+    "postalCode": "74601",
+    "addressCountry": "CZ"
+  },
+  "geo": {
+    "latitude": 49.9370015,
+    "longitude": 17.9095026
+  },
+  "sameAs": [
+    "https://www.instagram.com/studiovisibly/",
+    "https://www.google.com/maps/place/VISIBLY+-+reklama+%26+tisk/@49.9370015,17.9095026,713m/data=!3m1!1e3!4m6!3m5!1s0x4713d96819c2e89b:0x9b0984007fa00f2b!8m2!3d49.9370015!4d17.9120775!16s%2Fg%2F11shc95gyb!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D"
+  ],
+  "hasMap": "https://www.google.com/maps/place/VISIBLY+-+reklama+%26+tisk/@49.9370015,17.9095026,713m/data=!3m1!1e3!4m6!3m5!1s0x4713d96819c2e89b:0x9b0984007fa00f2b!8m2!3d49.9370015!4d17.9120775!16s%2Fg%2F11shc95gyb!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D",
+  "areaServed": [
+    "Opava",
+    "Ostrava",
+    "Moravskoslezský kraj",
+    "Česká republika"
+  ],
+  "knowsAbout": [
+    "velkoformátový tisk",
+    "reklamní výroba",
+    "polepy aut",
+    "polepy výloh",
+    "světelná reklama",
+    "3D loga",
+    "reklamní cedule",
+    "tisk samolepek",
+    "bannery",
+    "tiskoviny",
+    "POS materiály",
+    "fotoobrazy",
+    "grafika pro tisk"
+  ],
+  "services": [
+    "Velkoformátový tisk",
+    "Bannery a reklamní plachty",
+    "Samolepky a fólie",
+    "Polepy aut",
+    "Polepy výloh",
+    "Reklamní výroba",
+    "Reklamní cedule",
+    "Světelná reklama",
+    "3D loga a nápisy",
+    "Tiskoviny",
+    "POS materiály",
+    "Grafika pro tisk a výrobu",
+    "Fotoobrazy"
+  ]
+}

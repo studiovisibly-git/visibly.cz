@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "sync:partials": "node scripts/sync-partials.js && node scripts/generate-sitemap.js",
-    "generate:sitemap": "node scripts/generate-sitemap.js"
+    "sync:partials": "node scripts/sync-partials.js && node scripts/generate-schema.js && node scripts/generate-sitemap.js",
+    "generate:schema": "node scripts/generate-schema.js",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "generate:seo": "node scripts/generate-schema.js && node scripts/generate-sitemap.js"
   }
 }
