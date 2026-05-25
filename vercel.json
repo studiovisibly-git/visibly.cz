@@ -9,6 +9,21 @@
       "permanent": true
     },
     {
+      "source": "/sluzby",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/kontakty",
+      "destination": "/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/tisk-a-vyroba",
+      "destination": "/tisk",
+      "permanent": true
+    },
+    {
       "source": "/pages/about",
       "destination": "/",
       "permanent": true
