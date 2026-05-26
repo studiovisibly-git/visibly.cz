@@ -1263,6 +1263,27 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
   display: block;
 }
 
+.visibly-marquee.section._2 {
+  overflow: hidden;
+}
+
+.visibly-marquee .text-rotator-wrapper {
+  width: max-content;
+  overflow: visible;
+  will-change: transform;
+  animation: visiblyLogoMarquee 56s linear infinite;
+}
+
+.visibly-marquee .text-rotator-content {
+  flex: none;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+.visibly-marquee .text-rotator {
+  display: block;
+}
+
 .visibly-logo-canis img,
 .visibly-logo-broker img,
 .visibly-logo-rage img,
@@ -2116,7 +2137,8 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
   }
 
   .visibly-cta-ring,
-  .visibly-logo-track {
+  .visibly-logo-track,
+  .visibly-marquee__track {
     animation: none !important;
   }
 
