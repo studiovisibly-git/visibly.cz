@@ -969,11 +969,11 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
 
 .visibly-map-iframe {
   z-index: 0;
-  filter: grayscale(1);
-  width: 100%;
-  height: 100%;
+  width: 150%;
+  height: 150%;
   position: absolute;
-  inset: 0;
+  top: -34%;
+  left: -30%;
 }
 
 .visibly-map-circle-link {
@@ -1001,6 +1001,33 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
   line-height: 1;
   display: flex;
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: color .32s var(--visibly-ease);
+}
+
+.visibly-map-circle-button-label {
+  z-index: 1;
+  position: relative;
+}
+
+.visibly-map-circle span .button-overlay {
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 999px;
+  transition: transform .62s var(--visibly-ease), border-radius .62s var(--visibly-ease);
+  transform: translate3d(-72%, 55%, 0) scale3d(.08, .08, 1);
+}
+
+.visibly-map-circle-link:hover span,
+.visibly-map-circle-link:focus-visible span {
+  color: #fff;
+}
+
+.visibly-map-circle-link:hover .button-overlay,
+.visibly-map-circle-link:focus-visible .button-overlay {
+  border-radius: 999px;
+  transform: translate3d(-18%, -32%, 0) scale3d(1, 1, 1);
 }
 
 .visibly-map-placeholder {
