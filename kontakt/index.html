@@ -457,6 +457,41 @@
         </div>
       </div>
     </section>
+
+    <section id="poptavka" class="section visibly-contact-section">
+      <div class="container">
+        <div id="kontakt-formular" class="visibly-contact-form-panel">
+          <h2 class="footer-title">Napište nám, co potřebujete.</h2>
+          <p class="visibly-contact-form-lead">Čím víc informací pošlete, tím rychleji vám doporučíme správné řešení.</p>
+          <div class="margin-30px">
+            <div class="form-block visibly-contact-form-block w-form">
+              <form id="visibly-contact-form" name="visibly-contact-form" data-name="Visibly Contact Form" method="post" action="mailto:chci@visibly.cz" enctype="text/plain" class="visibly-contact-form">
+                <div class="visibly-contact-form-grid">
+                  <div class="visibly-contact-form-column">
+                    <label for="name" class="field-label">Jméno *</label><input class="text-field-line w-input" maxlength="256" name="Jmeno" data-name="Jméno" placeholder="Např. Jana Nováková" type="text" id="name" required="">
+                    <label for="company" class="field-label">Firma</label><input class="text-field-line w-input" maxlength="256" name="Firma" data-name="Firma" placeholder="Název firmy nebo provozovny" type="text" id="company">
+                    <label for="email" class="field-label">E-mail *</label><input class="text-field-line w-input" maxlength="256" name="Email" data-name="E-mail" placeholder="Kam se můžeme ozvat?" type="email" id="email" required="">
+                    <label for="phone" class="field-label">Telefon</label><input class="text-field-line w-input" maxlength="256" name="Telefon" data-name="Telefon" placeholder="+420 ..." type="tel" id="phone">
+                  </div>
+                  <div class="visibly-contact-form-column">
+                    <label for="project" class="field-label">Co potřebujete vyrobit? *</label><input class="text-field-line w-input" maxlength="256" name="Zakazka" data-name="Zakázka" placeholder="Banner, polep, cedule, textil..." type="text" id="project" required="">
+                    <label for="message" class="field-label">Zadání / zpráva</label><textarea id="message" name="Zadani" maxlength="5000" data-name="Zadání" placeholder="Popište představu, rozměr, termín nebo přidejte odkaz na podklady." class="text-field-line visibly-contact-textarea w-input"></textarea>
+                  </div>
+                </div>
+                <input type="submit" data-wait="Odesílám..." class="button visibly-contact-submit w-button" value="Odeslat poptávku">
+                <p class="visibly-contact-privacy">** odesláním souhlasíte se zpracováním osobních údajů</p>
+              </form>
+              <div class="success-message w-form-done">
+                <div>Děkujeme. Ozveme se co nejdřív.</div>
+              </div>
+              <div class="error-message w-form-fail">
+                <div>Formulář zatím není napojený. Napište nám prosím na chci@visibly.cz.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="section visibly-contact-section" id="co-pomuze">
       <div class="container">
         <div class="top-part-hero _3">
@@ -496,69 +531,6 @@
                 <h3 class="service-2-title">05 Termín</h3>
               </div>
               <p class="paragraph-0px">Napište, kdy to potřebujete. Řekneme, co je reálné.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="poptavka" class="section visibly-contact-section">
-      <div class="container">
-        <div id="kontakt-formular" class="visibly-contact-form-panel">
-          <h2 class="footer-title">Napište nám, co potřebujete.</h2>
-          <p class="visibly-contact-form-lead">Čím víc informací pošlete, tím rychleji vám doporučíme správné řešení.</p>
-          <div class="margin-30px">
-            <div class="form-block visibly-contact-form-block w-form">
-              <form id="visibly-contact-form" name="visibly-contact-form" data-name="Visibly Contact Form" method="post" action="mailto:chci@visibly.cz" enctype="text/plain" class="visibly-contact-form">
-                <div class="visibly-contact-form-grid">
-                  <div class="visibly-contact-form-column">
-                    <label for="name" class="field-label">Jméno *</label><input class="text-field-line w-input" maxlength="256" name="Jmeno" data-name="Jméno" placeholder="Např. Jana Nováková" type="text" id="name" required="">
-                    <label for="company" class="field-label">Firma</label><input class="text-field-line w-input" maxlength="256" name="Firma" data-name="Firma" placeholder="Název firmy nebo provozovny" type="text" id="company">
-                    <label for="email" class="field-label">E-mail *</label><input class="text-field-line w-input" maxlength="256" name="Email" data-name="E-mail" placeholder="Kam se můžeme ozvat?" type="email" id="email" required="">
-                    <label for="phone" class="field-label">Telefon</label><input class="text-field-line w-input" maxlength="256" name="Telefon" data-name="Telefon" placeholder="+420 ..." type="tel" id="phone">
-                  </div>
-                  <div class="visibly-contact-form-column">
-                    <label for="project" class="field-label">Co potřebujete vyrobit? *</label><input class="text-field-line w-input" maxlength="256" name="Zakazka" data-name="Zakázka" placeholder="Banner, polep, cedule, textil..." type="text" id="project" required="">
-                    <label for="message" class="field-label">Zadání / zpráva</label><textarea id="message" name="Zadani" maxlength="5000" data-name="Zadání" placeholder="Popište představu, rozměr, termín nebo přidejte odkaz na podklady." class="text-field-line visibly-contact-textarea w-input"></textarea>
-                  </div>
-                </div>
-                <input type="submit" data-wait="Odesílám..." class="button visibly-contact-submit w-button" value="Odeslat poptávku">
-                <p class="visibly-contact-privacy">** odesláním souhlasíte se zpracováním osobních údajů</p>
-              </form>
-              <div class="success-message w-form-done">
-                <div>Děkujeme. Ozveme se co nejdřív.</div>
-              </div>
-              <div class="error-message w-form-fail">
-                <div>Formulář zatím není napojený. Napište nám prosím na chci@visibly.cz.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="section visibly-contact-section">
-      <div class="container">
-        <div class="testimonials-wrapper _2 visibly-location-layout">
-          <div>
-            <div class="image-1 _1 show visibly-map-circle" aria-label="Mapa studia Visibly v Opavě">
-              <iframe class="visibly-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.957483055734!2d17.912077500000002!3d49.9370015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4713d96819c2e89b%3A0x9b0984007fa00f2b!2sVISIBLY%20-%20reklama%20%26%20tisk!5e1!3m2!1scs!2scz!4v1779748517370!5m2!1scs!2scz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa Visibly v Opavě"></iframe>
-              <a href="https://www.google.com/maps/place/VISIBLY+-+reklama+%26+tisk/@49.9370015,17.9120775,713m/data=!3m1!1e3!4m15!1m8!3m7!1s0x4713d96819c2e89b:0x9b0984007fa00f2b!2sVISIBLY+-+reklama+%26+tisk!8m2!3d49.9370015!4d17.9120775!10e1!16s%2Fg%2F11shc95gyb!3m5!1s0x4713d96819c2e89b:0x9b0984007fa00f2b!8m2!3d49.9370015!4d17.9120775!16s%2Fg%2F11shc95gyb!5m1!1e1?hl=cs&amp;entry=ttu&amp;g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="visibly-map-circle-link" aria-label="Navigovat do studia Visibly v Opavě">
-                <span>
-                  <div class="visibly-map-circle-button-label">Navigovat</div>
-                  <div class="button-overlay active"></div>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="max-w-width visibly-location-copy">
-            <h2 data-w-id="5b68164b-2806-e798-ef5a-c29451980995" style="opacity:0" class="title-3">Najdete nás v Opavě.<br></h2>
-            <div class="margin-30px">
-              <p>Vyrábíme v Opavě a zakázky dodáváme do Ostravy, celého Moravskoslezského kraje i dál po Česku.</p>
-            </div>
-            <div class="margin-30px">
-              <p><strong>Kontaktní info</strong><br>studio visibly s.r.o.<br>Komárovská 2662/2<br>746 01 Opava</p>
-            </div>
-            <div class="margin-30px">
-              <p><strong>Fakturační údaje</strong><br>IČ: 17760712<br>DIČ: CZ17760712<br>BÚ: 8912255002/5500</p>
             </div>
           </div>
         </div>
@@ -629,6 +601,35 @@
         </div>
       </div>
     </section>
+    <section class="section visibly-contact-section">
+      <div class="container">
+        <div class="testimonials-wrapper _2 visibly-location-layout">
+          <div>
+            <div class="image-1 _1 show visibly-map-circle" aria-label="Mapa studia Visibly v Opavě">
+              <iframe class="visibly-map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.957483055734!2d17.912077500000002!3d49.9370015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4713d96819c2e89b%3A0x9b0984007fa00f2b!2sVISIBLY%20-%20reklama%20%26%20tisk!5e1!3m2!1scs!2scz!4v1779748517370!5m2!1scs!2scz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa Visibly v Opavě"></iframe>
+              <a href="https://www.google.com/maps/place/VISIBLY+-+reklama+%26+tisk/@49.9370015,17.9120775,713m/data=!3m1!1e3!4m15!1m8!3m7!1s0x4713d96819c2e89b:0x9b0984007fa00f2b!2sVISIBLY+-+reklama+%26+tisk!8m2!3d49.9370015!4d17.9120775!10e1!16s%2Fg%2F11shc95gyb!3m5!1s0x4713d96819c2e89b:0x9b0984007fa00f2b!8m2!3d49.9370015!4d17.9120775!16s%2Fg%2F11shc95gyb!5m1!1e1?hl=cs&amp;entry=ttu&amp;g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="visibly-map-circle-link" aria-label="Navigovat do studia Visibly v Opavě">
+                <span>
+                  <div class="visibly-map-circle-button-label">Navigovat</div>
+                  <div class="button-overlay active"></div>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="max-w-width visibly-location-copy">
+            <h2 data-w-id="5b68164b-2806-e798-ef5a-c29451980995" style="opacity:0" class="title-3">Najdete nás v Opavě.<br></h2>
+            <div class="margin-30px">
+              <p>Vyrábíme v Opavě a zakázky dodáváme do Ostravy, celého Moravskoslezského kraje i dál po Česku.</p>
+            </div>
+            <div class="margin-30px">
+              <p><strong>Kontaktní info</strong><br>studio visibly s.r.o.<br>Komárovská 2662/2<br>746 01 Opava</p>
+            </div>
+            <div class="margin-30px">
+              <p><strong>Fakturační údaje</strong><br>IČ: 17760712<br>DIČ: CZ17760712<br>BÚ: 8912255002/5500</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="section-cta white _2">
       <div data-w-id="2a0119a1-5bae-25e7-8f0f-989c6579d59f" class="container _4">
         <div class="top-part-hero">
@@ -674,7 +675,7 @@
               <div class="margin-30px">
                 <div class="contact-grid on-footer">
                   <div>
-                    <p>Adresa:<br>Komárovská 2662/2<br>Opava</p>
+                    <a href="https://www.google.com/maps/place/VISIBLY+-+reklama+%26+tisk/@49.9370015,17.9120775,713m/data=!3m1!1e3!4m15!1m8!3m7!1s0x4713d96819c2e89b:0x9b0984007fa00f2b!2sVISIBLY+-+reklama+%26+tisk!8m2!3d49.9370015!4d17.9120775!10e1!16s%2Fg%2F11shc95gyb!3m5!1s0x4713d96819c2e89b:0x9b0984007fa00f2b!8m2!3d49.9370015!4d17.9120775!16s%2Fg%2F11shc95gyb!5m1!1e1?hl=cs&amp;entry=ttu&amp;g_ep=EgoyMDI2MDUyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="paragraph-link">Komárovská 2662/2<br>Opava</a>
                   </div>
                   <div>
                     <a href="mailto:chci@visibly.cz" class="paragraph-link">E: chci@visibly.cz</a>
@@ -696,8 +697,8 @@
               <div class="visibly-footer-legal-row">
                 <p class="copyright">©2026 studio visibly s.r.o.</p>
                 <a href="/cookies" class="copyright visibly-footer-legal">Cookies</a>
-                <a href="/mapa-webu" class="copyright visibly-footer-legal">Mapa webu</a>
-                <a href="/sitemap.xml" class="copyright visibly-footer-legal">Sitemap XML</a>
+                <a href="/mapa-webu" class="copyright visibly-footer-legal">Přehled webu</a>
+                <a href="/sitemap.xml" class="copyright visibly-footer-legal">Sitemap</a>
               </div>
               <p class="copyright visibly-footer-web">Líbí se vám web? Taky ho umíme vyrobit.</p>
             </div>
