@@ -46,22 +46,36 @@
     "bannery",
     "tiskoviny",
     "POS materiály",
-    "fotoobrazy",
-    "grafika pro tisk"
+    "tisk fotoobrazů",
+    "grafika pro tisk",
+    "reklamní textil",
+    "reklamní předměty"
   ],
   "services": [
     "Velkoformátový tisk",
     "Bannery a reklamní plachty",
     "Samolepky a fólie",
+    "Roll-upy",
+    "Plakáty",
+    "Billboardy a citylighty",
+    "Tiskoviny",
+    "POS materiály",
+    "Tisk fotoobrazů",
     "Polepy aut",
+    "Celopolepy aut",
+    "Polepy dodávek",
     "Polepy výloh",
+    "Interiérové polepy",
+    "Řezaná grafika",
     "Reklamní výroba",
     "Reklamní cedule",
     "Světelná reklama",
     "3D loga a nápisy",
-    "Tiskoviny",
-    "POS materiály",
-    "Grafika pro tisk a výrobu",
-    "Fotoobrazy"
+    "Venkovní reklama",
+    "Interiérová reklama",
+    "Orientační systémy",
+    "Reklamní textil",
+    "Reklamní předměty",
+    "Grafika pro tisk a výrobu"
   ]
 }

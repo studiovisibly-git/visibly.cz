@@ -118,8 +118,7 @@ Service podstránky:
 - `/venkovni-reklama/`
 - `/interierova-reklama/`
 - `/orientacni-systemy/`
-- `/reklamni-textil/`
-- `/reklamni-predmety/`
+- `/reklamni-predmety-a-textil/`
 
 ---
 
@@ -163,13 +162,14 @@ Footer je hlubší a nese SEO odkazy.
 - Opava / Ostrava / Moravskoslezský kraj
 
 #### Doplňkové (jen footer, ne menu)
-- Návrh loga a vizuální identity / Grafické návrhy pro tisk / Webdesign / Reklamní plochy Opava / Průvodce
+- Grafika a vizuální identita / Webdesign / Reklamní plochy Opava / Průvodce
 
 ---
 
 ## 5. Mimo tři pilíře (existují, ale ne v hlavním menu)
 
 ```text
+/grafika-a-vizualni-identita/
 /logo-a-vizualni-identita/
 /graficke-navrhy-pro-tisk/
 /webdesign/
@@ -178,11 +178,6 @@ Footer je hlubší a nese SEO odkazy.
 
 > **OPRAVA:** `/reklamni-plochy-opava/` je lokální SEO stránka a patří jen sem (jednou).
 > V původním dokumentu byla uvedená na dvou místech.
-> **OPRAVA:** `/grafika-a-vizualni-identita/` se nezakládá. Logo, barvy, písmo a vizuální
-> styl pokrývá jediná stránka `/logo-a-vizualni-identita/` s title
-> "Návrh loga a vizuální identity | Visibly". Samostatně zůstává
-> `/graficke-navrhy-pro-tisk/` s title "Grafické návrhy pro tisk | Visibly", protože řeší
-> přípravu hotových podkladů pro výrobu, ne tvorbu značky.
 
 Grafiku komunikovat jako podporu tisku a výroby:
 
@@ -374,15 +369,10 @@ vlastní FAQ a ideálně vlastní realizace z okolí.
 | `/billboardy-a-citylighty/` | Tisk billboardů a citylightů \| Visibly | billboardy |
 | `/tiskoviny/` | Tiskoviny pro firmy \| Visibly | tiskoviny |
 | `/pos-materialy/` | POS materiály a reklama do prodejen \| Visibly | POS materiály |
-| `/tisk-fotoobrazu/` | Tisk fotoobrazů \| Visibly | tisk fotoobrazů |
 | `/polepy-aut/` | Polepy aut a dodávek \| Visibly | polepy aut |
 | `/svetelna-reklama/` | Světelná reklama a LED loga \| Visibly | světelná reklama |
 | `/3d-loga-a-napisy/` | 3D loga a prostorové nápisy \| Visibly | 3D loga |
 | `/reklamni-cedule/` | Reklamní cedule a firemní označení \| Visibly | reklamní cedule |
-| `/reklamni-textil/` | Reklamní textil s logem \| Visibly | reklamní textil |
-| `/reklamni-predmety/` | Reklamní předměty s logem \| Visibly | reklamní předměty |
-| `/logo-a-vizualni-identita/` | Návrh loga a vizuální identity \| Visibly | návrh loga, vizuální identita |
-| `/graficke-navrhy-pro-tisk/` | Grafické návrhy pro tisk \| Visibly | grafické návrhy pro tisk |
 
 > **Pozor:** Původní dokument dával `/velkoformatovy-tisk/` title "Velkoformátový tisk Opava".
 > To bylo IDENTICKÉ s `/velkoformatovy-tisk-opava/`. Proto je tu město odstraněno.
@@ -472,7 +462,6 @@ Správná architektura:
 /billboardy-a-citylighty/
 /tiskoviny/
 /pos-materialy/
-/tisk-fotoobrazu/
 
 /polepy/                           (rozcestník)
 /polepy-aut/
@@ -489,10 +478,10 @@ Správná architektura:
 /venkovni-reklama/
 /interierova-reklama/
 /orientacni-systemy/
-/reklamni-textil/
-/reklamni-predmety/
+/reklamni-predmety-a-textil/
 
-/logo-a-vizualni-identita/         (footer, ne menu; logo, barvy, písmo, vizuální styl)
+/grafika-a-vizualni-identita/      (footer, ne menu)
+/logo-a-vizualni-identita/
 /graficke-navrhy-pro-tisk/
 /webdesign/
 

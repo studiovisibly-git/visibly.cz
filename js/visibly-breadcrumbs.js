@@ -58,7 +58,8 @@
     "reklamni-predmety-a-textil.html": ["Domů", "Reklama", "Reklamní předměty a textil"],
 
     "potisk-textilu.html": ["Domů", "Textil", "Potisk textilu"],
-    "grafika-a-vizualni-identita.html": ["Domů", "Grafika", "Grafika a vizuální identita"],
+    "logo-a-vizualni-identita.html": ["Domů", "Grafika", "Návrh loga a vizuální identity"],
+    "graficke-navrhy-pro-tisk.html": ["Domů", "Grafika", "Grafické návrhy pro tisk"],
     "webdesign.html": ["Domů", "Webdesign"],
     "reklamni-plochy-opava.html": ["Domů", "Reklamní plochy", "Opava"]
   };
@@ -76,7 +77,7 @@
     "Mapa webu": "/mapa-webu",
     "Průvodce": "/pruvodce",
     "Textil": "/potisk-textilu",
-    "Grafika": "/grafika-a-vizualni-identita",
+    "Grafika": "/logo-a-vizualni-identita",
     "Webdesign": "/webdesign",
     "Reklamní plochy": "/reklamni-plochy-opava"
   };
