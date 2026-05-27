@@ -1,8 +1,8 @@
 (function () {
   var imageMap = {
     "tisk": {
-      src: "images/services/visibly-service-tisk.jpg",
-      alt: "Velkoformátový tisk Visibly"
+      src: "images/services/visibly-service-tisk.png",
+      alt: "Velkoformátová tiskárna Epson při tisku reklamy Visibly"
     },
     "polepy": {
       src: "images/services/visibly-service-polepy.jpg",
