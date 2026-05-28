@@ -5,12 +5,12 @@
       alt: "Velkoformátová tiskárna Epson při tisku reklamy Visibly"
     },
     "polepy": {
-      src: "images/services/visibly-service-polepy.jpg",
-      alt: "Reklamní polepy aut, výloh a interiérů Visibly"
+      src: "images/services/visibly-service-polepy.png",
+      alt: "Polepená dodávka a výloha s reklamní grafikou"
     },
     "reklama": {
-      src: "images/services/visibly-service-reklamni-vyroba.jpg",
-      alt: "Reklamní výroba Visibly"
+      src: "images/services/visibly-service-reklama.png",
+      alt: "3D logo a reklamní cedule pro označení provozovny"
     },
     "o nás": {
       src: "images/services/visibly-service-grafika.jpg",
