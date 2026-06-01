@@ -1,15 +1,15 @@
 (function () {
   var imageMap = {
     "tisk": {
-      src: "images/services/visibly-service-tisk.png",
+      src: "images/services/visibly-service-tisk-optimized.jpg",
       alt: "Velkoformátová tiskárna Epson při tisku reklamy Visibly"
     },
     "polepy": {
-      src: "images/services/visibly-service-polepy.png",
+      src: "images/services/visibly-service-polepy-optimized.jpg",
       alt: "Polepená dodávka a výloha s reklamní grafikou"
     },
     "reklama": {
-      src: "images/services/visibly-service-reklama.png",
+      src: "images/services/visibly-service-reklama-optimized.jpg",
       alt: "3D logo a reklamní cedule pro označení provozovny"
     },
     "o nás": {
@@ -105,6 +105,7 @@
     circle.className = "circle-image visibly-print-hero-image visibly-print-hero-image-primary visibly-page-hero-circle";
     img.src = image.src;
     img.loading = "eager";
+    img.decoding = "async";
     img.alt = image.alt;
     img.className = "visibly-print-hero-photo";
     circle.appendChild(img);

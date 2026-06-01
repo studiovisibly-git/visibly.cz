@@ -6,6 +6,7 @@
   --visibly-container-padding-desktop: 48px;
   --visibly-container-padding-tablet: 32px;
   --visibly-container-padding-mobile: 20px;
+  --visibly-top-info-bar-height: 48px;
 }
 
 @media screen and (max-width: 991px) {
@@ -176,7 +177,7 @@ html {
   --visibly-duration-medium: 420ms;
   --visibly-duration-slow: 700ms;
   --visibly-reveal-distance: 36px;
-  --visibly-top-info-bar-height: 40px;
+  --visibly-top-info-bar-height: 48px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -237,12 +238,16 @@ body {
   background-color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, .16);
   width: 100%;
-  min-height: 40px;
+  min-height: var(--visibly-top-info-bar-height);
   position: fixed;
   inset: 0% 0% auto;
   opacity: 1;
   transform: translateY(0);
   transition: transform var(--visibly-duration-fast) var(--visibly-ease), opacity var(--visibly-duration-fast) var(--visibly-ease);
+}
+
+.visibly-top-info-bar + .navigation-wrapper {
+  top: var(--visibly-top-info-bar-height);
 }
 
 .visibly-top-info-bar.is-hidden {
@@ -312,7 +317,7 @@ body {
 }
 
 body.has-top-info-bar .navigation-wrapper {
-  top: var(--visibly-top-info-bar-height, 40px);
+  top: var(--visibly-top-info-bar-height);
   transition: top var(--visibly-duration-fast) var(--visibly-ease);
 }
 
@@ -340,6 +345,11 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
 .visibly-loader-logo {
   width: 64px;
   height: 64px;
+}
+
+body:not(.w-editor) .loader {
+  display: none !important;
+  pointer-events: none;
 }
 
 .visibly-title-line {
@@ -3127,7 +3137,7 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
 
 @media screen and (max-width: 767px) {
   html {
-    --visibly-top-info-bar-height: 44px;
+    --visibly-top-info-bar-height: 52px;
   }
 
   .visibly-top-info-bar__inner {
@@ -3217,11 +3227,28 @@ body.has-top-info-bar.top-info-bar-hidden .navigation-wrapper {
 }
 
 @media screen and (max-width: 479px) {
+  .visibly-top-info-bar__inner {
+    gap: 8px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .visibly-top-info-bar__text,
+  .visibly-top-info-bar__link {
+    font-size: 14px;
+  }
+
+  .navigation {
+    grid-column-gap: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   .navigation .button-circle.hide {
     height: 40px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 15px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 14px;
     line-height: 1;
   }
 }

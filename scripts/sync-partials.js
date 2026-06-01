@@ -36,15 +36,15 @@ const ignoredPathPatterns = [
 
 const pageHeroImages = {
   "tisk": {
-    src: "images/services/visibly-service-tisk.png",
+    src: "images/services/visibly-service-tisk-optimized.jpg",
     alt: "Velkoformátová tiskárna Epson při tisku reklamy Visibly",
   },
   "polepy": {
-    src: "images/services/visibly-service-polepy.png",
+    src: "images/services/visibly-service-polepy-optimized.jpg",
     alt: "Polepená dodávka a výloha s reklamní grafikou",
   },
   "reklama": {
-    src: "images/services/visibly-service-reklama.png",
+    src: "images/services/visibly-service-reklama-optimized.jpg",
     alt: "3D logo a reklamní cedule pro označení provozovny",
   },
   "o nás": {
@@ -210,7 +210,7 @@ ${buildTitleFallback(title)}
 </div>
 <div class="visibly-print-hero-images visibly-page-hero-image-wrap" aria-label="Ukázka ${escapeHtml(kicker)} Visibly">
   <div class="circle-image visibly-print-hero-image visibly-print-hero-image-primary visibly-page-hero-circle">
-    <img src="${image.src}" loading="eager" alt="${image.alt}" class="visibly-print-hero-photo">
+    <img src="${image.src}" loading="eager" alt="${image.alt}" class="visibly-print-hero-photo" decoding="async">
   </div>
 </div>
 <p class="subhead _2 visibly-print-hero-text">${escapeHtml(text)}</p>
@@ -258,7 +258,7 @@ function ensureScript(source, file, scriptPath, marker, beforeWebflow = false) {
     return source;
   }
 
-  const script = `<script src="${src}" type="text/javascript"></script>`;
+  const script = `<script src="${src}" type="text/javascript" defer></script>`;
   const webflowScript = /<script\s+src="[^"]*js\/webflow\.js"[^>]*><\/script>/;
   const webflowMatch = source.match(webflowScript);
 
