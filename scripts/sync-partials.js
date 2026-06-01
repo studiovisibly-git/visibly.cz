@@ -21,6 +21,38 @@ const footerEnd = "<!-- VISIBLY_FOOTER_END -->";
 const pageHeroStart = "<!-- VISIBLY_PAGE_HERO_START -->";
 const pageHeroEnd = "<!-- VISIBLY_PAGE_HERO_END -->";
 
+const ignoredPathPatterns = [
+  /^partials\//,
+  /^home\//,
+  /^pages\//,
+  /^information\//,
+  /^detail_.*\.html$/,
+  /^checkout\.html$/,
+  /^paypal-checkout\.html$/,
+  /^order-confirmation\.html$/,
+  /^401\.html$/,
+  /^404\.html$/,
+];
+
+const pageHeroImages = {
+  "tisk": {
+    src: "images/services/visibly-service-tisk.png",
+    alt: "Velkoformátová tiskárna Epson při tisku reklamy Visibly",
+  },
+  "polepy": {
+    src: "images/services/visibly-service-polepy.png",
+    alt: "Polepená dodávka a výloha s reklamní grafikou",
+  },
+  "reklama": {
+    src: "images/services/visibly-service-reklama.png",
+    alt: "3D logo a reklamní cedule pro označení provozovny",
+  },
+  "o nás": {
+    src: "images/services/visibly-service-grafika.jpg",
+    alt: "Visibly reklamní studio a tiskárna",
+  },
+};
+
 function indentBlock(content, indent) {
   return content
     .split("\n")
@@ -121,7 +153,72 @@ function preservePageHeroAttributes(currentBlock, partial) {
     return partial;
   }
 
-  return partial.replace(partialOpen[0], currentOpen[0]);
+  return buildPageHeroPartial(currentOpen[0]);
+}
+
+function getAttribute(openTag, name, fallback = "") {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = openTag.match(new RegExp(`${escaped}="([^"]*)"`, "i"));
+  return match ? match[1] : fallback;
+}
+
+function escapeHtml(value) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function buildTitleFallback(title) {
+  const lines = title.split("|").filter(Boolean);
+
+  return lines
+    .map((line, index) => {
+      const lineClass = ["_2", "_1", "_3", "_4"][index] || "_2";
+      const remainingTitle = index === 0 ? lines.slice(1).join(" ") : "";
+      const tag = index === 0 ? "h1" : "div";
+      const className = `title-1 ${lineClass}${index === 0 ? "" : " visibly-title-line"}`;
+      const hiddenTitle = remainingTitle ? `<span class="visibly-sr-only"> ${escapeHtml(remainingTitle)}</span>` : "";
+
+      return `  <div class="top-part-hero _2">
+    <${tag} class="${className}">${escapeHtml(line)}${hiddenTitle}<strong><br></strong></${tag}>
+  </div>`;
+    })
+    .join("\n");
+}
+
+function buildPageHeroPartial(openTag) {
+  const title = getAttribute(openTag, "data-hero-title", "Velkoformátový|tisk");
+  const kicker = getAttribute(openTag, "data-hero-kicker", "Tisk");
+  const text = getAttribute(openTag, "data-hero-text", "");
+  const buttonLabel = getAttribute(openTag, "data-hero-button-label", "");
+  const buttonUrl = getAttribute(openTag, "data-hero-button-url", "/kontakt");
+  const scrollText = getAttribute(openTag, "data-hero-scroll-text", "Scroll");
+  const scrollTarget = getAttribute(openTag, "data-hero-scroll-target", "#sluzby");
+  const image = pageHeroImages[kicker.toLowerCase()] || pageHeroImages.tisk;
+  const button = buttonLabel
+    ? `    <a href="${escapeHtml(buttonUrl)}" class="button-circle _2 w-inline-block">
+      <div>${escapeHtml(buttonLabel)}</div>
+      <div class="button-overlay active"></div>
+    </a>`
+    : "";
+
+  return `${openTag}
+<div class="visibly-print-hero-copy">
+${buildTitleFallback(title)}
+</div>
+<div class="visibly-print-hero-images visibly-page-hero-image-wrap" aria-label="Ukázka ${escapeHtml(kicker)} Visibly">
+  <div class="circle-image visibly-print-hero-image visibly-print-hero-image-primary visibly-page-hero-circle">
+    <img src="${image.src}" loading="eager" alt="${image.alt}" class="visibly-print-hero-photo">
+  </div>
+</div>
+<p class="subhead _2 visibly-print-hero-text">${escapeHtml(text)}</p>
+<div class="visibly-page-hero-actions">
+${button}
+  <a href="${escapeHtml(scrollTarget)}" class="scroll-down visibly-page-hero-scroll">${escapeHtml(scrollText)}</a>
+</div>
+</div>`;
 }
 
 function syncPageHero(source, partial) {
@@ -174,6 +271,10 @@ function ensureScript(source, file, scriptPath, marker, beforeWebflow = false) {
   return source.replace("</body>", `  ${script}\n</body>`);
 }
 
+function isIgnored(relativePath) {
+  return ignoredPathPatterns.some((pattern) => pattern.test(relativePath.split(path.sep).join("/")));
+}
+
 function collectHtmlFiles(dir, relativeDir = "") {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const files = [];
@@ -181,17 +282,18 @@ function collectHtmlFiles(dir, relativeDir = "") {
   for (const entry of entries) {
     const relativePath = path.join(relativeDir, entry.name);
     const fullPath = path.join(dir, entry.name);
+    const normalizedPath = relativePath.split(path.sep).join("/");
 
     if (entry.isDirectory()) {
-      if (entry.name === "realizace" || entry.name === "pruvodce") {
-        files.push(...collectHtmlFiles(fullPath, relativePath));
+      if (entry.name === ".git" || entry.name === "node_modules" || isIgnored(`${normalizedPath}/`)) {
+        continue;
       }
+
+      files.push(...collectHtmlFiles(fullPath, relativePath));
       continue;
     }
 
-    if (entry.isFile() && entry.name.endsWith(".html") && relativeDir === "") {
-      files.push(relativePath);
-    } else if (entry.isFile() && entry.name.endsWith(".html") && (relativeDir === "realizace" || relativeDir === "pruvodce")) {
+    if (entry.isFile() && entry.name.endsWith(".html") && !isIgnored(normalizedPath)) {
       files.push(relativePath);
     }
   }

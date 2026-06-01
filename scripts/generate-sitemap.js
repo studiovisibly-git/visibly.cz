@@ -57,24 +57,24 @@ function toPublicPath(relativePath) {
   }
 
   if (relativePath.endsWith("/index.html")) {
-    return `/${relativePath.replace(/\/index\.html$/, "/")}`;
+    return `/${relativePath.replace(/\/index\.html$/, "")}`;
   }
 
-  return `/${relativePath.replace(/\.html$/, "/")}`;
+  return `/${relativePath.replace(/\.html$/, "")}`;
 }
 
 function getPriority(publicPath) {
   if (publicPath === "/") return "1.0";
-  if (/^\/(tisk|polepy|reklama|realizace|technologie|o-nas|kontakt)\/$/.test(publicPath)) return "0.9";
-  if (/^\/(pruvodce|mapa-webu)\/$/.test(publicPath)) return "0.7";
+  if (/^\/(tisk|polepy|reklama|realizace|technologie|o-nas|kontakt)$/.test(publicPath)) return "0.9";
+  if (/^\/(pruvodce|mapa-webu)$/.test(publicPath)) return "0.7";
   if (/^\/(realizace|pruvodce)\//.test(publicPath)) return "0.6";
-  if (publicPath === "/cookies/") return "0.3";
+  if (publicPath === "/cookies") return "0.3";
   return "0.5";
 }
 
 function getChangefreq(publicPath) {
   if (publicPath === "/") return "weekly";
-  if (/^\/(tisk|polepy|reklama|realizace|technologie|kontakt)\/$/.test(publicPath)) return "monthly";
+  if (/^\/(tisk|polepy|reklama|realizace|technologie|kontakt)$/.test(publicPath)) return "monthly";
   if (/^\/(realizace|pruvodce)\//.test(publicPath)) return "monthly";
   return "yearly";
 }

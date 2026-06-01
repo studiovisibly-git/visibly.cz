@@ -37,7 +37,7 @@ const breadcrumbLabelMap = {
 };
 
 const serviceCatalogs = {
-  "/tisk/": {
+  "/tisk": {
     name: "Tiskové služby",
     serviceType: "Tisk",
     offers: [
@@ -52,7 +52,7 @@ const serviceCatalogs = {
       "Tisk fotoobrazů",
     ],
   },
-  "/polepy/": {
+  "/polepy": {
     name: "Reklamní polepy aut, výloh i interiérů",
     serviceType: "Reklamní polepy",
     offers: [
@@ -64,7 +64,7 @@ const serviceCatalogs = {
       "Řezaná grafika",
     ],
   },
-  "/reklama/": {
+  "/reklama": {
     name: "Reklamní výroba",
     serviceType: "Reklamní výroba",
     offers: [
@@ -119,14 +119,14 @@ function toPublicPath(relativePath) {
   }
 
   if (relativePath.endsWith("/index.html")) {
-    return `/${relativePath.replace(/\/index\.html$/, "/")}`;
+    return `/${relativePath.replace(/\/index\.html$/, "")}`;
   }
 
   if (hasCleanUrlCopy(relativePath)) {
-    return `/${relativePath.replace(/\.html$/, "/")}`;
+    return `/${relativePath.replace(/\.html$/, "")}`;
   }
 
-  return `/${relativePath.replace(/\.html$/, "/")}`;
+  return `/${relativePath.replace(/\.html$/, "")}`;
 }
 
 function canonicalUrl(publicPath) {
@@ -179,7 +179,7 @@ function getBreadcrumbItems(publicPath) {
     current += `/${segment}`;
     items.push({
       name: humanizeSegment(segment),
-      item: `${siteUrl}${current}/`,
+      item: `${siteUrl}${current}`,
     });
   });
 
@@ -269,9 +269,9 @@ function buildBreadcrumbEntity(publicPath) {
 }
 
 function getPageType(publicPath) {
-  if (publicPath === "/kontakt/") return "ContactPage";
-  if (publicPath.startsWith("/pruvodce/") && publicPath !== "/pruvodce/") return "Article";
-  if (publicPath.startsWith("/realizace/") && publicPath !== "/realizace/") return "CreativeWork";
+  if (publicPath === "/kontakt") return "ContactPage";
+  if (publicPath.startsWith("/pruvodce/") && publicPath !== "/pruvodce") return "Article";
+  if (publicPath.startsWith("/realizace/") && publicPath !== "/realizace") return "CreativeWork";
   return "WebPage";
 }
 
@@ -427,6 +427,26 @@ function replaceSchema(html, schema) {
   return withoutSchema.replace(/<\/head>/i, `${script}\n</head>`);
 }
 
+function canonicalLink(publicPath) {
+  return `  <link rel="canonical" href="${canonicalUrl(publicPath)}">`;
+}
+
+function replaceCanonical(html, publicPath) {
+  const link = canonicalLink(publicPath);
+  const withoutCanonical = html.replace(/\n?\s*<link\s+[^>]*rel=["']canonical["'][^>]*>/gi, "");
+
+  if (!/<\/head>/i.test(withoutCanonical)) {
+    return withoutCanonical;
+  }
+
+  const viewportPattern = /(\n\s*<meta\s+[^>]*name=["']viewport["'][^>]*>)/i;
+  if (viewportPattern.test(withoutCanonical)) {
+    return withoutCanonical.replace(viewportPattern, `$1\n${link}`);
+  }
+
+  return withoutCanonical.replace(/<\/head>/i, `${link}\n</head>`);
+}
+
 const files = walk(rootDir)
   .map((filePath) => ({
     filePath,
@@ -438,8 +458,9 @@ let updatedCount = 0;
 
 files.forEach(({ filePath, relativePath }) => {
   const html = fs.readFileSync(filePath, "utf8");
+  const publicPath = toPublicPath(relativePath);
   const schema = buildSchema(relativePath, html);
-  const nextHtml = replaceSchema(html, schema);
+  const nextHtml = replaceSchema(replaceCanonical(html, publicPath), schema);
 
   if (nextHtml !== html) {
     fs.writeFileSync(filePath, nextHtml);
