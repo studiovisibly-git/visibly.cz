@@ -104,6 +104,10 @@
     imageWrap.setAttribute("aria-label", "Ukázka " + getData(element, "data-hero-kicker", "služby") + " Visibly");
     circle.className = "circle-image visibly-print-hero-image visibly-print-hero-image-primary visibly-page-hero-circle";
     img.src = image.src;
+    if (/-optimized\.jpg$/.test(image.src)) {
+      img.srcset = image.src.replace(/-optimized\.jpg$/, "-480.jpg") + " 480w, " + image.src.replace(/-optimized\.jpg$/, "-760.jpg") + " 760w, " + image.src + " 1100w";
+      img.sizes = "(max-width: 479px) 48vw, (max-width: 767px) 64vw, (max-width: 991px) 56vw, 540px";
+    }
     img.loading = "eager";
     img.decoding = "async";
     img.alt = image.alt;

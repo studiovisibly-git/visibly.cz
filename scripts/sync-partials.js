@@ -197,6 +197,10 @@ function buildPageHeroPartial(openTag) {
   const scrollText = getAttribute(openTag, "data-hero-scroll-text", "Scroll");
   const scrollTarget = getAttribute(openTag, "data-hero-scroll-target", "#sluzby");
   const image = pageHeroImages[kicker.toLowerCase()] || pageHeroImages.tisk;
+  const imageBase = image.src.replace(/-optimized\.jpg$/, "");
+  const imageSrcset = image.src.endsWith("-optimized.jpg")
+    ? ` srcset="${imageBase}-480.jpg 480w, ${imageBase}-760.jpg 760w, ${image.src} 1100w" sizes="(max-width: 479px) 48vw, (max-width: 767px) 64vw, (max-width: 991px) 56vw, 540px"`
+    : "";
   const button = buttonLabel
     ? `    <a href="${escapeHtml(buttonUrl)}" class="button-circle _2 w-inline-block">
       <div>${escapeHtml(buttonLabel)}</div>
@@ -210,7 +214,7 @@ ${buildTitleFallback(title)}
 </div>
 <div class="visibly-print-hero-images visibly-page-hero-image-wrap" aria-label="Ukázka ${escapeHtml(kicker)} Visibly">
   <div class="circle-image visibly-print-hero-image visibly-print-hero-image-primary visibly-page-hero-circle">
-    <img src="${image.src}" loading="eager" alt="${image.alt}" class="visibly-print-hero-photo" decoding="async">
+    <img src="${image.src}"${imageSrcset} loading="eager" alt="${image.alt}" class="visibly-print-hero-photo" decoding="async">
   </div>
 </div>
 <p class="subhead _2 visibly-print-hero-text">${escapeHtml(text)}</p>
@@ -271,6 +275,46 @@ function ensureScript(source, file, scriptPath, marker, beforeWebflow = false) {
   return source.replace("</body>", `  ${script}\n</body>`);
 }
 
+function ensureTopInfoBarBodyClass(source) {
+  if (!source.includes(topInfoBarStart)) {
+    return source;
+  }
+
+  return source.replace(/<body\b([^>]*)>/i, (match, attributes) => {
+    const classMatch = attributes.match(/\bclass="([^"]*)"/i);
+
+    if (!classMatch) {
+      return `<body${attributes} class="has-top-info-bar">`;
+    }
+
+    const classes = classMatch[1].split(/\s+/).filter(Boolean);
+    if (classes.includes("has-top-info-bar")) {
+      return match;
+    }
+
+    const updatedClass = `class="${classes.concat("has-top-info-bar").join(" ")}"`;
+    return match.replace(classMatch[0], updatedClass);
+  });
+}
+
+function syncRuntimeScripts(source) {
+  const keepScripts = [
+    "/js/visibly-mobile-menu.js?v=mobile-menu-5",
+    "/js/visibly-top-info-bar.js",
+    "/js/visibly-runtime-loader.js?v=performance-1",
+  ];
+  const removePattern = /[ \t]*<script\s+src="[^"]*\/?js\/(?:jquery-3\.5\.1\.min\.dc5e7f18c8|webflow|visibly-page-hero|visibly-custom|visibly-sticky-cta|visibly-breadcrumbs|visibly-mobile-menu|visibly-top-info-bar|visibly-runtime-loader)\.js[^"]*"[^>]*><\/script>\n?/g;
+  let next = source.replace(removePattern, "");
+
+  keepScripts.forEach((src) => {
+    if (!next.includes(`src="${src}"`)) {
+      next = next.replace("</body>", `  <script src="${src}" type="text/javascript" defer></script>\n</body>`);
+    }
+  });
+
+  return next;
+}
+
 function isIgnored(relativePath) {
   return ignoredPathPatterns.some((pattern) => pattern.test(relativePath.split(path.sep).join("/")));
 }
@@ -312,6 +356,7 @@ for (const file of htmlFiles) {
 
   next = syncTopInfoBar(next, topInfoBarPartial);
   next = syncPageHero(next, pageHeroPartial);
+  next = ensureTopInfoBarBodyClass(next);
 
   next = syncBlock(
     next,
@@ -329,9 +374,7 @@ for (const file of htmlFiles) {
     footerPartial
   );
 
-  next = ensureScript(next, file, "js/visibly-top-info-bar.js", topInfoBarStart);
-  next = ensureScript(next, file, "js/visibly-mobile-menu.js", headerStart, true);
-  next = ensureScript(next, file, "js/visibly-page-hero.js", pageHeroStart, true);
+  next = syncRuntimeScripts(next);
 
   if (next !== original) {
     fs.writeFileSync(filePath, next);

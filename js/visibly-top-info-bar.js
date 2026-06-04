@@ -12,7 +12,11 @@
     function setBarHeight() {
       var rect = bars[0].getBoundingClientRect();
       var height = Math.ceil(rect.height || bars[0].offsetHeight || 40);
-      document.documentElement.style.setProperty("--visibly-top-info-bar-height", height + "px");
+      var current = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue("--visibly-top-info-bar-height")) || 0;
+
+      if (Math.abs(height - current) > 1) {
+        document.documentElement.style.setProperty("--visibly-top-info-bar-height", height + "px");
+      }
     }
 
     function update() {

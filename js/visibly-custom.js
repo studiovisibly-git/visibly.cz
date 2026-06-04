@@ -158,6 +158,20 @@
     var activeIndex = 0;
     var crossfadeSeconds = 0.55;
     var isSwitching = false;
+    var hydrated = false;
+
+    var hydrateVideos = function () {
+      if (hydrated) return;
+      hydrated = true;
+
+      videos.forEach(function (video) {
+        var src = video.getAttribute('data-src');
+        if (src && !video.getAttribute('src')) {
+          video.setAttribute('src', src);
+          video.load();
+        }
+      });
+    };
 
     var activate = function (index) {
       videos.forEach(function (video, videoIndex) {
@@ -210,16 +224,19 @@
     });
 
     var retryActivePlayback = function () {
+      hydrateVideos();
       playVideo(videos[activeIndex]);
     };
 
-    activate(activeIndex);
-    retryActivePlayback();
-    window.setTimeout(retryActivePlayback, 250);
-    window.setTimeout(retryActivePlayback, 1000);
-    window.addEventListener('touchstart', retryActivePlayback, { passive: true });
-    window.addEventListener('pointerdown', retryActivePlayback, { passive: true });
-    window.addEventListener('scroll', retryActivePlayback, { passive: true });
+    var startPlayback = function () {
+      activate(activeIndex);
+      retryActivePlayback();
+      window.setTimeout(retryActivePlayback, 250);
+      window.setTimeout(retryActivePlayback, 1000);
+    };
+
+    window.addEventListener('touchstart', startPlayback, { once: true, passive: true });
+    window.addEventListener('pointerdown', startPlayback, { once: true, passive: true });
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden) retryActivePlayback();
     });
@@ -227,11 +244,15 @@
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) retryActivePlayback();
+          if (!entry.isIntersecting) return;
+          startPlayback();
+          observer.unobserve(entry.target);
         });
-      }, { threshold: 0.2 });
+      }, { rootMargin: '360px 0px', threshold: 0.01 });
 
       observer.observe(media);
+    } else {
+      startPlayback();
     }
   }
 
@@ -297,10 +318,19 @@
     window.addEventListener('resize', updateAll);
   }
 
-  window.addEventListener('load', function () {
+  function initVisiblyCustom() {
+    if (window.__visiblyCustomInitialized) return;
+    window.__visiblyCustomInitialized = true;
+
     initServiceCards();
     initWorkTrack();
     initIntroVideoLoop();
     initBreadcrumb();
-  });
+  }
+
+  if (document.readyState === 'complete') {
+    initVisiblyCustom();
+  } else {
+    window.addEventListener('load', initVisiblyCustom, { once: true });
+  }
 }());
