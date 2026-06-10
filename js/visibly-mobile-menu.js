@@ -5,12 +5,14 @@
     var hamburger = wrapper && wrapper.querySelector(".hamburger");
     var navigation = wrapper && wrapper.querySelector(".navigation");
     var hamburgerIcon = hamburger && hamburger.querySelector(".hamburger-menu._2");
+    var menuTextWrapper = hamburger && hamburger.querySelector(".menu-text-wrapper");
     var dots = hamburgerIcon && hamburgerIcon.querySelector(".dots");
     var close = hamburgerIcon && hamburgerIcon.querySelector(".remove");
     var lottie = hamburgerIcon && hamburgerIcon.querySelector(".lottie-animation");
     var body = document.body;
     var scrollY = 0;
     var isOpen = false;
+    var lastPointerToggle = 0;
 
     if (!wrapper || !menu || !hamburger) return;
 
@@ -115,8 +117,15 @@
     window.setTimeout(update, 500);
     window.addEventListener("resize", update);
     window.addEventListener("scroll", setMenuTop, { passive: true });
-    hamburger.addEventListener("click", function (event) {
+    function handleMenuToggle(event) {
       if (window.innerWidth > 991) return;
+
+      if ((event.type === "click" || event.type === "mousedown") && Date.now() - lastPointerToggle < 450) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+
       event.preventDefault();
       event.stopImmediatePropagation();
       if (isOpen || menuIsVisible()) {
@@ -124,7 +133,70 @@
       } else {
         openMenuNow();
       }
-    }, true);
+
+      if (event.type === "pointerdown" || event.type === "mousedown" || event.type === "touchstart") {
+        lastPointerToggle = Date.now();
+      }
+    }
+
+    function getEventPoint(event) {
+      var touch = event.touches && event.touches[0];
+      var changedTouch = event.changedTouches && event.changedTouches[0];
+      var point = touch || changedTouch;
+
+      if (point) {
+        return { x: point.clientX, y: point.clientY };
+      }
+
+      if (typeof event.clientX === "number" && typeof event.clientY === "number") {
+        return { x: event.clientX, y: event.clientY };
+      }
+
+      return null;
+    }
+
+    function eventHitsHamburger(event) {
+      var point = getEventPoint(event);
+
+      if (!point) return false;
+
+      var rect = hamburger.getBoundingClientRect();
+      return (
+        point.x >= rect.left &&
+        point.x <= rect.right &&
+        point.y >= rect.top &&
+        point.y <= rect.bottom
+      );
+    }
+
+    function handleDocumentMenuToggle(event) {
+      var target = event.target;
+      var owner = target && target.closest ? target.closest(".navigation-wrapper .hamburger") : null;
+
+      if (owner !== hamburger && !eventHitsHamburger(event)) return;
+      handleMenuToggle(event);
+    }
+
+    document.addEventListener("pointerdown", handleDocumentMenuToggle, true);
+    document.addEventListener("mousedown", handleDocumentMenuToggle, true);
+    document.addEventListener("touchstart", handleDocumentMenuToggle, { capture: true, passive: false });
+    document.addEventListener("click", handleDocumentMenuToggle, true);
+    hamburger.addEventListener("pointerdown", handleMenuToggle, true);
+    hamburger.addEventListener("mousedown", handleMenuToggle, true);
+    hamburger.addEventListener("touchstart", handleMenuToggle, { capture: true, passive: false });
+    hamburger.addEventListener("click", handleMenuToggle, true);
+    if (menuTextWrapper) {
+      menuTextWrapper.addEventListener("pointerdown", handleMenuToggle, true);
+      menuTextWrapper.addEventListener("mousedown", handleMenuToggle, true);
+      menuTextWrapper.addEventListener("touchstart", handleMenuToggle, { capture: true, passive: false });
+      menuTextWrapper.addEventListener("click", handleMenuToggle, true);
+      menuTextWrapper.querySelectorAll(".menu-text").forEach(function (textNode) {
+        textNode.addEventListener("pointerdown", handleMenuToggle, true);
+        textNode.addEventListener("mousedown", handleMenuToggle, true);
+        textNode.addEventListener("touchstart", handleMenuToggle, { capture: true, passive: false });
+        textNode.addEventListener("click", handleMenuToggle, true);
+      });
+    }
     document.addEventListener("click", function () {
       window.setTimeout(update, 0);
       window.setTimeout(update, 320);

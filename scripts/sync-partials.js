@@ -308,7 +308,7 @@ function ensureTopInfoBarBodyClass(source) {
 
 function syncRuntimeScripts(source) {
   const keepScripts = [
-    "/js/visibly-mobile-menu.js?v=mobile-menu-5",
+    "/js/visibly-mobile-menu.js?v=mobile-menu-10",
     "/js/visibly-top-info-bar.js",
     "/js/visibly-breadcrumbs.js?v=performance-2",
     "/js/visibly-runtime-loader.js?v=performance-1",
