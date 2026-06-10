@@ -69,8 +69,21 @@
     return link;
   }
 
+  function hasStaticHeroMarkup(element) {
+    return (
+      element.querySelector(".visibly-print-hero-copy") &&
+      element.querySelector(".visibly-print-hero-images") &&
+      element.querySelector(".visibly-print-hero-text")
+    );
+  }
+
   function renderHero(element) {
-    if (element.getAttribute("data-page-hero-rendered") === "true") return;
+    if (element.getAttribute("data-page-hero-rendered") === "true" || hasStaticHeroMarkup(element)) {
+      element.setAttribute("data-page-hero-rendered", "true");
+      element.classList.add("visibly-page-hero");
+      return;
+    }
+
     element.setAttribute("data-page-hero-rendered", "true");
     if (!element.getAttribute("data-w-id")) {
       element.setAttribute("data-w-id", "3ef9be33-4443-fe7a-f70f-a8c05b16e371");

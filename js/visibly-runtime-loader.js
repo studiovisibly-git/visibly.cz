@@ -5,8 +5,7 @@
     "/js/webflow.js",
     "/js/visibly-page-hero.js?v=service-images-3",
     "/js/visibly-custom.js?v=motion-system-6",
-    "/js/visibly-sticky-cta.js",
-    "/js/visibly-breadcrumbs.js?v=performance-1"
+    "/js/visibly-sticky-cta.js"
   ];
 
   function loadScript(src, done) {

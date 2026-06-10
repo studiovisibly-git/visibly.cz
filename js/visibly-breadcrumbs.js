@@ -123,6 +123,7 @@
     var list = document.createElement("ol");
 
     container.innerHTML = "";
+    container.classList.toggle("is-home-only", trail.length <= 1);
 
     trail.forEach(function (label, index) {
       var item = document.createElement("li");

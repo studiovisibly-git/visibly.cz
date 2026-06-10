@@ -162,6 +162,14 @@ function getAttribute(openTag, name, fallback = "") {
   return match ? match[1] : fallback;
 }
 
+function markPageHeroRendered(openTag) {
+  if (/data-page-hero-rendered=/i.test(openTag)) {
+    return openTag;
+  }
+
+  return openTag.replace(/>$/, ' data-page-hero-rendered="true">');
+}
+
 function escapeHtml(value) {
   return value
     .replace(/&/g, "&amp;")
@@ -189,6 +197,7 @@ function buildTitleFallback(title) {
 }
 
 function buildPageHeroPartial(openTag) {
+  const renderedOpenTag = markPageHeroRendered(openTag);
   const title = getAttribute(openTag, "data-hero-title", "Velkoformátový|tisk");
   const kicker = getAttribute(openTag, "data-hero-kicker", "Tisk");
   const text = getAttribute(openTag, "data-hero-text", "");
@@ -208,7 +217,7 @@ function buildPageHeroPartial(openTag) {
     </a>`
     : "";
 
-  return `${openTag}
+  return `${renderedOpenTag}
 <div class="visibly-print-hero-copy">
 ${buildTitleFallback(title)}
 </div>
@@ -301,6 +310,7 @@ function syncRuntimeScripts(source) {
   const keepScripts = [
     "/js/visibly-mobile-menu.js?v=mobile-menu-5",
     "/js/visibly-top-info-bar.js",
+    "/js/visibly-breadcrumbs.js?v=performance-2",
     "/js/visibly-runtime-loader.js?v=performance-1",
   ];
   const removePattern = /[ \t]*<script\s+src="[^"]*\/?js\/(?:jquery-3\.5\.1\.min\.dc5e7f18c8|webflow|visibly-page-hero|visibly-custom|visibly-sticky-cta|visibly-breadcrumbs|visibly-mobile-menu|visibly-top-info-bar|visibly-runtime-loader)\.js[^"]*"[^>]*><\/script>\n?/g;

@@ -260,6 +260,14 @@
     var breadcrumb = document.querySelector('.visibly-breadcrumbs, .visibly-breadcrumb');
     if (!breadcrumb) return;
 
+    var mobileQuery = window.matchMedia('(max-width: 991px)');
+    if (mobileQuery.matches) {
+      document.documentElement.style.setProperty('--visibly-breadcrumb-progress', '1');
+      document.documentElement.style.setProperty('--visibly-logo-text-progress', '0');
+      document.body.classList.remove('visibly-breadcrumb-is-fixed');
+      return;
+    }
+
     var logoFadeDistance = window.innerWidth < 768 ? 46 : 68;
     var ticking = false;
 
