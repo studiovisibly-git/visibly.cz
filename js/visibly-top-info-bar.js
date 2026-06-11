@@ -5,6 +5,7 @@
     if (!bars.length) return;
 
     var body = document.body;
+    var navigationWrappers = document.querySelectorAll(".navigation-wrapper");
     var ticking = false;
 
     body.classList.add("has-top-info-bar");
@@ -24,6 +25,14 @@
 
       bars.forEach(function (bar) {
         bar.classList.toggle("is-hidden", shouldHide);
+      });
+
+      navigationWrappers.forEach(function (wrapper) {
+        if (shouldHide) {
+          wrapper.style.setProperty("top", "0px", "important");
+        } else {
+          wrapper.style.removeProperty("top");
+        }
       });
 
       body.classList.toggle("top-info-bar-hidden", shouldHide);

@@ -9,10 +9,12 @@
     var dots = hamburgerIcon && hamburgerIcon.querySelector(".dots");
     var close = hamburgerIcon && hamburgerIcon.querySelector(".remove");
     var lottie = hamburgerIcon && hamburgerIcon.querySelector(".lottie-animation");
+    var topInfoBars = document.querySelectorAll("[data-top-info-bar]");
     var body = document.body;
     var scrollY = 0;
     var isOpen = false;
-    var lastPointerToggle = 0;
+    var lastToggleAt = 0;
+    var lastTogglePoint = null;
 
     if (!wrapper || !menu || !hamburger) return;
 
@@ -28,8 +30,24 @@
       }
     }
 
+    function syncTopInfoBarHidden() {
+      var hidden = body.classList.contains("visibly-mobile-menu-open") || body.classList.contains("top-info-bar-hidden");
+
+      topInfoBars.forEach(function (bar) {
+        bar.classList.toggle("is-hidden", hidden);
+      });
+
+      if (hidden) {
+        wrapper.style.setProperty("top", "0px", "important");
+      } else {
+        wrapper.style.removeProperty("top");
+      }
+    }
+
     function setIconState(open) {
       wrapper.classList.toggle("visibly-menu-is-open", open);
+      hamburger.setAttribute("aria-expanded", open ? "true" : "false");
+      hamburger.setAttribute("aria-label", open ? "Zavřít menu" : "Otevřít menu");
 
       setStyle(dots, "opacity", open ? "0" : "1");
       setStyle(dots, "transform", open ? "scale(0)" : "scale(1)");
@@ -55,9 +73,12 @@
       if (isOpen) return;
       scrollY = window.scrollY || window.pageYOffset || 0;
       body.classList.add("visibly-mobile-menu-open");
+      body.classList.add("top-info-bar-hidden");
+      syncTopInfoBarHidden();
       body.style.top = "-" + scrollY + "px";
       setMenuTop();
       window.requestAnimationFrame(setMenuTop);
+      window.setTimeout(setMenuTop, 80);
       isOpen = true;
     }
 
@@ -69,6 +90,8 @@
       var previousScrollBehavior = document.documentElement.style.scrollBehavior;
       document.documentElement.style.scrollBehavior = "auto";
       body.classList.remove("visibly-mobile-menu-open");
+      body.classList.toggle("top-info-bar-hidden", restoreY > 80);
+      syncTopInfoBarHidden();
       body.style.top = "";
       window.scrollTo(0, restoreY);
       window.requestAnimationFrame(function () {
@@ -120,22 +143,29 @@
     function handleMenuToggle(event) {
       if (window.innerWidth > 991) return;
 
-      if ((event.type === "click" || event.type === "mousedown") && Date.now() - lastPointerToggle < 450) {
+      var now = Date.now();
+      var point = getEventPoint(event);
+      var isSameTap = (
+        lastTogglePoint &&
+        point &&
+        Math.abs(point.x - lastTogglePoint.x) < 24 &&
+        Math.abs(point.y - lastTogglePoint.y) < 24
+      );
+
+      if (isSameTap && now - lastToggleAt < 500) {
         event.preventDefault();
         event.stopImmediatePropagation();
         return;
       }
 
+      lastToggleAt = now;
+      lastTogglePoint = point;
       event.preventDefault();
       event.stopImmediatePropagation();
       if (isOpen || menuIsVisible()) {
         closeMenuNow();
       } else {
         openMenuNow();
-      }
-
-      if (event.type === "pointerdown" || event.type === "mousedown" || event.type === "touchstart") {
-        lastPointerToggle = Date.now();
       }
     }
 
@@ -177,24 +207,18 @@
       handleMenuToggle(event);
     }
 
-    document.addEventListener("pointerdown", handleDocumentMenuToggle, true);
-    document.addEventListener("mousedown", handleDocumentMenuToggle, true);
-    document.addEventListener("touchstart", handleDocumentMenuToggle, { capture: true, passive: false });
+    function bindToggleTarget(target) {
+      target.addEventListener("touchend", handleMenuToggle, { capture: true, passive: false });
+      target.addEventListener("click", handleMenuToggle, true);
+    }
+
+    document.addEventListener("touchend", handleDocumentMenuToggle, { capture: true, passive: false });
     document.addEventListener("click", handleDocumentMenuToggle, true);
-    hamburger.addEventListener("pointerdown", handleMenuToggle, true);
-    hamburger.addEventListener("mousedown", handleMenuToggle, true);
-    hamburger.addEventListener("touchstart", handleMenuToggle, { capture: true, passive: false });
-    hamburger.addEventListener("click", handleMenuToggle, true);
+    bindToggleTarget(hamburger);
     if (menuTextWrapper) {
-      menuTextWrapper.addEventListener("pointerdown", handleMenuToggle, true);
-      menuTextWrapper.addEventListener("mousedown", handleMenuToggle, true);
-      menuTextWrapper.addEventListener("touchstart", handleMenuToggle, { capture: true, passive: false });
-      menuTextWrapper.addEventListener("click", handleMenuToggle, true);
+      bindToggleTarget(menuTextWrapper);
       menuTextWrapper.querySelectorAll(".menu-text").forEach(function (textNode) {
-        textNode.addEventListener("pointerdown", handleMenuToggle, true);
-        textNode.addEventListener("mousedown", handleMenuToggle, true);
-        textNode.addEventListener("touchstart", handleMenuToggle, { capture: true, passive: false });
-        textNode.addEventListener("click", handleMenuToggle, true);
+        bindToggleTarget(textNode);
       });
     }
     document.addEventListener("click", function () {

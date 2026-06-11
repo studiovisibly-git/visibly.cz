@@ -64,6 +64,21 @@
     padding-bottom: 44px;
   }
 
+  .navigation-wrapper .hamburger {
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .navigation-wrapper .hamburger-menu._2,
+  .navigation-wrapper .menu-text-wrapper,
+  .navigation-wrapper .hamburger .menu-text {
+    pointer-events: none;
+  }
+
   .navigation-wrapper .hamburger .menu-text:first-child {
     display: block;
   }
@@ -2280,10 +2295,10 @@ body:not(.w-editor) .loader {
   }
 
   body.top-info-bar-hidden .visibly-breadcrumbs {
-    top: var(--visibly-mobile-breadcrumb-collapsed-top);
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    transform: translate3d(0, 0, 0) !important;
+    top: 0;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translate3d(0, -120%, 0) !important;
   }
 
   body.visibly-mobile-menu-open .visibly-breadcrumbs {
@@ -2292,6 +2307,7 @@ body:not(.w-editor) .loader {
     transform: translate3d(0, -120%, 0) !important;
   }
 
+  body.visibly-mobile-menu-open .visibly-top-info-bar,
   body.top-info-bar-hidden .visibly-top-info-bar,
   .visibly-top-info-bar.is-hidden {
     opacity: 0 !important;
@@ -3884,4 +3900,34 @@ body:not(.w-editor) .loader {
     padding-top: 52px;
   }
 
+}
+
+@media screen and (max-width: 991px) {
+  body.top-info-bar-hidden,
+  body.visibly-mobile-menu-open {
+    --visibly-mobile-menu-top: var(--visibly-mobile-nav-height);
+  }
+
+  body.top-info-bar-hidden .navigation-wrapper,
+  body.visibly-mobile-menu-open .navigation-wrapper {
+    top: 0 !important;
+    transform: none !important;
+  }
+
+  body.top-info-bar-hidden .visibly-top-info-bar,
+  body.visibly-mobile-menu-open .visibly-top-info-bar {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translate3d(0, -100%, 0) !important;
+  }
+
+  body.top-info-bar-hidden .visibly-breadcrumbs,
+  body.visibly-mobile-menu-open .visibly-breadcrumbs {
+    top: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translate3d(0, -120%, 0) !important;
+  }
 }
