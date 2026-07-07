@@ -373,3 +373,15 @@ Allowed page-specific values:
 Use | in data-hero-title to control line breaks.
 
 When creating a new service page, always use the shared page hero component.
+
+## Home-3 style service H1
+
+Service landing hero headlines based on the Circle home-3 hero must keep the original four visual headline rows and class pattern:
+- row 1: `top-part-hero _2` with `title-1 _2`
+- row 2: `top-part-hero _2` with `title-1 _1`
+- row 3: `top-part-hero _2` with `title-1 _3`
+- row 4: `top-part-hero _2` with `title-1 _4`
+
+Do not collapse these service H1 heroes into two rows or invent a new headline layout. Copy the original home-3 structure first and only adjust the text.
+
+The zig-zag indentation for these hero rows must be present immediately on page load. Do not rely on scroll state or delayed Webflow interaction state to put the first and third visual rows into position.
