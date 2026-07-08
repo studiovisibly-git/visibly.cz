@@ -56,73 +56,88 @@
   }
 
   function initWorkTrack() {
-    var track = document.querySelector('.visibly-work-track');
-    if (!track) return;
+    var tracks = Array.prototype.slice.call(document.querySelectorAll('.visibly-work-track'));
+    if (!tracks.length) return;
 
-    var list = track.querySelector('.collection-list');
-    if (!list) return;
+    var states = tracks.map(function (track) {
+      return {
+        track: track,
+        list: track.querySelector('.collection-list'),
+        startOffset: 0,
+        endOffset: 0,
+        travelDistance: 0,
+        scrollRange: 0
+      };
+    }).filter(function (state) {
+      return state.list;
+    });
+
+    if (!states.length) return;
 
     var ticking = false;
-    var startOffset = 0;
-    var endOffset = 0;
-    var travelDistance = 0;
-    var scrollRange = 0;
 
-    var measure = function () {
+    var measureState = function (state) {
       if (window.innerWidth < 992) {
-        track.style.height = '';
-        list.style.transform = '';
-        startOffset = 0;
-        endOffset = 0;
-        travelDistance = 0;
-        scrollRange = 0;
+        state.track.style.height = '';
+        state.list.style.transform = '';
+        state.startOffset = 0;
+        state.endOffset = 0;
+        state.travelDistance = 0;
+        state.scrollRange = 0;
         return;
       }
 
-      list.style.transform = 'translate3d(0, 0, 0)';
+      state.list.style.transform = 'translate3d(0, 0, 0)';
 
-      var items = list.querySelectorAll('.collection-item');
+      var items = state.list.querySelectorAll('.collection-item');
       var firstItem = items[0];
       var lastItem = items[items.length - 1];
 
       if (!firstItem || !lastItem) {
-        startOffset = 0;
-        endOffset = 0;
-        travelDistance = 0;
-        scrollRange = 0;
-        track.style.height = '';
+        state.startOffset = 0;
+        state.endOffset = 0;
+        state.travelDistance = 0;
+        state.scrollRange = 0;
+        state.track.style.height = '';
         return;
       }
 
       var firstRect = firstItem.getBoundingClientRect();
       var lastRect = lastItem.getBoundingClientRect();
 
-      startOffset = Math.max(-firstRect.left, 0);
-      endOffset = Math.min(window.innerWidth - lastRect.right, startOffset);
-      travelDistance = Math.max(startOffset - endOffset, 0);
-      scrollRange = Math.max(travelDistance, window.innerHeight * 0.8);
-      track.style.height = Math.ceil(window.innerHeight + scrollRange) + 'px';
+      state.startOffset = Math.max(-firstRect.left, 0);
+      state.endOffset = Math.min(window.innerWidth - lastRect.right, state.startOffset);
+      state.travelDistance = Math.max(state.startOffset - state.endOffset, 0);
+      state.scrollRange = Math.max(state.travelDistance, window.innerHeight * 0.8);
+      state.track.style.height = Math.ceil(window.innerHeight + state.scrollRange) + 'px';
+    };
+
+    var measure = function () {
+      states.forEach(measureState);
+    };
+
+    var updateState = function (state) {
+      if (window.innerWidth < 992) {
+        state.list.style.transform = '';
+        return;
+      }
+
+      var rect = state.track.getBoundingClientRect();
+      state.scrollRange = Math.max(state.track.offsetHeight - window.innerHeight, 1);
+
+      if (state.scrollRange <= 0 || state.travelDistance <= 0) {
+        state.list.style.transform = 'translate3d(' + state.startOffset + 'px, 0, 0)';
+        return;
+      }
+
+      var progress = Math.min(Math.max(-rect.top / state.scrollRange, 0), 1);
+      var currentOffset = state.startOffset - (state.travelDistance * progress);
+      state.list.style.transform = 'translate3d(' + currentOffset + 'px, 0, 0)';
     };
 
     var update = function () {
       ticking = false;
-
-      if (window.innerWidth < 992) {
-        list.style.transform = '';
-        return;
-      }
-
-      var rect = track.getBoundingClientRect();
-      scrollRange = Math.max(track.offsetHeight - window.innerHeight, 1);
-
-      if (scrollRange <= 0 || travelDistance <= 0) {
-        list.style.transform = 'translate3d(' + startOffset + 'px, 0, 0)';
-        return;
-      }
-
-      var progress = Math.min(Math.max(-rect.top / scrollRange, 0), 1);
-      var currentOffset = startOffset - (travelDistance * progress);
-      list.style.transform = 'translate3d(' + currentOffset + 'px, 0, 0)';
+      states.forEach(updateState);
     };
 
     var requestUpdate = function () {

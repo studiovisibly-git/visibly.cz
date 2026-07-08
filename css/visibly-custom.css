@@ -565,7 +565,7 @@ body.has-top-info-bar .hero._3 > .container._2.grid[data-w-id="3b50631a-a919-d64
 }
 
 .visibly-print-circle {
-  background-image: url('../images/work-1.jpg');
+  background-image: url('../images/visibly-placeholder.png');
   background-position: 50%;
   width: 320px;
   height: 320px;
@@ -1215,6 +1215,10 @@ body.has-top-info-bar .hero._3 > .container._2.grid[data-w-id="3b50631a-a919-d64
 
 .visibly-services-section {
   padding-top: 120px;
+}
+
+.visibly-services-section.visibly-services-after-intro {
+  padding-top: 80px;
 }
 
 .visibly-services-heading {
@@ -2685,6 +2689,10 @@ body.has-top-info-bar .hero._3 > .container._2.grid[data-w-id="3b50631a-a919-d64
     padding-top: 72px;
   }
 
+  .visibly-services-section.visibly-services-after-intro {
+    padding-top: 20px;
+  }
+
   .visibly-subpage-hero {
     min-height: auto;
     padding-top: 150px;
@@ -2999,6 +3007,10 @@ body.has-top-info-bar .hero._3 > .container._2.grid[data-w-id="3b50631a-a919-d64
 
   .visibly-services-section {
     padding-top: 60px;
+  }
+
+  .visibly-services-section.visibly-services-after-intro {
+    padding-top: 40px;
   }
 
   .visibly-subpage-hero .title-1 {
@@ -3593,7 +3605,7 @@ body.has-top-info-bar .hero._3 > .container._2.grid[data-w-id="3b50631a-a919-d64
   content: "";
   z-index: -1;
   opacity: .045;
-  background-image: url("/images/circle-2.png");
+  background-image: url('../images/visibly-placeholder.png');
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: contain;
