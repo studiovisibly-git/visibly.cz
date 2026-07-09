@@ -489,7 +489,10 @@ body.has-top-info-bar .hero._3 > .container._2.grid[data-w-id="3b50631a-a919-d64
 }
 
 .visibly-color-circle {
-  background-image: repeating-linear-gradient(90deg, #f7dd00 0 28px, #f8bb00 28px 56px, #f77d00 56px 84px, #f44312 84px 112px, #ec1944 112px 140px, #b91b69 140px 168px, #47225f 168px 196px);
+  background-image: url("../images/visibly-home-hero-colors.jpg");
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 450px;
   height: 450px;
   bottom: -80%;
