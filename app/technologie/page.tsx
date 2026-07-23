@@ -48,7 +48,25 @@ const techList = [
     ],
   },
   {
-    num: "02 · Přesný řez",
+    num: "02 · Hybridní UV tisk",
+    name: "Agfa Anapurna M2050i",
+    points: [
+      { title: "Deska i role", text: "Tiskne přímo na Dibond, sklo, hliník, keramiku i fólie." },
+      { title: "Bílá barva", text: "Podklad pod barvy i tisk na průhledné materiály." },
+      { title: "Ven i dovnitř", text: "UV LED odolnost pro výlohy, cedule i interiér." },
+    ],
+  },
+  {
+    num: "03 · Rolový UV tisk",
+    name: "Agfa Anapurna RTR3200i LED",
+    points: [
+      { title: "Až 3,2 metru", text: "Bannery a plachty v jednom kuse, bez spojů." },
+      { title: "Dvě role zároveň", text: "Vyšší průchodnost u velkých sérií a formátů." },
+      { title: "Šetrné vytvrzení", text: "UV LED zvládne i teplem citlivé fólie a plachty." },
+    ],
+  },
+  {
+    num: "04 · Přesný řez",
     name: "Roland CAMM-1 GR2-640",
     points: [
       { title: "Čisté hrany", text: "Detail odpovídá datům, ne náladě nože." },
@@ -57,7 +75,7 @@ const techList = [
     ],
   },
   {
-    num: "03 · Ochrana povrchu",
+    num: "05 · Ochrana povrchu",
     name: "Velkoplošná laminace",
     points: [
       { title: "Odolnější povrch", text: "UV, oděr i mytí bez ztráty barev." },
@@ -66,7 +84,7 @@ const techList = [
     ],
   },
   {
-    num: "04 · Firemní textil",
+    num: "06 · Firemní textil",
     name: "Termolis",
     points: [
       { title: "Správná pozice", text: "Logo přesně tam, kde má být." },
@@ -75,7 +93,7 @@ const techList = [
     ],
   },
   {
-    num: "05 · Dokončení na místě",
+    num: "07 · Dokončení na místě",
     name: "Kompletace a aplikace",
     points: [
       { title: "Složení zakázky", text: "Kampaně balíme po pobočkách." },
