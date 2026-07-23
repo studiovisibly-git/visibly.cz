@@ -25,7 +25,7 @@ export default function RealizacePage() {
         eyebrow="Portfolio"
         title="Realizace, které jsou vidět."
         titleLines={["Realizace,", "které jsou vidět."]}
-        sub="Ukázky propojení návrhu, tisku, polepu a výroby do jednoho srozumitelného výsledku."
+        sub="Ukázky propojení návrhu, tisku, polepu a výroby do jednoho srozumitelného výsledku."
         primary={{ label: "Poptat výrobu", href: INQUIRY_URL }}
         scroll={{ label: "Prohlédnout naše práce", href: "#prace" }}
       />

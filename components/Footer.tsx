@@ -11,7 +11,7 @@ import {
 const sitemapLinks = [
   { label: "Realizace", href: "/realizace" },
   { label: "Technologie", href: "/technologie" },
-  { label: "O nás", href: "/o-nas" },
+  { label: "O nás", href: "/o-nas" },
   { label: "Průvodce", href: "/pruvodce" },
   { label: "Pro agentury", href: "/pro-agentury" },
   { label: "Reklamní plochy Opava", href: "/reklamni-plochy-opava" },
@@ -36,8 +36,8 @@ export function Footer() {
               <img src="/visibly-logo.svg" alt="Visibly" width={64} height={64} />
             </Link>
             <p>
-              Reklama &amp; tisk se sídlem v srdci Slezska. Tisk, polepy a reklamní výroba pro firmy —
-              vlastní výroba v Opavě, dodáváme po celém Moravskoslezském kraji i ČR.
+              Reklama &amp; tisk se sídlem v srdci Slezska. Tisk, polepy a reklamní výroba pro firmy —
+              vlastní výroba v Opavě, dodáváme po celém Moravskoslezském kraji i ČR.
             </p>
           </div>
 
@@ -91,7 +91,7 @@ export function Footer() {
         </div>
 
         <div className="footer__legal">
-          <span>© {new Date().getFullYear()} Visibly — tiskárna a reklamní studio, Opava</span>
+          <span>© {new Date().getFullYear()} Visibly — tiskárna a reklamní studio, Opava</span>
           <span>
             <Link href="/cookies">Cookies</Link> · <Link href="/mapa-webu">Mapa webu</Link>
           </span>

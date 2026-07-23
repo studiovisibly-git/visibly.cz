@@ -17,23 +17,23 @@ export const metadata = buildMetadata({
 const techFaq = [
   {
     q: "Musím vědět, jakou technologii potřebuji?",
-    a: "Ne — technologie je náš problém. Vy popíšete, co má vzniknout a kde to bude fungovat; my vybereme stroj, materiál i postup.",
+    a: "Ne — technologie je náš problém. Vy popíšete, co má vzniknout a kde to bude fungovat; my vybereme stroj, materiál i postup.",
   },
   {
     q: "Zkontrolujete před výrobou moje data?",
-    a: "Vždy. Rozlišení, spadávky, barevnost a křivky projdou kontrolou dřív, než se cokoli vyrobí. Když něco nesedí, ozveme se s řešením.",
+    a: "Vždy. Rozlišení, spadávky, barevnost a křivky projdou kontrolou dřív, než se cokoli vyrobí. Když něco nesedí, ozveme se s řešením.",
   },
   {
-    q: "Potřebuji u každého tisku laminaci?",
-    a: "Ne. Laminace má smysl u polepů, venkovních tisků a tiskovin do rukou. Kde je zbytečná, sami vám ji rozmluvíme — s cenou to umí i opačně.",
+    q: "Potřebuji u každého tisku laminaci?",
+    a: "Ne. Laminace má smysl u polepů, venkovních tisků a tiskovin do rukou. Kde je zbytečná, sami vám ji rozmluvíme — s cenou to umí i opačně.",
   },
   {
     q: "Zajistíte také aplikaci nebo dokončení?",
-    a: "Ano — polepy aplikujeme, cedule montujeme, zakázky kompletujeme. Výroba u nás končí hotovým výsledkem, ne krabicí s díly.",
+    a: "Ano — polepy aplikujeme, cedule montujeme, zakázky kompletujeme. Výroba u nás končí hotovým výsledkem, ne krabicí s díly.",
   },
   {
     q: "Mohu konzultovat výrobu před hotovým návrhem?",
-    a: "Prosíme o to! Konzultace před návrhem šetří peníze — grafika pak od začátku počítá s materiálem a technologií.",
+    a: "Prosíme o to! Konzultace před návrhem šetří peníze — grafika pak od začátku počítá s materiálem a technologií.",
   },
 ];
 
@@ -42,7 +42,7 @@ const techList = [
     num: "01 · Velkoformátový tisk",
     name: "Epson SureColor SC-S80610",
     points: [
-      { title: "Barva pod kontrolou", text: "Čitelnost odstínů a detailů i na metrech plochy." },
+      { title: "Barva pod kontrolou", text: "Čitelnost odstínů a detailů i na metrech plochy." },
       { title: "Materiál podle místa", text: "Fólie, bannery, papíry — povrch podle použití." },
       { title: "Více typů výstupu", text: "Od samolepky po backlit do světelného rámu." },
     ],
@@ -51,18 +51,18 @@ const techList = [
     num: "02 · Hybridní UV tisk",
     name: "Agfa Anapurna M2050i",
     points: [
-      { title: "Deska i role", text: "Tiskne přímo na Dibond, sklo, hliník, keramiku i fólie." },
-      { title: "Bílá barva", text: "Podklad pod barvy i tisk na průhledné materiály." },
-      { title: "Ven i dovnitř", text: "UV LED odolnost pro výlohy, cedule i interiér." },
+      { title: "Deska i role", text: "Tiskne přímo na Dibond, sklo, hliník, keramiku i fólie." },
+      { title: "Bílá barva", text: "Podklad pod barvy i tisk na průhledné materiály." },
+      { title: "Ven i dovnitř", text: "UV LED odolnost pro výlohy, cedule i interiér." },
     ],
   },
   {
     num: "03 · Rolový UV tisk",
     name: "Agfa Anapurna RTR3200i LED",
     points: [
-      { title: "Až 3,2 metru", text: "Bannery a plachty v jednom kuse, bez spojů." },
-      { title: "Dvě role zároveň", text: "Vyšší průchodnost u velkých sérií a formátů." },
-      { title: "Šetrné vytvrzení", text: "UV LED zvládne i teplem citlivé fólie a plachty." },
+      { title: "Až 3,2 metru", text: "Bannery a plachty v jednom kuse, bez spojů." },
+      { title: "Dvě role zároveň", text: "Vyšší průchodnost u velkých sérií a formátů." },
+      { title: "Šetrné vytvrzení", text: "UV LED zvládne i teplem citlivé fólie a plachty." },
     ],
   },
   {
@@ -71,15 +71,15 @@ const techList = [
     points: [
       { title: "Čisté hrany", text: "Detail odpovídá datům, ne náladě nože." },
       { title: "Tvar podle grafiky", text: "Logo nemusí končit obdélníkem." },
-      { title: "Připraveno k aplikaci", text: "S aplikační fólií, části na sebe navazují." },
+      { title: "Připraveno k aplikaci", text: "S aplikační fólií, části na sebe navazují." },
     ],
   },
   {
     num: "05 · Ochrana povrchu",
     name: "Velkoplošná laminace",
     points: [
-      { title: "Odolnější povrch", text: "UV, oděr i mytí bez ztráty barev." },
-      { title: "Mat nebo lesk", text: "Vzhled podle použití a světla." },
+      { title: "Odolnější povrch", text: "UV, oděr i mytí bez ztráty barev." },
+      { title: "Mat nebo lesk", text: "Vzhled podle použití a světla." },
       { title: "Součást řešení", text: "Doporučíme, jen kde dává smysl." },
     ],
   },
@@ -89,16 +89,16 @@ const techList = [
     points: [
       { title: "Správná pozice", text: "Logo přesně tam, kde má být." },
       { title: "Menší série", text: "Od jednoho kusu, bez příplatků za málo." },
-      { title: "Jednotná značka", text: "Textil ladí s autem i tiskovinami." },
+      { title: "Jednotná značka", text: "Textil ladí s autem i tiskovinami." },
     ],
   },
   {
     num: "07 · Dokončení na místě",
-    name: "Kompletace a aplikace",
+    name: "Kompletace a aplikace",
     points: [
       { title: "Složení zakázky", text: "Kampaně balíme po pobočkách." },
       { title: "Čistá aplikace", text: "Polepy bez bublin, montáž bez děr navíc." },
-      { title: "Kontrola v kontextu", text: "Výsledek posuzujeme na místě, ne od stolu." },
+      { title: "Kontrola v kontextu", text: "Výsledek posuzujeme na místě, ne od stolu." },
     ],
   },
 ];
@@ -112,11 +112,11 @@ export default function TechnologiePage() {
         variant="media"
         eyebrow="Výroba · Opava"
         title="Výroba, která hlídá výsledek od začátku."
-        sub="Klíčové kroky výroby držíme u sebe — od dat až po předání."
+        sub="Klíčové kroky výroby držíme u sebe — od dat až po předání."
         primary={{ label: "Probrat výrobu", href: INQUIRY_URL }}
         scroll={{ label: "Stroje jsou prostředek. Výsledek je měřítko.", href: "#stroje" }}
         media={{
-          label: "Video z výroby",
+          label: "Video z výroby",
           variant: "circle",
           src: "/video/epson-tisk-mini.mp4",
           alt: "Velkoformátový tisk na Epson SureColor",
@@ -125,10 +125,10 @@ export default function TechnologiePage() {
 
       <section className="section section--rule container">
         <Split
-          media={{ label: "Video z tisku", variant: "circle", src: "/video/epson-tisk-mini.mp4", alt: "Velkoformátový tisk na Epson SureColor" }}
-          eyebrow="Výroba v Opavě"
+          media={{ label: "Video z tisku", variant: "circle", src: "/video/epson-tisk-mini.mp4", alt: "Velkoformátový tisk na Epson SureColor" }}
+          eyebrow="Výroba v Opavě"
           title="Když kroky navazují, mizí slabá místa."
-          text="Tisk, řezání, laminace a aplikace řešíme jako jeden výrobní celek."
+          text="Tisk, řezání, laminace a aplikace řešíme jako jeden výrobní celek."
           cta={{ label: "Probrat výrobu", href: INQUIRY_URL }}
         />
       </section>
@@ -162,9 +162,9 @@ export default function TechnologiePage() {
         <SectionHead title="Kontrola probíhá dřív, než je pozdě." indent={1} />
         <Process
           steps={[
-            { title: "Data a rozměr", text: "Kontrola podkladů před výrobou." },
-            { title: "Materiál a místo", text: "Volba podle skutečného použití." },
-            { title: "První výstup", text: "Kontrola barev a detailu." },
+            { title: "Data a rozměr", text: "Kontrola podkladů před výrobou." },
+            { title: "Materiál a místo", text: "Volba podle skutečného použití." },
+            { title: "První výstup", text: "Kontrola barev a detailu." },
             { title: "Předání", text: "Hotové, zkontrolované, na místě." },
           ]}
         />
@@ -176,8 +176,8 @@ export default function TechnologiePage() {
           cols={3}
           items={[
             { title: "Tisk", text: "Bannery, samolepky, plakáty, tiskoviny.", href: "/tisk", cta: "Prohlédnout tisk" },
-            { title: "Polepy", text: "Auta, výlohy a interiéry.", href: "/polepy", cta: "Prohlédnout polepy" },
-            { title: "Reklama", text: "Cedule, světlo a 3D loga.", href: "/reklama", cta: "Prohlédnout reklamu" },
+            { title: "Polepy", text: "Auta, výlohy a interiéry.", href: "/polepy", cta: "Prohlédnout polepy" },
+            { title: "Reklama", text: "Cedule, světlo a 3D loga.", href: "/reklama", cta: "Prohlédnout reklamu" },
           ]}
         />
       </section>
@@ -188,7 +188,7 @@ export default function TechnologiePage() {
       </section>
 
       <FinalCta
-        title="Nevíte, jak začít s výrobou?"
+        title="Nevíte, jak začít s výrobou?"
         cta={{ label: "Probrat zadání", href: INQUIRY_URL }}
         secondary={{ label: "Prohlédnout realizace", href: "/realizace" }}
       />

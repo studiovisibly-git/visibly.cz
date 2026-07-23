@@ -26,23 +26,23 @@ export const metadata = buildMetadata({
 const kontaktFaq = [
   {
     q: "Musím mít hotová tisková data?",
-    a: "Ne. Pošlete, co máte — logo, fotku, náčrt na ubrousku. Grafiku připravíme my a před výrobou vám ji ukážeme ke schválení.",
+    a: "Ne. Pošlete, co máte — logo, fotku, náčrt na ubrousku. Grafiku připravíme my a před výrobou vám ji ukážeme ke schválení.",
   },
   {
-    q: "Umíte poradit s materiálem?",
-    a: "To je přesně naše práce. Popište, kde má výsledek fungovat a jak dlouho vydržet — materiál, dokončení i technologii doporučíme my.",
+    q: "Umíte poradit s materiálem?",
+    a: "To je přesně naše práce. Popište, kde má výsledek fungovat a jak dlouho vydržet — materiál, dokončení i technologii doporučíme my.",
   },
   {
-    q: "Děláte i montáž nebo aplikaci?",
-    a: "Ano, polepy aplikujeme a reklamu montujeme v Opavě a okolí vlastními silami. Zakázku předáváme hotovou na místě.",
+    q: "Děláte i montáž nebo aplikaci?",
+    a: "Ano, polepy aplikujeme a reklamu montujeme v Opavě a okolí vlastními silami. Zakázku předáváme hotovou na místě.",
   },
   {
-    q: "Působíte jen v Opavě?",
-    a: "Vyrábíme v Opavě, montujeme po celém Moravskoslezském kraji a tisk posíláme po celé ČR. Vzdálenost není překážka.",
+    q: "Působíte jen v Opavě?",
+    a: "Vyrábíme v Opavě, montujeme po celém Moravskoslezském kraji a tisk posíláme po celé ČR. Vzdálenost není překážka.",
   },
   {
     q: "Jak rychle dokážete říct cenu?",
-    a: "Běžné poptávky naceníme do 24–48 hodin. Když je zadání složitější, ozveme se s doplňujícími dotazy — ale vždy rychle.",
+    a: "Běžné poptávky naceníme do 24–48 hodin. Když je zadání složitější, ozveme se s doplňujícími dotazy — ale vždy rychle.",
   },
   {
     q: "Co když přesně nevím, co potřebuji?",
@@ -70,7 +70,7 @@ export default function KontaktPage() {
       <section className="section section--rule container" id="poptavka">
         <SectionHead
           title="Stačí začít tím, co už víte."
-          text="Nevíte rozměr nebo materiál? Nevadí. Pošlete fotografii a napište, kde má výsledek fungovat."
+          text="Nevíte rozměr nebo materiál? Nevadí. Pošlete fotografii a napište, kde má výsledek fungovat."
         />
         <div className="lead-form">
           <LeadForm />
@@ -116,8 +116,8 @@ export default function KontaktPage() {
             <Media media={{ label: "Kruhová mapa · Opava, Komárovská 2662/2", variant: "circle" }} />
           </div>
           <div className="split__copy" data-reveal>
-            <h2 className="h2">Najdete nás v Opavě.</h2>
-            <p>Dodáváme do Opavy, Ostravy, Moravskoslezského kraje i po celé republice.</p>
+            <h2 className="h2">Najdete nás v Opavě.</h2>
+            <p>Dodáváme do Opavy, Ostravy, Moravskoslezského kraje i po celé republice.</p>
             <p className="split__sub">
               {ADDRESS_FULL} · {PHONE_DISPLAY} · {EMAIL}
             </p>

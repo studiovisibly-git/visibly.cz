@@ -65,7 +65,7 @@ const knowsAbout = [
   "POS materiály",
   "tisk fotoobrazů",
   "grafika pro tisk",
-  "návrh loga a vizuální identity",
+  "návrh loga a vizuální identity",
   "webdesign",
   "reklamní textil",
   "reklamní předměty",
@@ -90,7 +90,7 @@ export const localBusinessSchema = {
   legalName: "studio visibly s.r.o.",
   alternateName: "visibly.cz",
   description:
-    "Visibly je tiskárna a výrobní reklamní studio z Opavy. Tiskneme a vyrábíme reklamu, která je vidět — velkoformátový tisk, polepy, cedule a světelnou reklamu pro firmy z Opavy, Ostravy a celého Moravskoslezského kraje.",
+    "Visibly je tiskárna a výrobní reklamní studio z Opavy. Tiskneme a vyrábíme reklamu, která je vidět — velkoformátový tisk, polepy, cedule a světelnou reklamu pro firmy z Opavy, Ostravy a celého Moravskoslezského kraje.",
   slogan: "Reklama, která je vidět.",
   url: `${SITE_URL}/`,
   logo: {

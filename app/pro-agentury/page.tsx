@@ -17,23 +17,23 @@ export const metadata = buildMetadata({
 const b2bFaq = [
   {
     q: "Budete kontaktovat našeho klienta?",
-    a: "Ne. Váš klient je váš — nekontaktujeme ho, neznačkujeme dodávky a na přání vystupujeme na místě pod vaší vlajkou. Diskrétnost je základ, na kterém partnerský režim stojí.",
+    a: "Ne. Váš klient je váš — nekontaktujeme ho, neznačkujeme dodávky a na přání vystupujeme na místě pod vaší vlajkou. Diskrétnost je základ, na kterém partnerský režim stojí.",
   },
   {
     q: "Jak rychle vracíte kalkulace?",
-    a: "Běžné zakázky obvykle do 24 hodin v pracovním týdnu. Víme, že klientovi slibujete termín — a čekání na nabídku tiskárny je to poslední, co potřebujete.",
+    a: "Běžné zakázky obvykle do 24 hodin v pracovním týdnu. Víme, že klientovi slibujete termín — a čekání na nabídku tiskárny je to poslední, co potřebujete.",
   },
   {
-    q: "Jaké podklady posíláte k přípravě dat?",
-    a: "Šablony a specifikace pro každou technologii: přesahy pro řez, bílá pod tiskem, profily. Mluvíme s vámi jako grafik s grafikem.",
+    q: "Jaké podklady posíláte k přípravě dat?",
+    a: "Šablony a specifikace pro každou technologii: přesahy pro řez, bílá pod tiskem, profily. Mluvíme s vámi jako grafik s grafikem.",
   },
   {
     q: "Umíte doručit přímo koncovému klientovi?",
-    a: "Ano — neutrálně zabalené, s vaším dodacím listem, kamkoli po ČR. Nebo zakázku vyzvednete u nás v Opavě.",
+    a: "Ano — neutrálně zabalené, s vaším dodacím listem, kamkoli po ČR. Nebo zakázku vyzvednete u nás v Opavě.",
   },
   {
     q: "Od jakého objemu platí partnerské ceny?",
-    a: "Od druhé spolupráce automaticky. Nechceme sliby o objemech — chceme, aby se vám s námi vyplatilo tisknout dlouhodobě.",
+    a: "Od druhé spolupráce automaticky. Nechceme sliby o objemech — chceme, aby se vám s námi vyplatilo tisknout dlouhodobě.",
   },
 ];
 
@@ -46,8 +46,8 @@ export default function ProAgenturyPage() {
         variant="media"
         eyebrow="B2B · Partnerský tisk"
         title="Vy držíte klienta. My držíme výrobu."
-        sub="Partnerský tisk pro agentury a grafická studia. Dodáte data, my pohlídáme kvalitu, termín a mlčenlivost."
-        note="První odpověď obvykle do 24 hodin."
+        sub="Partnerský tisk pro agentury a grafická studia. Dodáte data, my pohlídáme kvalitu, termín a mlčenlivost."
+        note="První odpověď obvykle do 24 hodin."
         primary={{ label: "Chci partnerský ceník", href: INQUIRY_URL }}
         scroll={{ label: "Jedna výroba pro celé vaše portfolio", href: "#co-vyrobite" }}
         media={{ label: "Kruhová fotografie · výroba / tiskový stroj", variant: "circle" }}
@@ -64,7 +64,7 @@ export default function ProAgenturyPage() {
 
       <section className="section container" id="co-vyrobite">
         <SectionHead
-          eyebrow="Co u nás vyrobíte"
+          eyebrow="Co u nás vyrobíte"
           title="Jedna výroba pro celé vaše portfolio."
           indent={1}
         />
@@ -79,16 +79,16 @@ export default function ProAgenturyPage() {
           </article>
           <article className="dir-card" data-reveal>
             <span className="num">02</span>
-            <h3>Řezaná grafika a polepy</h3>
-            <p>Ploter Roland, laminace, aplikační fólie. Včetně aplikace u klienta.</p>
+            <h3>Řezaná grafika a polepy</h3>
+            <p>Ploter Roland, laminace, aplikační fólie. Včetně aplikace u klienta.</p>
             <Link href="/polepy/rezana-grafika" className="dir-card__link dir-card--link">
               Specifikace řezu <span className="arr" aria-hidden="true">↗</span>
             </Link>
           </article>
           <article className="dir-card" data-reveal>
             <span className="num">03</span>
-            <h3>Tiskoviny a POS</h3>
-            <p>Vizitky, letáky, brožury, stojky a kompletace kampaní po pobočkách.</p>
+            <h3>Tiskoviny a POS</h3>
+            <p>Vizitky, letáky, brožury, stojky a kompletace kampaní po pobočkách.</p>
             <Link href="/tisk/tiskoviny" className="dir-card__link dir-card--link">
               Projít tiskoviny <span className="arr" aria-hidden="true">↗</span>
             </Link>
@@ -108,9 +108,9 @@ export default function ProAgenturyPage() {
         <SectionHead title="Jak spolupráce probíhá." indent={1} />
         <Process
           steps={[
-            { title: "Data a specifikace", text: "Pošlete data, nebo jen popis — technické řešení doladíme." },
-            { title: "Kalkulace do 24 h", text: "Cena a termín bez obvolávání." },
-            { title: "Výroba a kontrola", text: "Vyrobíme a zkontrolujeme proti datům." },
+            { title: "Data a specifikace", text: "Pošlete data, nebo jen popis — technické řešení doladíme." },
+            { title: "Kalkulace do 24 h", text: "Cena a termín bez obvolávání." },
+            { title: "Výroba a kontrola", text: "Vyrobíme a zkontrolujeme proti datům." },
             { title: "Předání", text: "Vám, nebo diskrétně přímo klientovi." },
           ]}
         />
@@ -120,7 +120,7 @@ export default function ProAgenturyPage() {
         <Band
           eyebrow="Férovost především"
           title="Nekonkurujeme vám. Tiskneme vám."
-          text="Grafické služby nabízíme jen koncovým klientům, kteří přijdou přímo — vaše zakázky jsou u nás jen výroba."
+          text="Grafické služby nabízíme jen koncovým klientům, kteří přijdou přímo — vaše zakázky jsou u nás jen výroba."
           cta={{ label: "Chci partnerský ceník", href: INQUIRY_URL }}
         />
       </section>
@@ -132,7 +132,7 @@ export default function ProAgenturyPage() {
 
       <FinalCta
         title="Pojďme tisknout pro vaše klienty."
-        text="Napište pár řádků o studiu a objemech — vrátíme ceník a podmínky."
+        text="Napište pár řádků o studiu a objemech — vrátíme ceník a podmínky."
         cta={{ label: "Chci partnerský ceník", href: INQUIRY_URL }}
         secondary={{ label: "Průvodce partnerským tiskem", href: "/pruvodce/partnersky-tisk-pro-agentury" }}
       />

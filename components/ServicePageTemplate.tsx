@@ -47,7 +47,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
         eyebrow={page.eyebrow}
         title={page.h1}
         sub={page.intro}
-        note="Stačí fotka, rozměr nebo krátký popis. Ozveme se s návrhem řešení."
+        note="Stačí fotka, rozměr nebo krátký popis. Ozveme se s návrhem řešení."
         primary={{ label: page.finalCta, href: INQUIRY_URL }}
         scroll={{ label: page.variantsTitle, href: "#varianty" }}
         media={page.heroMedia}
@@ -123,7 +123,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
           <aside className="article-aside">
             {page.guides.length > 0 && (
               <div className="aside-box">
-                <h3>Průvodce k tématu</h3>
+                <h3>Průvodce k tématu</h3>
                 <ul>
                   {page.guides.map((g) => (
                     <li key={g.href}>
@@ -135,7 +135,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
             )}
             <div className="aside-box">
               <h3>Nenašli jste odpověď?</h3>
-              <p>Napište nám, co řešíte. Poradíme s materiálem, daty i rozpočtem.</p>
+              <p>Napište nám, co řešíte. Poradíme s materiálem, daty i rozpočtem.</p>
               <Link href={INQUIRY_URL} className="btn btn--sm">
                 Probrat zadání
               </Link>

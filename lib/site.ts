@@ -1,6 +1,6 @@
 export const SITE_URL = "https://www.visibly.cz";
 export const SITE_NAME = "Visibly";
-export const SITE_TAGLINE = "tiskárna a reklamní studio Opava";
+export const SITE_TAGLINE = "tiskárna a reklamní studio Opava";
 
 export const PHONE_DISPLAY = "603 750 631";
 export const PHONE_HREF = "tel:+420603750631";

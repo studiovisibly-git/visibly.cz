@@ -117,7 +117,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           <aside className="article-aside">
             <div className="aside-box">
               <h3>Související služba</h3>
-              <p>Od rady rovnou k výrobě:</p>
+              <p>Od rady rovnou k výrobě:</p>
               <ul style={{ marginTop: "0.5rem" }}>
                 <li>
                   <Link href={guide.service.href}>{guide.service.label} ↗</Link>
@@ -138,7 +138,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             )}
             <div className="aside-box">
               <h3>Raději to probrat?</h3>
-              <p>Napište, co řešíte. Poradíme konkrétně k vaší situaci.</p>
+              <p>Napište, co řešíte. Poradíme konkrétně k vaší situaci.</p>
               <Link href={INQUIRY_URL} className="btn btn--sm">
                 Poslat dotaz
               </Link>
@@ -148,7 +148,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       </section>
 
       <FinalCta
-        title="Přejděte od rady k výrobě."
+        title="Přejděte od rady k výrobě."
         cta={{ label: "Poptat výrobu", href: INQUIRY_URL }}
         secondary={{ label: guide.service.label, href: guide.service.href }}
       />

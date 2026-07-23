@@ -53,7 +53,7 @@ export function LeadForm() {
     <form className="form-card" onSubmit={handleSubmit} id="poptavka">
       {step === 1 ? (
         <>
-          <p className="form-step-note">Krok 1 ze 2 · Zakázka a podklady</p>
+          <p className="form-step-note">Krok 1 ze 2 · Zakázka a podklady</p>
           <h3>Nezávazná poptávka</h3>
 
           <label className="field">
@@ -76,7 +76,7 @@ export function LeadForm() {
               required
               value={data.popis}
               onChange={set("popis")}
-              placeholder="Např.: Potřebuji polepit dodávku, logo mám v PDF. Auto je bílý Transporter."
+              placeholder="Např.: Potřebuji polepit dodávku, logo mám v PDF. Auto je bílý Transporter."
             />
           </label>
 
@@ -85,19 +85,19 @@ export function LeadForm() {
               <span>
                 Rozměr <small>— stačí orientačně</small>
               </span>
-              <input value={data.rozmer} onChange={set("rozmer")} placeholder="např. 3 × 1 m" />
+              <input value={data.rozmer} onChange={set("rozmer")} placeholder="např. 3 × 1 m" />
             </label>
             <label className="field">
               <span>
                 Počet <small>— kusy, plocha, rozsah</small>
               </span>
-              <input value={data.pocet} onChange={set("pocet")} placeholder="např. 2 ks" />
+              <input value={data.pocet} onChange={set("pocet")} placeholder="např. 2 ks" />
             </label>
             <label className="field">
               <span>
                 Termín <small>— kdy výsledek potřebujete</small>
               </span>
-              <input value={data.termin} onChange={set("termin")} placeholder="např. do konce měsíce" />
+              <input value={data.termin} onChange={set("termin")} placeholder="např. do konce měsíce" />
             </label>
             <label className="field">
               <span>
@@ -149,7 +149,7 @@ export function LeadForm() {
               Odeslat nezávaznou poptávku
             </button>
             <button type="button" className="arrow-link" onClick={() => setStep(1)}>
-              ← Zpět k zadání
+              ← Zpět k zadání
             </button>
           </div>
           <p className="hero__note" style={{ marginTop: "1rem" }}>

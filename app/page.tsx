@@ -32,19 +32,19 @@ export const metadata = buildMetadata({
 const homeFaq = [
   {
     q: "Musím vědět přesný materiál?",
-    a: "Nemusíte — to je naše práce. Popište, kde má výsledek fungovat a jak dlouho vydržet, a materiál doporučíme my. Vybírat z dvaceti druhů fólií po vás nikdy chtít nebudeme.",
+    a: "Nemusíte — to je naše práce. Popište, kde má výsledek fungovat a jak dlouho vydržet, a materiál doporučíme my. Vybírat z dvaceti druhů fólií po vás nikdy chtít nebudeme.",
   },
   {
     q: "Co když nemám hotová tisková data?",
-    a: "Stačí logo, fotka nebo popis. Grafiku připravíme přímo pro výrobu — a data vám předáme, takže je příště použijete kdekoli.",
+    a: "Stačí logo, fotka nebo popis. Grafiku připravíme přímo pro výrobu — a data vám předáme, takže je příště použijete kdekoli.",
   },
   {
-    q: "Děláte i aplikaci nebo montáž?",
-    a: "Ano. Polepy aplikujeme v naší dílně nebo u vás, cedule a reklamu montujeme včetně kotvení. Zakázku předáváme hotovou, ne v krabici s návodem.",
+    q: "Děláte i aplikaci nebo montáž?",
+    a: "Ano. Polepy aplikujeme v naší dílně nebo u vás, cedule a reklamu montujeme včetně kotvení. Zakázku předáváme hotovou, ne v krabici s návodem.",
   },
   {
-    q: "Řešíte zakázky i mimo Opavu?",
-    a: "Vyrábíme v Opavě a montujeme po celém Moravskoslezském kraji. Tisk a výrobu posíláme po celé republice — vzdálenost řešíme my, ne vy.",
+    q: "Řešíte zakázky i mimo Opavu?",
+    a: "Vyrábíme v Opavě a montujeme po celém Moravskoslezském kraji. Tisk a výrobu posíláme po celé republice — vzdálenost řešíme my, ne vy.",
   },
 ];
 
@@ -55,27 +55,27 @@ export default function HomePage() {
       <Hero
         variant="home"
         displayClass="display-xl"
-        eyebrow="Tiskárna a reklamní studio · Opava"
-        title="Tiskneme a vyrábíme reklamu, která je vidět. V Opavě i dál."
-        titleLines={["Tiskneme a vyrábíme", "reklamu, která je vidět.", "V Opavě i dál."]}
-        sub="Tisk, polepy a reklamní výroba pro firmy. Od návrhu po hotový výsledek."
+        eyebrow="Tiskárna a reklamní studio · Opava"
+        title="Tiskneme a vyrábíme reklamu, která je vidět. V Opavě i dál."
+        titleLines={["Tiskneme a vyrábíme", "reklamu, která je vidět.", "V Opavě i dál."]}
+        sub="Tisk, polepy a reklamní výroba pro firmy. Od návrhu po hotový výsledek."
         primary={{ label: "Poptat výrobu", href: INQUIRY_URL }}
         scroll={{ label: "Co potřebujete dostat do světa?", href: "#rozcestnik" }}
         media={{
           label: "Barevné tiskové materiály",
           variant: "circle",
           src: "/images/visibly-home-hero-colors.jpg",
-          alt: "Barevné tiskové materiály z výroby Visibly",
+          alt: "Barevné tiskové materiály z výroby Visibly",
         }}
       />
 
       {/* Proof */}
       <ProofStrip
         items={[
-          { title: "Tiskárna a výrobní studio v Opavě" },
-          { title: "Klíčové výrobní kroky držíme u sebe" },
+          { title: "Tiskárna a výrobní studio v Opavě" },
+          { title: "Klíčové výrobní kroky držíme u sebe" },
           { title: "Tisk. Polepy. Reklamní výroba." },
-          { title: "Podle zakázky i aplikace a montáž" },
+          { title: "Podle zakázky i aplikace a montáž" },
         ]}
       />
 
@@ -95,10 +95,10 @@ export default function HomePage() {
               text: "Bannery, fólie, plakáty nebo tiskoviny.",
               href: "/tisk",
               media: {
-                label: "Tiskoviny z výroby Visibly",
+                label: "Tiskoviny z výroby Visibly",
                 variant: "wide",
                 src: "/images/realizace-reformlab-poukazy-optimized.jpg",
-                alt: "Tiskoviny a poukázky z výroby Visibly",
+                alt: "Tiskoviny a poukázky z výroby Visibly",
               },
             },
             {
@@ -138,7 +138,7 @@ export default function HomePage() {
       {/* Vybrané realizace — full-bleed pás */}
       <section className="section">
         <div className="container">
-          <SectionHead eyebrow="Realizace" title="Vyrobeno u nás. Vidět všude." indent={0} />
+          <SectionHead eyebrow="Realizace" title="Vyrobeno u nás. Vidět všude." indent={0} />
         </div>
         <WorkStrip
           items={works.map((work) => ({
@@ -159,14 +159,14 @@ export default function HomePage() {
       <section className="section container">
         <Split
           media={{
-            label: "Video z výroby",
+            label: "Video z výroby",
             variant: "circle",
             src: "/video/epson-tisk-mini.mp4",
             alt: "Velkoformátový tisk na Epson SureColor",
           }}
           eyebrow="Proč Visibly"
-          title="Jsme tiskárna a studio reklamní výroby."
-          text="Klíčové výrobní kroky držíme u sebe. Díky tomu na sebe navazuje grafika, tisk, dokončení i montáž."
+          title="Jsme tiskárna a studio reklamní výroby."
+          text="Klíčové výrobní kroky držíme u sebe. Díky tomu na sebe navazuje grafika, tisk, dokončení i montáž."
           cta={{ label: "Naše výroba", href: "/technologie" }}
           badge={{ label: "Naše výroba · podívejte se · naše výroba ·", href: "/technologie" }}
         />
@@ -175,7 +175,7 @@ export default function HomePage() {
       {/* Klienti */}
       <section className="section--tight">
         <div className="container">
-          <SectionHead title="Lokální firmy i větší značky." indent={2} />
+          <SectionHead title="Lokální firmy i větší značky." indent={2} />
         </div>
         <LogoStrip logos={clientLogos} />
       </section>
@@ -186,8 +186,8 @@ export default function HomePage() {
         <Process
           steps={[
             { title: "Zadání", text: "Řeknete nám, co potřebujete. Klidně jen fotku místa, auto nebo rozměr." },
-            { title: "Návrh", text: "Doporučíme řešení a připravíme grafiku pro výrobu." },
-            { title: "Tisk a výroba", text: "Vytiskneme, vyřežeme, zalaminujeme nebo vyrobíme." },
+            { title: "Návrh", text: "Doporučíme řešení a připravíme grafiku pro výrobu." },
+            { title: "Tisk a výroba", text: "Vytiskneme, vyřežeme, zalaminujeme nebo vyrobíme." },
             { title: "Předání / instalace", text: "Dodáme, nalepíme nebo namontujeme." },
           ]}
         />
@@ -197,12 +197,12 @@ export default function HomePage() {
       <section className="section container">
         <SectionHead
           eyebrow="Studio"
-          title="Značka, web a obrazy pod jednou střechou."
+          title="Značka, web a obrazy pod jednou střechou."
           indent={1}
         />
         <CircleRow
           items={[
-            { title: "Logo a vizuální identita", note: "Studio", href: "/navrh-loga-a-vizualni-identity" },
+            { title: "Logo a vizuální identita", note: "Studio", href: "/navrh-loga-a-vizualni-identity" },
             { title: "Webdesign", note: "Studio", href: "/webdesign" },
             { title: "Tisk fotoobrazů", note: "Studio", href: "/tisk-fotoobrazu" },
             { title: "Partnerský tisk", note: "B2B", href: "/pro-agentury" },
@@ -212,7 +212,7 @@ export default function HomePage() {
 
       {/* Průvodce */}
       <section className="section section--rule container">
-        <SectionHead title="Dobré zadání šetří čas i slepé uličky." indent={0} />
+        <SectionHead title="Dobré zadání šetří čas i slepé uličky." indent={0} />
         <EditorialList
           items={[
             {
@@ -246,7 +246,7 @@ export default function HomePage() {
       </section>
 
       {/* Obří marquee */}
-      <GiantMarquee items={["Tisk", "Polepy", "Reklama", "Výroba v Opavě"]} />
+      <GiantMarquee items={["Tisk", "Polepy", "Reklama", "Výroba v Opavě"]} />
 
       {/* Final CTA */}
       <FinalCta
