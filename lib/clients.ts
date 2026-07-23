@@ -1,0 +1,20 @@
+/** Loga klientů pro marquee — stejná sada jako na ostrém visibly.cz. */
+export const clientLogos: { name: string; src: string }[] = [
+  { name: "Andante", src: "/logos/andante.svg" },
+  { name: "BBQ", src: "/logos/bbq.svg" },
+  { name: "Broker Consulting", src: "/logos/broker-consulting.svg" },
+  { name: "Canis", src: "/logos/canis.svg" },
+  { name: "Hansen", src: "/logos/hansen.svg" },
+  { name: "Iberia", src: "/logos/iberia.svg" },
+  { name: "Jirdos", src: "/logos/jirdos.svg" },
+  { name: "KHT", src: "/logos/kht.svg" },
+  { name: "Krikloun", src: "/logos/krikloun.svg" },
+  { name: "Medica", src: "/logos/medica.svg" },
+  { name: "Nord Invest", src: "/logos/nord-invest.svg" },
+  { name: "Pavlík", src: "/logos/pavlik.svg" },
+  { name: "PS GREEN", src: "/logos/ps-green.svg" },
+  { name: "Rage Fitness", src: "/logos/rage-fitness-logo.svg" },
+  { name: "Rodina", src: "/logos/rodina.svg" },
+  { name: "Smart", src: "/logos/smart.svg" },
+  { name: "Teichmann", src: "/logos/teichmann.svg" },
+];
