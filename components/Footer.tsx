@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { polepyLinks, reklamaLinks, studioLinks, tiskLinks } from "@/lib/nav";
 import {
   ADDRESS_FULL,
   EMAIL,
@@ -62,17 +61,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label="Služby">
-            <h3>Služby</h3>
-            <ul>
-              {[...tiskLinks.slice(0, 3), ...polepyLinks.slice(0, 2), ...reklamaLinks.slice(0, 3), ...studioLinks].map(
-                (l) => (
-                  <li key={l.href}>
-                    <Link href={l.href}>{l.label}</Link>
-                  </li>
-                ),
-              )}
-            </ul>
+          <nav aria-label="Působnost">
             <h3>Působnost</h3>
             <ul>
               {pusobnostLinks.map((l) => (
