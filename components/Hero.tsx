@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Media } from "./Media";
 import { ParallaxHeading } from "./ParallaxHeading";
 import { ScrollCta } from "./ScrollCta";
+import { ScrollScale } from "./ScrollScale";
 import type { LinkItem, MediaSpec } from "@/lib/types";
 
 type HeroVariant = "home" | "media" | "plain";
@@ -64,13 +65,13 @@ export function Hero({
       </div>
 
       {media && (
-        <div className="hero__media">
+        <ScrollScale className="hero__media">
           <Media
             media={media}
             sizes={variant === "home" ? "(max-width: 1080px) 62vw, 28rem" : "(max-width: 860px) 70vw, 26rem"}
             priority
           />
-        </div>
+        </ScrollScale>
       )}
     </section>
   );
