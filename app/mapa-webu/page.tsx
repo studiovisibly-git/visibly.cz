@@ -24,6 +24,13 @@ const staticPages = [
   { label: "Cookies", href: "/cookies" },
 ];
 
+const pusobnostPages = [
+  { label: "Tiskárna Ostrava", href: "/tiskarna-ostrava" },
+  { label: "Polepy Ostrava", href: "/polepy-ostrava" },
+  { label: "Reklama Ostrava", href: "/reklama-ostrava" },
+  { label: "Moravskoslezský kraj", href: "/moravskoslezsky-kraj" },
+];
+
 function LinkList({ title, items }: { title: string; items: { label: string; href: string }[] }) {
   return (
     <div>
@@ -68,6 +75,7 @@ export default function MapaWebuPage() {
             items={[{ label: "Reklama — přehled", href: "/reklama" }, ...reklamaLinks]}
           />
           <LinkList title="Studio" items={studioLinks} />
+          <LinkList title="Působnost" items={pusobnostPages} />
           <LinkList
             title="Realizace"
             items={works.map((w) => ({ label: w.client, href: `/realizace/${w.slug}` }))}
