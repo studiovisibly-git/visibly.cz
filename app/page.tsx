@@ -59,7 +59,6 @@ export default function HomePage() {
         title="Tiskneme a vyrábíme reklamu, která je vidět. V Opavě i dál."
         titleLines={["Tiskneme a vyrábíme", "reklamu, která je vidět.", "V Opavě i dál."]}
         sub="Tisk, polepy a reklamní výroba pro firmy. Od návrhu po hotový výsledek."
-        note="Stačí fotka, rozměr nebo krátký popis."
         primary={{ label: "Poptat výrobu", href: INQUIRY_URL }}
         scroll={{ label: "Co potřebujete dostat do světa?", href: "#rozcestnik" }}
         media={{
