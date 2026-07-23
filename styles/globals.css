@@ -409,6 +409,9 @@ button {
 
 /* ---------- Scroll reveal — výrazný nájezd zdola jako v šabloně Circle ---------- */
 
+/* Startovní stav platí už od prvního vykreslení — kdyby ho nasadila
+   až JS třída .reveal po hydrataci, obsah by nejdřív probliknul. */
+[data-reveal]:not(.is-in),
 .reveal {
   opacity: 0;
   translate: 0 4rem;
@@ -436,6 +439,7 @@ button {
     scroll-behavior: auto;
   }
 
+  [data-reveal]:not(.is-in),
   .reveal {
     opacity: 1;
     translate: none;
