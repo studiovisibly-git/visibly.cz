@@ -127,15 +127,26 @@ export const localBusinessSchema = {
   makesOffer,
 };
 
-/** Service schema pro podstránku — s pokrytím celého kraje. */
+/** areaServed pro městské landing pages — cílové město na prvním místě. */
+export const ostravaAreaServed = [
+  { "@type": "City", name: "Ostrava" },
+  { "@type": "City", name: "Hlučín" },
+  { "@type": "City", name: "Bohumín" },
+  { "@type": "City", name: "Havířov" },
+  { "@type": "AdministrativeArea", name: "Moravskoslezský kraj" },
+];
+
+/** Service schema pro podstránku — s pokrytím celého kraje (nebo vlastním area). */
 export function serviceSchema({
   name,
   description,
   url,
+  area,
 }: {
   name: string;
   description: string;
   url: string;
+  area?: object[];
 }) {
   return {
     "@context": "https://schema.org",
@@ -144,7 +155,7 @@ export function serviceSchema({
     description,
     url,
     serviceType: name,
-    areaServed,
+    areaServed: area ?? areaServed,
     provider: { "@type": "LocalBusiness", name: "Visibly", "@id": BUSINESS_ID },
   };
 }

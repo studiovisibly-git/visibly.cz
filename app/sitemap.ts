@@ -17,6 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/pruvodce",
     "/pro-agentury",
     "/reklamni-plochy-opava",
+    "/tiskarna-ostrava",
+    "/polepy-ostrava",
+    "/reklama-ostrava",
+    "/moravskoslezsky-kraj",
     "/cookies",
     "/mapa-webu",
   ];

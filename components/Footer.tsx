@@ -19,6 +19,13 @@ const sitemapLinks = [
   { label: "Kontakt", href: "/kontakt" },
 ];
 
+const pusobnostLinks = [
+  { label: "Tiskárna Ostrava", href: "/tiskarna-ostrava" },
+  { label: "Polepy Ostrava", href: "/polepy-ostrava" },
+  { label: "Reklama Ostrava", href: "/reklama-ostrava" },
+  { label: "Moravskoslezský kraj", href: "/moravskoslezsky-kraj" },
+];
+
 /** Minimální, tichá patička podle vzoru šablony. */
 export function Footer() {
   return (
@@ -65,6 +72,14 @@ export function Footer() {
                   </li>
                 ),
               )}
+            </ul>
+            <h3>Působnost</h3>
+            <ul>
+              {pusobnostLinks.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href}>{l.label}</Link>
+                </li>
+              ))}
             </ul>
           </nav>
 
