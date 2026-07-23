@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileCta } from "@/components/MobileCta";
 import { RevealInit } from "@/components/RevealInit";
+import { CursorDot } from "@/components/CursorDot";
 import { SITE_URL } from "@/lib/site";
 import "@/styles/globals.css";
 import "@/styles/site.css";
@@ -83,6 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <MobileCta />
         <RevealInit />
+        <CursorDot />
       </body>
     </html>
   );

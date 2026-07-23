@@ -37,9 +37,13 @@ export function ProofStrip({ items }: { items: { title: string; text?: string }[
       <div className="container proof__grid">
         {items.map((item, i) => (
           <div className="proof__item" key={item.title} data-reveal>
-            <span className="num">{String(i + 1).padStart(2, "0")}</span>
-            <h3>{item.title}</h3>
-            {item.text && <p>{item.text}</p>}
+            <span className="proof__num" aria-hidden="true">
+              {i + 1}
+            </span>
+            <div className="proof__body">
+              <h3>{item.title}</h3>
+              {item.text && <p>{item.text}</p>}
+            </div>
           </div>
         ))}
       </div>

@@ -553,6 +553,12 @@
     max-width: 42rem;
     z-index: 3;
   }
+
+  /* HP už nemá poznámku pod tlačítky. Blok je ukotvený zdola, takže by se
+     o její výšku propadl — dorovnáme, ať zůstane ve stejné výšce jako dřív. */
+  .hero--home .hero__foot {
+    bottom: calc(58px + 2.325rem);
+  }
 }
 
 /* Tablet a mobil — vše v běžném toku, kruh pod textem */
@@ -575,36 +581,93 @@
   }
 }
 
-/* ---------- Proof strip — vzdušný, bez linek ---------- */
+/* ---------- Puntík sledující kurzor (originál .circle-cursor) ---------- */
 
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.3);
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  will-change: transform;
+  transition:
+    opacity 0.3s var(--ease-out),
+    scale 0.25s var(--ease-out),
+    background-color 0.25s var(--ease-out);
+}
+
+.cursor-dot.is-visible {
+  opacity: 1;
+}
+
+.cursor-dot.is-active {
+  scale: 3;
+  background: rgb(0 0 0 / 0.12);
+}
+
+/* ---------- Proof strip — karty v rámečku ---------- */
+
+/* Karty v rámečku podle originálu (.high-content): 2px rámeček bez zaoblení,
+   číslo nahoře místo ikony, text dole. */
 .proof__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: var(--grid-gap);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 25px;
   padding-block: clamp(1rem, 2vw, 2rem);
 }
 
-.proof__item .num {
-  display: block;
-  font-size: var(--fs-eyebrow);
-  font-weight: 700;
+.proof__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  min-height: 15rem;
+  padding: 32px 30px 20px;
+  border: 2px solid var(--ink);
+}
+
+.proof__num {
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1;
   color: var(--ink);
-  letter-spacing: 0.14em;
-  margin-bottom: 0.9rem;
 }
 
 .proof__item strong,
 .proof__item h3 {
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.35;
 }
 
 .proof__item p {
   margin-top: 0.45rem;
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   font-weight: 700;
+  line-height: 1.29;
   color: var(--ink);
+}
+
+/* Mobil: karty kompaktní, ať se zbytečně neroztahují do výšky. */
+@media (max-width: 640px) {
+  .proof__grid {
+    gap: 0.75rem;
+  }
+
+  .proof__item {
+    min-height: 0;
+    gap: 0.9rem;
+    padding: 1.15rem 1.25rem;
+  }
+
+  .proof__num {
+    font-size: 1.5rem;
+  }
 }
 
 /* ---------- Section head ---------- */
