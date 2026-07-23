@@ -613,26 +613,39 @@
 /* ---------- Proof strip — karty v rámečku ---------- */
 
 /* Karty v rámečku podle originálu (.high-content): 2px rámeček bez zaoblení,
-   číslo nahoře místo ikony, text dole. */
+   číslo nahoře místo ikony, text dole. Rozměry 1:1 — karta 281×260,
+   mřížka max 1200px, mezera 25px. */
+.proof {
+  /* Odstup od hero: kruhová fotka přesahuje pod patu hero a při scrollu roste. */
+  padding-top: clamp(3.5rem, 8vw, 7rem);
+}
+
 .proof__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 25px;
+  /* Obsah 1200px jako originál (max-width je border-box, proto + gutter). */
+  max-width: calc(75rem + 2 * var(--gutter));
   padding-block: clamp(1rem, 2vw, 2rem);
 }
 
 .proof__item {
+  /* Šířka vždy na čtvrtinu mřížky a bez růstu — při třech kartách si tak
+     drží rozměr a jen se vycentrují. */
+  flex: 0 1 calc((100% - 75px) / 4);
+  max-width: calc((100% - 75px) / 4);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: clamp(1.5rem, 4vw, 3rem);
-  min-height: 15rem;
+  min-height: 16.25rem;
   padding: 32px 30px 20px;
   border: 2px solid var(--ink);
 }
 
 .proof__num {
-  font-size: 2.25rem;
+  font-size: 3rem;
   font-weight: 500;
   line-height: 1;
   color: var(--ink);
@@ -653,20 +666,30 @@
   color: var(--ink);
 }
 
-/* Mobil: karty kompaktní, ať se zbytečně neroztahují do výšky. */
+/* Tablet: dvě karty vedle sebe. */
+@media (max-width: 1080px) {
+  .proof__item {
+    flex-basis: calc((100% - 25px) / 2);
+    max-width: calc((100% - 25px) / 2);
+  }
+}
+
+/* Mobil: karty přes celou šířku a kompaktní, ať se neroztahují do výšky. */
 @media (max-width: 640px) {
   .proof__grid {
     gap: 0.75rem;
   }
 
   .proof__item {
+    flex-basis: 100%;
+    max-width: none;
     min-height: 0;
     gap: 0.9rem;
     padding: 1.15rem 1.25rem;
   }
 
   .proof__num {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
 

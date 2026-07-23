@@ -76,6 +76,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="cs" className={satoshi.variable}>
       <body>
+        {/* Bez JS by prvky čekající na reveal zůstaly neviditelné. */}
+        <noscript>
+          <style>{`[data-reveal]:not(.is-in){opacity:1;translate:none}`}</style>
+        </noscript>
         <a className="skip-link" href="#obsah">
           Přeskočit na obsah
         </a>
