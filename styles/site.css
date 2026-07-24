@@ -505,26 +505,24 @@
   will-change: transform;
 }
 
-/* home — barevný kruh visí dole vpravo, pod úrovní nadpisu (originál: 450px @1440) */
-.hero--home .hero__media {
-  position: absolute;
-  right: 0;
-  bottom: clamp(-2rem, -3vw, -4rem);
-  width: clamp(15rem, 31vw, 28rem);
-}
-
-/* media — kruh vpravo, svisle na střed hero */
-.hero--media .hero__copy {
-  max-width: min(100%, 58rem);
-}
-
+/* Velký kruh (31vw, originál ~450 px @1440) na obou variantách.
+   HP: visí dole vpravo pod nadpisem. Podstránky: svisle na střed vpravo. */
+.hero--home .hero__media,
 .hero--media .hero__media {
   position: absolute;
   right: 0;
+  width: clamp(15rem, 31vw, 28rem);
+}
+
+.hero--home .hero__media {
+  bottom: clamp(-2rem, -3vw, -4rem);
+}
+
+.hero--media .hero__media {
   top: 50%;
   translate: 0 -50%;
-  width: clamp(14rem, 25vw, 25rem);
 }
+
 
 /* plain (editorial) — bez média, širší copy, blok v běžném toku */
 .hero--plain .hero__copy {
@@ -533,15 +531,21 @@
 
 /* Desktop: spodní blok ukotvený u paty hero (originál: bottom 58px) */
 @media (min-width: 1080px) {
+  /* Originál drží hero přes celý viewport — díky tomu kruh sedí až v dolní
+     půlce, nadpis zůstává nahoře a doplňkový blok padá dolů. HP i podstránky
+     stejně; liší se jen velikost H1 (display-xl vs display-l). */
   .hero--home,
   .hero--media {
     padding-bottom: clamp(9rem, 15vw, 13rem);
+    min-height: 88vh;
   }
 
-  /* Originál drží hero přes celý viewport — díky tomu kruh sedí až v dolní
-     půlce a nadpis do něj nikdy nezasahuje. */
-  .hero--home {
-    min-height: 88vh;
+  /* Podstránky mají nad hero drobečky (54 px), které HP nemá. Vytáhneme hero
+     o jejich výšku nahoru, aby začínal (a při min-height i končil) ve stejné
+     výšce jako HP — H1 nahoře i doplňkový blok dole tak sedí 1:1. Drobečky se
+     vejdou do horního odsazení hero, nadpis do nich nezasahuje. */
+  .hero--media {
+    margin-top: -3.375rem;
   }
 
   .hero--home .hero__foot,
@@ -583,31 +587,59 @@
 
 /* ---------- Puntík sledující kurzor (originál .circle-cursor) ---------- */
 
+/* Dvoudílný jako originál .circle-cursor: plný černý puntík + poloprůhledný
+   prstenec, který nad klikacím prvkem vyroste. Polohu (translate) řídí JS na
+   vnějším obalu, zvětšení (scale) běží na vnitřních prvcích — proto se scale
+   animuje plynule a nikam neuskakuje. */
 .cursor-dot {
   position: fixed;
   top: 0;
   left: 0;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: rgb(0 0 0 / 0.3);
-  pointer-events: none;
+  width: 0;
+  height: 0;
   z-index: 999;
+  pointer-events: none;
   opacity: 0;
   will-change: transform;
-  transition:
-    opacity 0.3s var(--ease-out),
-    scale 0.25s var(--ease-out),
-    background-color 0.25s var(--ease-out);
+  transition: opacity 0.3s var(--ease-out);
 }
 
 .cursor-dot.is-visible {
   opacity: 1;
 }
 
-.cursor-dot.is-active {
-  scale: 3;
+.cursor-dot__dot,
+.cursor-dot__ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  translate: -50% -50%; /* střed přesně na hrotu kurzoru */
+}
+
+/* Vnitřní plný černý puntík — vždy viditelný. */
+.cursor-dot__dot {
+  width: 9px;
+  height: 9px;
+  background: var(--ink);
+  transition: scale 0.25s var(--ease-out);
+}
+
+/* Vnější prstenec — v klidu schovaný, nad klikacím prvkem vyjede. */
+.cursor-dot__ring {
+  width: 46px;
+  height: 46px;
   background: rgb(0 0 0 / 0.12);
+  scale: 0;
+  transition: scale 0.28s var(--ease-out);
+}
+
+.cursor-dot.is-active .cursor-dot__ring {
+  scale: 1;
+}
+
+.cursor-dot.is-active .cursor-dot__dot {
+  scale: 0.55;
 }
 
 /* ---------- Proof strip — karty v rámečku ---------- */
@@ -834,10 +866,29 @@
   margin-top: 1.5rem;
 }
 
-.split__copy .h2 {
+.split__copy .h2,
+.split__copy .split__title {
   font-size: var(--fs-display-l);
   font-weight: 500;
-  line-height: 1;
+  line-height: 0.95;
+}
+
+/* Cik-cak parallax nadpisu (jako v šabloně title-1) — menší amplituda i odsazení,
+   ať se do užšího sloupce vejde. */
+.split__title .tline {
+  --amp: clamp(0.75rem, 3vw, 2.5rem);
+}
+
+.split__title.tlines--stagger .tline:nth-child(2) {
+  margin-left: clamp(0.5rem, 2vw, 2rem);
+}
+
+.split__title.tlines--stagger .tline:nth-child(3) {
+  margin-left: clamp(0.25rem, 1vw, 1rem);
+}
+
+.split__title.tlines--stagger .tline:nth-child(4) {
+  margin-left: clamp(0.75rem, 3vw, 3rem);
 }
 
 .split__copy p {

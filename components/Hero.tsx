@@ -43,7 +43,7 @@ export function Hero({
     <section className={`container container--wide hero hero--${variant}`}>
       <div className="hero__copy">
         <span className="eyebrow">{eyebrow}</span>
-        <ParallaxHeading text={title} lines={titleLines} className={displayClass} stagger />
+        <ParallaxHeading text={title} lines={titleLines} className={displayClass} stagger fromTop />
         <div className="hero__foot">
           <p className="hero__sub">{sub}</p>
           <div className="hero__actions">

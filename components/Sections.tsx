@@ -124,7 +124,7 @@ export function Split({
   const copyEl = (
     <div className="split__copy" data-reveal>
       {eyebrow && <span className="eyebrow">{eyebrow}</span>}
-      <h2 className="h2">{title}</h2>
+      <ParallaxHeading as="h2" text={title} className="split__title" stagger />
       <p>{text}</p>
       {sub && <p className="split__sub">{sub}</p>}
       {cta && (

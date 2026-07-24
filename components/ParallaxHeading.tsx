@@ -48,6 +48,7 @@ export function ParallaxHeading({
   lines: linesProp,
   className = "",
   stagger = false,
+  fromTop = false,
 }: {
   as?: "h1" | "h2";
   text: string;
@@ -56,6 +57,13 @@ export function ParallaxHeading({
   className?: string;
   /** Statické cik-cak odsazení řádků (hero nadpisy). Vypnuto u vycentrovaných CTA. */
   stagger?: boolean;
+  /**
+   * Kotví parallax od horního okraje: v klidu (načtení, bez scrollu) je posun
+   * přesně 0 — řádky tedy začínají zarovnané a rozjíždějí se až scrollem.
+   * Pro hero nadpisy, které jsou nad ohybem; bez toho by měly nenulový posun
+   * daný svojí svislou pozicí (a nezarovnaly by se s eyebrow).
+   */
+  fromTop?: boolean;
 }) {
   const ref = useRef<HTMLHeadingElement>(null);
   const lines = linesProp ?? splitLines(text);
@@ -70,10 +78,19 @@ export function ParallaxHeading({
       raf = 0;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || 1;
-      const center = rect.top + rect.height / 2;
-      // −1 (přichází zdola) … 0 (na středu) … +1 (odchází nahoru)
-      let p = (vh / 2 - center) / (vh / 2 + rect.height / 2);
-      p = Math.max(-1, Math.min(1, p));
+      let p;
+      if (fromTop) {
+        // Reaguje od prvního pixelu scrollu: v klidu (scrollY 0) je posun 0,
+        // pak roste přímo se scrollem. (Ne přes rect.top — ten je zpočátku
+        // kladný, takže by se posun rozjel až po projetí celé výšky nadpisu.)
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        p = Math.max(0, Math.min(1, y / vh));
+      } else {
+        const center = rect.top + rect.height / 2;
+        // −1 (přichází zdola) … 0 (na středu) … +1 (odchází nahoru)
+        p = (vh / 2 - center) / (vh / 2 + rect.height / 2);
+        p = Math.max(-1, Math.min(1, p));
+      }
       el.style.setProperty("--p", p.toFixed(4));
     };
     const onScroll = () => {
