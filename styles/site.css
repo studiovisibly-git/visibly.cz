@@ -505,15 +505,24 @@
   will-change: transform;
 }
 
-/* Barevný kruh visí dole vpravo, velký — stejně na HP i podstránkách
-   (originál ~450 px @1440 = 31vw). Nadpis je nad ním, spodní blok pod ním. */
+/* Velký kruh (31vw, originál ~450 px @1440) na obou variantách.
+   HP: visí dole vpravo pod nadpisem. Podstránky: svisle na střed vpravo. */
 .hero--home .hero__media,
 .hero--media .hero__media {
   position: absolute;
   right: 0;
-  bottom: clamp(-2rem, -3vw, -4rem);
   width: clamp(15rem, 31vw, 28rem);
 }
+
+.hero--home .hero__media {
+  bottom: clamp(-2rem, -3vw, -4rem);
+}
+
+.hero--media .hero__media {
+  top: 50%;
+  translate: 0 -50%;
+}
+
 
 /* plain (editorial) — bez média, širší copy, blok v běžném toku */
 .hero--plain .hero__copy {
@@ -529,6 +538,14 @@
   .hero--media {
     padding-bottom: clamp(9rem, 15vw, 13rem);
     min-height: 88vh;
+  }
+
+  /* Podstránky mají nad hero drobečky (54 px), které HP nemá. Vytáhneme hero
+     o jejich výšku nahoru, aby začínal (a při min-height i končil) ve stejné
+     výšce jako HP — H1 nahoře i doplňkový blok dole tak sedí 1:1. Drobečky se
+     vejdou do horního odsazení hero, nadpis do nich nezasahuje. */
+  .hero--media {
+    margin-top: -3.375rem;
   }
 
   .hero--home .hero__foot,
