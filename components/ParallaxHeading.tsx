@@ -80,8 +80,11 @@ export function ParallaxHeading({
       const vh = window.innerHeight || 1;
       let p;
       if (fromTop) {
-        // 0 dokud je nadpis na svém místě (rect.top ≥ 0), pak roste, jak odjíždí nahoru.
-        p = Math.max(0, Math.min(1, -rect.top / vh));
+        // Reaguje od prvního pixelu scrollu: v klidu (scrollY 0) je posun 0,
+        // pak roste přímo se scrollem. (Ne přes rect.top — ten je zpočátku
+        // kladný, takže by se posun rozjel až po projetí celé výšky nadpisu.)
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        p = Math.max(0, Math.min(1, y / vh));
       } else {
         const center = rect.top + rect.height / 2;
         // −1 (přichází zdola) … 0 (na středu) … +1 (odchází nahoru)
