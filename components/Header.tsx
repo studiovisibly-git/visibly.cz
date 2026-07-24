@@ -17,10 +17,10 @@ function Logo({ compact = false }: { compact?: boolean }) {
       {!compact && (
         <span className="logo__tag" aria-hidden="true">
           Reklama &amp; tisk se sídlem
-          <br />v srdci Slezska.
+          <br />v srdci Slezska.
         </span>
       )}
-      <span className="sr-only">Visibly — reklama a tisk se sídlem v srdci Slezska</span>
+      <span className="sr-only">Visibly — reklama a tisk se sídlem v srdci Slezska</span>
     </Link>
   );
 }

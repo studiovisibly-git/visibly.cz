@@ -81,7 +81,7 @@ export function SpinBadge({ label, href }: { label: string; href: string }) {
     <Link href={href} className="spin-badge" aria-label={label}>
       <svg viewBox="0 0 100 100" aria-hidden="true">
         <defs>
-          <path id={id} d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none" />
+          <path id={id} d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none" />
         </defs>
         <text>
           <textPath href={`#${id}`}>{label}</textPath>
@@ -160,7 +160,8 @@ export function Split({
 
 /** Rozdělí titulek na 2 vyvážené řádky podle počtu slov. */
 function twoLines(title: string): string[] {
-  const words = title.trim().split(/\s+/);
+  // Dělíme jen na běžných mezerách — nezlomitelná mezera drží slova u sebe.
+  const words = title.trim().split(/[ \t\n]+/);
   if (words.length < 2) return [title.trim()];
   let best = 1;
   let bestDiff = Infinity;

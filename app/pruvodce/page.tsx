@@ -26,11 +26,11 @@ export default function PruvodcePage() {
         variant="plain"
         displayClass="display-xl"
         eyebrow="Obsahový hub"
-        title="Průvodce tiskem a reklamou."
-        titleLines={["Průvodce tiskem", "a reklamou."]}
-        sub="Vyberte téma podle problému. Každý článek vede k jasnému rozhodnutí a související službě."
+        title="Průvodce tiskem a reklamou."
+        titleLines={["Průvodce tiskem", "a reklamou."]}
+        sub="Vyberte téma podle problému. Každý článek vede k jasnému rozhodnutí a související službě."
         primary={{ label: "Probrat zadání", href: INQUIRY_URL }}
-        scroll={{ label: "Rady, které vedou k výsledku", href: "#temata" }}
+        scroll={{ label: "Rady, které vedou k výsledku", href: "#temata" }}
       />
 
       <section className="section--tight section--rule container" id="temata">
@@ -55,7 +55,7 @@ export default function PruvodcePage() {
 
       <section className="section container">
         <h2 className="h2 indent-1" style={{ marginBottom: "2.5rem" }}>
-          Rady, které vedou k výsledku.
+          Rady, které vedou k výsledku.
         </h2>
         {guideCategories.map((category) => {
           const items = rest.filter((g) => g.category === category);
@@ -83,7 +83,7 @@ export default function PruvodcePage() {
 
       <section className="section--tight container">
         <Band
-          title="Přejděte od rady rovnou k výrobě."
+          title="Přejděte od rady rovnou k výrobě."
           text="Tisk · Polepy · Reklamní výroba"
           cta={{ label: "Probrat zadání", href: INQUIRY_URL }}
         />
@@ -91,7 +91,7 @@ export default function PruvodcePage() {
 
       <FinalCta
         title="Nenašli jste odpověď?"
-        text="Napište nám, co řešíte — poradíme i bez článku."
+        text="Napište nám, co řešíte — poradíme i bez článku."
         cta={{ label: "Poslat dotaz", href: INQUIRY_URL }}
       />
     </>

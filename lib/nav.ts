@@ -5,10 +5,10 @@ export type NavItem = LinkItem & { children?: LinkItem[] };
 /** Slugy odpovídají schválené sitemapě — jsou součástí SEO kontraktu. */
 export const tiskLinks: LinkItem[] = [
   { label: "Velkoformátový tisk", href: "/tisk/velkoformatovy-tisk" },
-  { label: "Bannery a plachty", href: "/tisk/bannery-a-plachty" },
-  { label: "Samolepky a fólie", href: "/tisk/samolepky-a-folie" },
+  { label: "Bannery a plachty", href: "/tisk/bannery-a-plachty" },
+  { label: "Samolepky a fólie", href: "/tisk/samolepky-a-folie" },
   { label: "Roll-upy", href: "/tisk/roll-upy" },
-  { label: "Billboardy a citylighty", href: "/tisk/billboardy-a-citylighty" },
+  { label: "Billboardy a citylighty", href: "/tisk/billboardy-a-citylighty" },
   { label: "Plakáty", href: "/tisk/plakaty" },
   { label: "Tiskoviny", href: "/tisk/tiskoviny" },
   { label: "POS materiály", href: "/tisk/pos-materialy" },
@@ -35,7 +35,7 @@ export const reklamaLinks: LinkItem[] = [
 ];
 
 export const studioLinks: LinkItem[] = [
-  { label: "Návrh loga a vizuální identity", href: "/navrh-loga-a-vizualni-identity" },
+  { label: "Návrh loga a vizuální identity", href: "/navrh-loga-a-vizualni-identity" },
   { label: "Webdesign", href: "/webdesign" },
   { label: "Tisk fotoobrazů", href: "/tisk-fotoobrazu" },
 ];
@@ -46,14 +46,14 @@ export const mainNav: NavItem[] = [
   { label: "Reklama", href: "/reklama", children: reklamaLinks },
   { label: "Realizace", href: "/realizace" },
   { label: "Technologie", href: "/technologie" },
-  { label: "O nás", href: "/o-nas" },
+  { label: "O nás", href: "/o-nas" },
   { label: "Kontakt", href: "/kontakt" },
 ];
 
 export const footerCompanyLinks: LinkItem[] = [
   { label: "Realizace", href: "/realizace" },
   { label: "Technologie", href: "/technologie" },
-  { label: "O nás", href: "/o-nas" },
+  { label: "O nás", href: "/o-nas" },
   { label: "Průvodce", href: "/pruvodce" },
   { label: "Pro agentury", href: "/pro-agentury" },
   { label: "Reklamní plochy Opava", href: "/reklamni-plochy-opava" },

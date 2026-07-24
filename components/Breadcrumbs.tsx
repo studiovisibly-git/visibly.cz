@@ -13,7 +13,7 @@ export function Breadcrumbs({ items }: { items: LinkItem[] }) {
         <nav aria-label="Drobečková navigace">
           <ol>
             {trail.map((item, i) =>
-              i === trail.length - 1 ? (
+              i === trail.length - 1 ? (
                 <li key={item.href} aria-current="page">
                   {item.label}
                 </li>

@@ -16,7 +16,7 @@ const staticPages = [
   { label: "Úvodní stránka", href: "/" },
   { label: "Realizace", href: "/realizace" },
   { label: "Technologie", href: "/technologie" },
-  { label: "O nás", href: "/o-nas" },
+  { label: "O nás", href: "/o-nas" },
   { label: "Kontakt", href: "/kontakt" },
   { label: "Průvodce", href: "/pruvodce" },
   { label: "Pro agentury", href: "/pro-agentury" },

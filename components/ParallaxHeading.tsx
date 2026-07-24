@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 
 /** Rozdělí titulek na vyvážené řádky (1–4) pro cik-cak parallax. */
 export function splitLines(text: string, maxChars = 15): string[] {
-  const words = text.trim().split(/\s+/);
+  // Dělíme jen na běžných mezerách — nezlomitelná mezera drží slova u sebe.
+  const words = text.trim().split(/[ \t\n]+/);
   if (words.length <= 1) return [text.trim()];
 
   const build = (limit: number): string[] => {

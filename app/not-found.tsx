@@ -9,7 +9,7 @@ export default function NotFound() {
         Tahle stránka není vidět.
       </h1>
       <p style={{ marginTop: "1.4rem", color: "var(--muted)", fontWeight: 500 }}>
-        Což je u nás docela ironie. Zkuste rozcestník, nebo nám rovnou napište.
+        Což je u nás docela ironie. Zkuste rozcestník, nebo nám rovnou napište.
       </p>
       <div className="final__actions">
         <Link href="/" className="btn">

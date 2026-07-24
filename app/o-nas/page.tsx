@@ -22,15 +22,15 @@ export const metadata = buildMetadata({
 export default function ONasPage() {
   return (
     <>
-      <Breadcrumbs items={[{ label: "O nás", href: "/o-nas" }]} />
+      <Breadcrumbs items={[{ label: "O nás", href: "/o-nas" }]} />
 
       <Hero
         variant="media"
         eyebrow="Kdo jsme"
-        title="Tiskárna a reklamní výroba z Opavy."
-        sub="Navrhujeme, tiskneme a vyrábíme reklamu, která obstojí na obrazovce i v reálném provozu."
+        title="Tiskárna a reklamní výroba z Opavy."
+        sub="Navrhujeme, tiskneme a vyrábíme reklamu, která obstojí na obrazovce i v reálném provozu."
         primary={{ label: "Poptat výrobu", href: INQUIRY_URL }}
-        scroll={{ label: "Tři principy, které jsou vidět v práci", href: "#principy" }}
+        scroll={{ label: "Tři principy, které jsou vidět v práci", href: "#principy" }}
         media={{ label: "Kruhová fotografie · práce ve výrobě", variant: "circle" }}
       />
 
@@ -39,12 +39,12 @@ export default function ONasPage() {
           <h2>Nejdřív řešíme, co má reklama udělat. Teprve potom, jak ji vyrobit.</h2>
           <div className="statement__cols">
             <p>
-              Visibly je tiskárna a studio reklamní výroby z Opavy. Nejsme jen reklamka, která
-              zakázky přeposílá dál — klíčové výrobní kroky držíme u sebe.
+              Visibly je tiskárna a studio reklamní výroby z Opavy. Nejsme jen reklamka, která
+              zakázky přeposílá dál — klíčové výrobní kroky držíme u sebe.
             </p>
             <p>
-              Každou zakázku posuzujeme v souvislostech: kde bude výsledek fungovat, kdo se na něj
-              bude dívat a co si má zapamatovat. Doporučujeme podle skutečného použití.
+              Každou zakázku posuzujeme v souvislostech: kde bude výsledek fungovat, kdo se na něj
+              bude dívat a co si má zapamatovat. Doporučujeme podle skutečného použití.
             </p>
           </div>
         </div>
@@ -52,10 +52,10 @@ export default function ONasPage() {
 
       <section className="section section--rule container">
         <Split
-          media={{ label: "Video z výroby", variant: "circle", src: "/video/epson-tisk-mini.mp4", alt: "Velkoformátový tisk na Epson SureColor" }}
+          media={{ label: "Video z výroby", variant: "circle", src: "/video/epson-tisk-mini.mp4", alt: "Velkoformátový tisk na Epson SureColor" }}
           eyebrow="Od návrhu po předání"
           title="Jedna zakázka. Jeden souvislý kontext."
-          text="Grafika počítá s materiálem, tisk s dokončením a dokončení s místem aplikace."
+          text="Grafika počítá s materiálem, tisk s dokončením a dokončení s místem aplikace."
           cta={{ label: "Prohlédnout výrobu", href: "/technologie" }}
         />
       </section>
@@ -64,7 +64,7 @@ export default function ONasPage() {
         <SectionHead title="Důvěra stojí na konkrétních věcech." indent={1} />
         <div className="case">
           <div data-reveal>
-            <Media media={{ label: "Fotografie · zakázky v dílně", variant: "tall" }} />
+            <Media media={{ label: "Fotografie · zakázky v dílně", variant: "tall" }} />
           </div>
           <div className="facts" data-reveal>
             <div>
@@ -81,7 +81,7 @@ export default function ONasPage() {
             </div>
             <div>
               <span className="eyebrow">Co navazuje</span>
-              <h3>Laminace, termolis a aplikace</h3>
+              <h3>Laminace, termolis a aplikace</h3>
             </div>
             <div>
               <span className="eyebrow">Přímý kontakt</span>
@@ -94,12 +94,12 @@ export default function ONasPage() {
       </section>
 
       <section className="section section--rule container" id="principy">
-        <SectionHead title="Tři principy, které jsou vidět v práci." indent={0} />
+        <SectionHead title="Tři principy, které jsou vidět v práci." indent={0} />
         <div className="editorial">
           <article className="edit-card" data-reveal>
             <span className="eyebrow">01</span>
             <h3>Doporučujeme podle použití</h3>
-            <p>Materiál a technologie se vybírají podle místa a účelu — ne podle marže.</p>
+            <p>Materiál a technologie se vybírají podle místa a účelu — ne podle marže.</p>
           </article>
           <article className="edit-card" data-reveal>
             <span className="eyebrow">02</span>
@@ -119,15 +119,15 @@ export default function ONasPage() {
         <div className="editorial">
           <article className="edit-card" data-reveal>
             <h3>Co má výsledek sdělit</h3>
-            <p>Pohled značky a zákazníka.</p>
+            <p>Pohled značky a zákazníka.</p>
           </article>
           <article className="edit-card" data-reveal>
             <h3>Jak má výsledek vzniknout</h3>
-            <p>Pohled grafika a výroby.</p>
+            <p>Pohled grafika a výroby.</p>
           </article>
           <article className="edit-card" data-reveal>
             <h3>Jak má fungovat na místě</h3>
-            <p>Pohled montáže a provozu.</p>
+            <p>Pohled montáže a provozu.</p>
           </article>
         </div>
       </section>

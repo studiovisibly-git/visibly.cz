@@ -56,6 +56,10 @@ html {
 
 body {
   margin: 0;
+  /* Parallaxové řádky nadpisu a full-bleed pás (100vw vs. šířka bez scrollbaru)
+     přetékají doprava. `clip` je odřízne, ale na rozdíl od `hidden` nevytvoří
+     scroll kontejner, takže sticky hlavička dál funguje. */
+  overflow-x: clip;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-sans);

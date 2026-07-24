@@ -64,7 +64,7 @@ export function HubPageTemplate({ hub }: { hub: HubPage }) {
         eyebrow={hub.eyebrow}
         title={hub.h1}
         sub={hub.intro}
-        note="Stačí fotka, rozměr nebo krátký popis. Ozveme se s návrhem řešení."
+        note="Stačí fotka, rozměr nebo krátký popis. Ozveme se s návrhem řešení."
         primary={{ label: hub.heroCta, href: INQUIRY_URL }}
         scroll={{ label: hub.directoryTitle, href: "#rozcestnik" }}
         media={hub.heroMedia}

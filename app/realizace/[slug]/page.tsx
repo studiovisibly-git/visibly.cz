@@ -84,7 +84,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
 
       <section className="section section--rule container">
         <h2 className="h2 indent-1" style={{ marginBottom: "2rem" }}>
-          Služby z této realizace
+          Služby z této realizace
         </h2>
         <div className="editorial">
           {work.services.map((s) => (
