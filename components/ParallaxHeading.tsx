@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { documentTop, onLayoutChange, onScrollFrame, prefersReducedMotion } from "@/lib/motion";
+import { LERP, documentTop, onLayoutChange, onScrollFrame, prefersReducedMotion } from "@/lib/motion";
 
 /** Rozdělí titulek na vyvážené řádky (1–4) pro cik-cak parallax. */
 export function splitLines(text: string, maxChars = 15): string[] {
@@ -96,8 +96,10 @@ export function ParallaxHeading({
     );
     io.observe(el);
 
+    let cur: number | null = null;
+
     const apply = (scrollY: number, vh: number) => {
-      if (!inView) return;
+      if (!inView) return false;
       // Pozice nadpisu vůči viewportu, dopočítaná z cachovaných hodnot.
       const relTop = top - scrollY;
       let p;
@@ -111,11 +113,17 @@ export function ParallaxHeading({
         p = (vh / 2 - center) / (vh / 2 + height / 2);
         p = Math.max(-1, Math.min(1, p));
       }
-      const next = p.toFixed(4);
+      // Dojíždění k cíli (jako smoothing v šabloně) — případný zmeškaný
+      // snímek se rozpustí v easingu místo viditelného skoku.
+      if (cur === null) cur = p;
+      cur += (p - cur) * LERP;
+      if (Math.abs(p - cur) < 0.0004) cur = p;
+      const next = cur.toFixed(4);
       if (next !== last) {
         last = next;
         el.style.setProperty("--p", next);
       }
+      return cur !== p;
     };
 
     measure();

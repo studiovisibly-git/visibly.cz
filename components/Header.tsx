@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { onScrollFrame } from "@/lib/motion";
+import { LERP, onScrollFrame } from "@/lib/motion";
 import { mainNav, studioLinks } from "@/lib/nav";
 import { INQUIRY_URL, PHONE_DISPLAY, PHONE_HREF } from "@/lib/site";
 
@@ -50,12 +50,19 @@ export function Header() {
     if (!el) return;
 
     let last = "";
+    let cur: number | null = null;
     return onScrollFrame((scrollY) => {
-      const next = Math.min(scrollY / 90, 1).toFixed(3);
+      const target = Math.min(scrollY / 90, 1);
+      // Dojíždění (smoothing) — plynulé i při zmeškaném snímku.
+      if (cur === null) cur = target;
+      cur += (target - cur) * LERP;
+      if (Math.abs(target - cur) < 0.002) cur = target;
+      const next = cur.toFixed(3);
       if (next !== last) {
         last = next;
         el.style.setProperty("--logo-progress", next);
       }
+      return cur !== target;
     });
   }, []);
 
