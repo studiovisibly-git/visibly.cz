@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { NO_SCROLL_FX } from "@/lib/motion";
+import { documentTop, onLayoutChange, onScrollFrame, prefersReducedMotion } from "@/lib/motion";
 
 /**
  * Scroll-linked zvětšení kruhové fotky — 1:1 podle Circle šablony,
@@ -26,38 +26,33 @@ export function ScrollScale({
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const mq = window.matchMedia(NO_SCROLL_FX);
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      if (mq.matches) {
-        el.style.setProperty("--s", String(from));
-        return;
-      }
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
-      el.style.setProperty("--s", (from + (to - from) * p).toFixed(4));
-    };
-    const onScroll = () => {
-      if (mq.matches || raf) return;
-      raf = requestAnimationFrame(update);
-    };
-    const onBreakpoint = () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = 0;
-      update();
+    // Měříme dopředu, ne uvnitř scroll snímku — v něm se pak jen počítá
+    // a nastavuje transform (kompozitní, bez přepočtu layoutu).
+    let top = 0;
+    let height = 0;
+    let last = "";
+
+    const measure = () => {
+      top = documentTop(el);
+      height = el.offsetHeight;
     };
 
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    mq.addEventListener("change", onBreakpoint);
+    const apply = (scrollY: number, vh: number) => {
+      const relTop = top - scrollY;
+      const p = Math.min(1, Math.max(0, (vh - relTop) / (vh + height)));
+      const next = (from + (to - from) * p).toFixed(4);
+      if (next !== last) {
+        last = next;
+        el.style.setProperty("--s", next);
+      }
+    };
+
+    measure();
+    const stopLayout = onLayoutChange(el, measure);
+    const stopScroll = onScrollFrame(apply);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      mq.removeEventListener("change", onBreakpoint);
-      if (raf) cancelAnimationFrame(raf);
+      stopLayout();
+      stopScroll();
     };
   }, [from, to]);
 

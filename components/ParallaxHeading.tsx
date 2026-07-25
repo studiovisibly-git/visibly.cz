@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { NO_SCROLL_FX } from "@/lib/motion";
+import { documentTop, onLayoutChange, onScrollFrame, prefersReducedMotion } from "@/lib/motion";
 
 /** Rozdělí titulek na vyvážené řádky (1–4) pro cik-cak parallax. */
 export function splitLines(text: string, maxChars = 15): string[] {
@@ -72,53 +72,46 @@ export function ParallaxHeading({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
 
-    const mq = window.matchMedia(NO_SCROLL_FX);
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      if (mq.matches) {
-        el.style.setProperty("--p", "0");
-        return;
-      }
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight || 1;
+    // Pozici a výšku měříme dopředu, ne uvnitř scroll snímku — díky tomu
+    // v každém snímku jen počítáme a měníme transform (žádný přepočet layoutu).
+    let top = 0;
+    let height = 0;
+    let last = "";
+
+    const measure = () => {
+      top = documentTop(el);
+      height = el.offsetHeight;
+    };
+
+    const apply = (scrollY: number, vh: number) => {
+      // Pozice nadpisu vůči viewportu, dopočítaná z cachovaných hodnot.
+      const relTop = top - scrollY;
       let p;
       if (fromTop) {
         // Reaguje od prvního pixelu scrollu: v klidu (scrollY 0) je posun 0,
-        // pak roste přímo se scrollem. (Ne přes rect.top — ten je zpočátku
-        // kladný, takže by se posun rozjel až po projetí celé výšky nadpisu.)
-        const y = window.scrollY || document.documentElement.scrollTop || 0;
-        p = Math.max(0, Math.min(1, y / vh));
+        // pak roste přímo se scrollem.
+        p = Math.max(0, Math.min(1, scrollY / vh));
       } else {
-        const center = rect.top + rect.height / 2;
+        const center = relTop + height / 2;
         // −1 (přichází zdola) … 0 (na středu) … +1 (odchází nahoru)
-        p = (vh / 2 - center) / (vh / 2 + rect.height / 2);
+        p = (vh / 2 - center) / (vh / 2 + height / 2);
         p = Math.max(-1, Math.min(1, p));
       }
-      el.style.setProperty("--p", p.toFixed(4));
-    };
-    const onScroll = () => {
-      // Na mobilu ani neplánujeme snímek — jinak by rAF běžel při každém scrollu.
-      if (mq.matches || raf) return;
-      raf = requestAnimationFrame(update);
-    };
-    const onBreakpoint = () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = 0;
-      update();
+      const next = p.toFixed(4);
+      if (next !== last) {
+        last = next;
+        el.style.setProperty("--p", next);
+      }
     };
 
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    mq.addEventListener("change", onBreakpoint);
+    measure();
+    const stopLayout = onLayoutChange(el, measure);
+    const stopScroll = onScrollFrame(apply);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      mq.removeEventListener("change", onBreakpoint);
-      if (raf) cancelAnimationFrame(raf);
+      stopLayout();
+      stopScroll();
     };
   }, [text, lines.length, fromTop]);
 
