@@ -31,13 +31,24 @@ export function ScrollScale({
     let top = 0;
     let height = 0;
     let last = "";
+    let inView = true;
 
     const measure = () => {
       top = documentTop(el);
       height = el.offsetHeight;
     };
 
+    // Mimo viewport se nepočítá nic.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+      },
+      { rootMargin: "20% 0px" },
+    );
+    io.observe(el);
+
     const apply = (scrollY: number, vh: number) => {
+      if (!inView) return;
       const relTop = top - scrollY;
       const p = Math.min(1, Math.max(0, (vh - relTop) / (vh + height)));
       const next = (from + (to - from) * p).toFixed(4);
@@ -51,6 +62,7 @@ export function ScrollScale({
     const stopLayout = onLayoutChange(el, measure);
     const stopScroll = onScrollFrame(apply);
     return () => {
+      io.disconnect();
       stopLayout();
       stopScroll();
     };

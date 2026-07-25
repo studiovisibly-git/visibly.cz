@@ -79,13 +79,25 @@ export function ParallaxHeading({
     let top = 0;
     let height = 0;
     let last = "";
+    let inView = true;
 
     const measure = () => {
       top = documentTop(el);
       height = el.offsetHeight;
     };
 
+    // Mimo viewport nadpis nepřepočítáváme vůbec — style recalc jen tam,
+    // kde je vidět (stejný princip jako IX2 „while scrolling in view").
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+      },
+      { rootMargin: "20% 0px" },
+    );
+    io.observe(el);
+
     const apply = (scrollY: number, vh: number) => {
+      if (!inView) return;
       // Pozice nadpisu vůči viewportu, dopočítaná z cachovaných hodnot.
       const relTop = top - scrollY;
       let p;
@@ -110,6 +122,7 @@ export function ParallaxHeading({
     const stopLayout = onLayoutChange(el, measure);
     const stopScroll = onScrollFrame(apply);
     return () => {
+      io.disconnect();
       stopLayout();
       stopScroll();
     };

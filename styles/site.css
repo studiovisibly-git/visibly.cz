@@ -80,7 +80,10 @@
   grid-template-columns: minmax(130px, 0.8fr) auto minmax(130px, 0.8fr);
   align-items: center;
   gap: 1.5rem;
-  padding-block: clamp(0.75rem, calc(1.35rem - 0.55rem * var(--logo-progress, 0)), 1.35rem);
+  /* Konstantní výška! Dřív se padding počítal z --logo-progress, takže každý
+     snímek scrollu měnil výšku sticky hlavičky = reflow celého dokumentu.
+     To bylo hlavní sekání na mobilu. Zmenšování loga řeší transform níž. */
+  padding-block: 1.2rem;
 }
 
 .header__logo {
@@ -96,10 +99,16 @@
 
 .logo__mark {
   display: block;
-  width: calc(4.75rem - 1rem * var(--logo-progress, 0)); /* 76px → 60px */
-  height: calc(4.75rem - 1rem * var(--logo-progress, 0));
+  /* Box v layoutu je konstantní 60px — vizuální zmenšení 76px → 60px dělá
+     transform (jen kompozitor, žádný layout). Přesah 16px se vejde do
+     paddingu hlavičky, takže se při scrollu nic neposouvá. */
+  width: 3.75rem;
+  height: 3.75rem;
   border-radius: 50%;
   overflow: hidden;
+  transform: scale(calc(1.2667 - 0.2667 * var(--logo-progress, 0)));
+  transform-origin: left center;
+  will-change: transform;
 }
 
 .logo__mark img {
