@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { documentTop, onLayoutChange, onScrollFrame, prefersReducedMotion } from "@/lib/motion";
+import { LERP, documentTop, onLayoutChange, onScrollFrame, prefersReducedMotion } from "@/lib/motion";
 
 /**
  * Scroll-linked zvětšení kruhové fotky — 1:1 podle Circle šablony,
@@ -47,15 +47,23 @@ export function ScrollScale({
     );
     io.observe(el);
 
+    let cur: number | null = null;
+
     const apply = (scrollY: number, vh: number) => {
-      if (!inView) return;
+      if (!inView) return false;
       const relTop = top - scrollY;
       const p = Math.min(1, Math.max(0, (vh - relTop) / (vh + height)));
-      const next = (from + (to - from) * p).toFixed(4);
+      const target = from + (to - from) * p;
+      // Dojíždění k cíli (smoothing jako v šabloně).
+      if (cur === null) cur = target;
+      cur += (target - cur) * LERP;
+      if (Math.abs(target - cur) < 0.0004) cur = target;
+      const next = cur.toFixed(4);
       if (next !== last) {
         last = next;
         el.style.setProperty("--s", next);
       }
+      return cur !== target;
     };
 
     measure();
