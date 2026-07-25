@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { LazyVideo } from "./LazyVideo";
 import type { MediaSpec } from "@/lib/types";
 
 /**
@@ -21,17 +22,7 @@ export function Media({
   if (media.src?.endsWith(".mp4")) {
     return (
       <div className={cls}>
-        <video
-          className="media__video"
-          src={media.src}
-          poster={media.poster}
-          muted
-          loop
-          playsInline
-          autoPlay
-          preload="metadata"
-          aria-label={media.alt ?? media.label}
-        />
+        <LazyVideo src={media.src} poster={media.poster} label={media.alt ?? media.label} />
       </div>
     );
   }
