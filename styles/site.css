@@ -512,13 +512,6 @@
   will-change: transform;
 }
 
-/* Na mobilu scroll-linked efekty neběží (viz lib/motion.ts) — bez will-change
-   ať prohlížeč zbytečně nedrží kompozitní vrstvy navíc. */
-@media (max-width: 760px) {
-  .hero__media > * {
-    will-change: auto;
-  }
-}
 
 /* Velký kruh (31vw, originál ~450 px @1440) na obou variantách.
    HP: visí dole vpravo pod nadpisem. Podstránky: svisle na střed vpravo. */
@@ -1517,13 +1510,6 @@ a.circle-chip:hover small {
   animation: rise 0.9s var(--ease-out) both;
 }
 
-/* Mobil: parallax neběží (viz lib/motion.ts), takže netřeba držet kompozitní
-   vrstvu pro každý řádek nadpisu. */
-@media (max-width: 760px) {
-  .tline {
-    will-change: auto;
-  }
-}
 
 .tline:nth-child(2) {
   animation-delay: 0.08s;
@@ -1678,11 +1664,15 @@ a.circle-chip:hover small {
     padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom));
     background: color-mix(in srgb, var(--paper) 90%, transparent);
     backdrop-filter: blur(12px);
-    /* Naskočí až po kousku scrollu — v hero by jen překáželo. */
-    translate: 0 100%;
+    /* Vyjede až po kousku scrollu — v hero by jen překáželo. Delší náběh
+       a měkčí křivka, ať to nezaklapne, ale plynule dojede. */
+    translate: 0 115%;
     opacity: 0;
     pointer-events: none;
-    transition: translate 0.35s var(--ease-out), opacity 0.35s var(--ease-out);
+    transition:
+      translate 0.62s cubic-bezier(0.22, 0.61, 0.28, 1),
+      opacity 0.45s ease-out;
+    will-change: translate;
   }
 
   .mobile-cta.is-shown {

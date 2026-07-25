@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { NO_SCROLL_FX } from "@/lib/motion";
+import { onScrollFrame } from "@/lib/motion";
 import { mainNav, studioLinks } from "@/lib/nav";
 import { INQUIRY_URL, PHONE_DISPLAY, PHONE_HREF } from "@/lib/site";
 
@@ -43,39 +43,20 @@ export function Header() {
   }, [open]);
 
   /* Scroll-linked progress: tagline fade + logo shrink (jako --visibly-logo-text-progress na živém webu).
-     Na mobilu vypnuto — progress mění rozměry loga i padding hlavičky, což je
-     přepočet layoutu při každém snímku scrollu (hlavní zdroj sekání). */
+     Běží na sdíleném tickeru. Progress se hýbe jen prvních 90 px scrollu, pak
+     je konstantní — dál se už nic nepřepočítává. */
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
-    const mq = window.matchMedia(NO_SCROLL_FX);
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      if (mq.matches) {
-        el.style.setProperty("--logo-progress", "0");
-        return;
+
+    let last = "";
+    return onScrollFrame((scrollY) => {
+      const next = Math.min(scrollY / 90, 1).toFixed(3);
+      if (next !== last) {
+        last = next;
+        el.style.setProperty("--logo-progress", next);
       }
-      const progress = Math.min(window.scrollY / 90, 1);
-      el.style.setProperty("--logo-progress", progress.toFixed(3));
-    };
-    const onScroll = () => {
-      if (mq.matches || raf) return;
-      raf = requestAnimationFrame(update);
-    };
-    const onBreakpoint = () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = 0;
-      update();
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    mq.addEventListener("change", onBreakpoint);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      mq.removeEventListener("change", onBreakpoint);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    });
   }, []);
 
   return (
