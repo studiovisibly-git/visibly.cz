@@ -411,6 +411,14 @@ button {
   translate: 0.25em -0.25em;
 }
 
+/* Nekonečné smyčky (marquee pásy, rotující badge) stojí, dokud nejsou vidět.
+   Jinak by kompozitor pořád překresloval pásy široké přes 4000 px — i mimo
+   obrazovku. Pauzu řídí IntersectionObserver v RevealInit. */
+.is-paused,
+.is-paused * {
+  animation-play-state: paused !important;
+}
+
 /* ---------- Scroll reveal — výrazný nájezd zdola jako v šabloně Circle ---------- */
 
 /* Startovní stav platí už od prvního vykreslení — kdyby ho nasadila
