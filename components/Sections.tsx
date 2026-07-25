@@ -78,7 +78,7 @@ export function Directory({ items, cols = 2 }: { items: DirItem[]; cols?: 2 | 3 
 export function SpinBadge({ label, href }: { label: string; href: string }) {
   const id = `spin-${label.replace(/\W/g, "").slice(0, 14)}`;
   return (
-    <Link href={href} className="spin-badge" aria-label={label}>
+    <Link href={href} className="spin-badge" aria-label={label} data-loop>
       <svg viewBox="0 0 100 100" aria-hidden="true">
         <defs>
           <path id={id} d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none" />
@@ -252,7 +252,7 @@ export function LogoStrip({ logos }: { logos: { name: string; src: string }[] })
   const doubled = [...logos, ...logos];
   return (
     <div className="logo-strip" aria-label="Klienti">
-      <div className="logo-strip__track">
+      <div className="logo-strip__track" data-loop>
         {doubled.map((logo, i) => (
           <span className="logo-strip__item" key={`${logo.name}-${i}`} aria-hidden={i >= logos.length}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -329,7 +329,7 @@ export function GiantMarquee({ items }: { items: string[] }) {
   const row = [...items, ...items];
   return (
     <div className="marquee-xl" aria-hidden="true">
-      <div className="marquee-xl__track">
+      <div className="marquee-xl__track" data-loop>
         {row.map((item, i) => (
           <span className="marquee-xl__item" key={`${item}-${i}`}>
             {item}
