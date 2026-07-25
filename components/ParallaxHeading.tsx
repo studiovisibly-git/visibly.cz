@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { NO_SCROLL_FX } from "@/lib/motion";
 
 /** Rozdělí titulek na vyvážené řádky (1–4) pro cik-cak parallax. */
 export function splitLines(text: string, maxChars = 15): string[] {
@@ -73,9 +74,14 @@ export function ParallaxHeading({
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    const mq = window.matchMedia(NO_SCROLL_FX);
     let raf = 0;
     const update = () => {
       raf = 0;
+      if (mq.matches) {
+        el.style.setProperty("--p", "0");
+        return;
+      }
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || 1;
       let p;
@@ -94,18 +100,27 @@ export function ParallaxHeading({
       el.style.setProperty("--p", p.toFixed(4));
     };
     const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+      // Na mobilu ani neplánujeme snímek — jinak by rAF běžel při každém scrollu.
+      if (mq.matches || raf) return;
+      raf = requestAnimationFrame(update);
+    };
+    const onBreakpoint = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      update();
     };
 
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
+    mq.addEventListener("change", onBreakpoint);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      mq.removeEventListener("change", onBreakpoint);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [text, lines.length]);
+  }, [text, lines.length, fromTop]);
 
   return (
     <Tag className={`tlines${stagger ? " tlines--stagger" : ""}${className ? ` ${className}` : ""}`} ref={ref}>
