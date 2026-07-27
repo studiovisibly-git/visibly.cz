@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { EMAIL } from "@/lib/site";
 
 /**
@@ -25,6 +26,19 @@ export function LeadForm() {
 
   const set = (key: keyof typeof data) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setData((d) => ({ ...d, [key]: e.target.value }));
+
+  /* Předvyplnění z katalogu textilu: /kontakt?produkt=…#poptavka.
+     Zákazník tak nemusí kód produktu nikam opisovat. */
+  const params = useSearchParams();
+  const produkt = params.get("produkt");
+  useEffect(() => {
+    if (!produkt) return;
+    setData((d) => ({
+      ...d,
+      oblast: d.oblast || "Reklamní textil (potisk trik, mikin…)",
+      popis: d.popis || `Mám vybráno z katalogu: ${produkt}.\n\nPotřebuji potisk (logo/motiv):\nVelikosti a počty kusů:`,
+    }));
+  }, [produkt]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -63,6 +77,7 @@ export function LeadForm() {
               <option>Tisk (banner, samolepky, plakáty, tiskoviny…)</option>
               <option>Polep (auto, výloha, interiér…)</option>
               <option>Reklama (cedule, světelná reklama, 3D logo…)</option>
+              <option>Reklamní textil (potisk trik, mikin…)</option>
               <option>Logo / identita / web</option>
               <option>Nevím — potřebuji poradit</option>
             </select>

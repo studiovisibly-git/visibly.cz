@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Accordion } from "@/components/Accordion";
 import { Hero } from "@/components/Hero";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -73,7 +74,11 @@ export default function KontaktPage() {
           text="Nevíte rozměr nebo materiál? Nevadí. Pošlete fotografii a napište, kde má výsledek fungovat."
         />
         <div className="lead-form">
-          <LeadForm />
+          {/* Formulář čte ?produkt= z URL (předvyplnění z katalogu textilu),
+              což vyžaduje Suspense, aby stránka zůstala staticky generovaná. */}
+          <Suspense fallback={null}>
+            <LeadForm />
+          </Suspense>
           <aside className="contact-panel">
             <span className="eyebrow">Raději rovnou?</span>
             <a href={PHONE_HREF}>

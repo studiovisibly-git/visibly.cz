@@ -659,6 +659,333 @@
   scale: 0.55;
 }
 
+/* ---------- Katalog textilu — vlastní mřížka nad API dodavatele ---------- */
+
+.cat__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.cat__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cat__tab {
+  border: 2px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+
+.cat__tab.is-on {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.cat__search input {
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-btn);
+  padding: 0.55rem 0.9rem;
+  min-width: min(20rem, 70vw);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.cat__count {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.cat__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+.cat-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  padding: 0;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.cat-card:hover {
+  transform: translateY(-4px);
+}
+
+.cat-card__img {
+  display: block;
+  background: var(--surface);
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.cat-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: scale 0.4s var(--ease-out);
+}
+
+.cat-card:hover .cat-card__img img {
+  scale: 1.05;
+}
+
+.cat-card__body {
+  display: block;
+  padding: 0.9rem 1rem 1.1rem;
+  border-top: 2px solid var(--ink);
+}
+
+.cat-card__sub {
+  display: block;
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cat-card__name {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0.35rem;
+}
+
+.cat-card__meta {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: rgb(22 22 22 / 0.63);
+  margin-top: 0.35rem;
+}
+
+.cat__more {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* ---------- Detail produktu v modálu ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.5rem, 3vw, 2.5rem);
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(22 22 22 / 0.55);
+  animation: fade-in 0.25s var(--ease-out) both;
+}
+
+.modal__panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  width: min(64rem, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  animation: rise 0.35s var(--ease-out) both;
+}
+
+.modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+
+.modal__close:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.modal__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--surface);
+  object-fit: contain;
+  aspect-ratio: 1;
+}
+
+.modal__views {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.modal__view {
+  width: 4rem;
+  height: 4rem;
+  padding: 0;
+  border: 2px solid rgb(22 22 22 / 0.25);
+  background: var(--surface);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.modal__view.is-on {
+  border-color: var(--ink);
+}
+
+.modal__view img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.modal__code {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.modal__label {
+  display: block;
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.modal__colors {
+  margin-top: 1.25rem;
+}
+
+.modal__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  max-height: 11rem;
+  overflow: auto;
+}
+
+.modal__swatch {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 2px solid rgb(22 22 22 / 0.2);
+  background: var(--surface);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.modal__swatch.is-on {
+  border-color: var(--ink);
+}
+
+.modal__swatch img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.modal__attrs {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.modal__attrs li {
+  display: flex;
+  gap: 0.5rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
+.modal__attrs strong {
+  min-width: 11rem;
+  flex: none;
+}
+
+.modal__rte {
+  margin-top: 1rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.modal__rte ul {
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.modal__note {
+  margin-top: 1rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
+.modal__note a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.modal__cta {
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+}
+
+@media (max-width: 860px) {
+  .modal__panel {
+    grid-template-columns: 1fr;
+    max-height: 94vh;
+  }
+}
+
 /* ---------- Vložený katalog dodavatele (iframe) ---------- */
 
 /* Rámeček 2 px jako u karet pásu — ať vložený obsah vypadá jako záměr,
