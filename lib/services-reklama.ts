@@ -470,6 +470,7 @@ export const reklamaServices: ServicePage[] = [
     ],
     variantsTitle: "Pro koho textil chystáte?",
     variants: [
+      { title: "Chci si vybrat v katalogu", text: "Trička, mikiny i pracovní oblečení online.", href: "/reklama/reklamni-textil/katalog-malfini", cta: "Otevřít katalog" },
       { title: "Pro tým na provozovně", text: "Trička a polokošile pro každodenní nošení.", href: "/kontakt#poptavka", cta: "Poptat trička" },
       { title: "Pro řemeslníky v terénu", text: "Pracovní oblečení, které vydrží zátěž.", href: "/kontakt#poptavka", cta: "Poptat pracovní textil" },
       { title: "Na akci či event", text: "Rychlá série pro jednorázovou příležitost.", href: "/kontakt#poptavka", cta: "Stihnout akci" },
