@@ -38,8 +38,8 @@ export default async function KatalogMalfiniPage() {
         displayClass="display-l"
         eyebrow="Reklamní textil · Katalog"
         title="Katalog firemního textilu."
-        sub="Trička, mikiny, polokošile i pracovní oblečení. Vyberte střih a barvu, potisk doporučíme a naceníme my."
-        note="Klikněte na produkt — ukážeme fotky, barvy i materiál. Ceny jsou bez potisku."
+        sub="Trička, mikiny, polokošile i pracovní oblečení ze sortimentu MALFINI®. Vyberte střih a barvu, potisk doporučíme a naceníme my."
+        note="Klikněte na produkt — ukážeme fotky, barvy i materiál. Ceny jsou bez potisku."
         primary={{ label: "Nechat nacenit potisk", href: INQUIRY_URL }}
         scroll={{ label: "Prohlédnout katalog", href: "#katalog" }}
       />
@@ -61,6 +61,19 @@ export default async function KatalogMalfiniPage() {
             </p>
           </div>
         )}
+
+        {/* Zdroj dat a fotografií přiznáváme — katalog i snímky jsou MALFINI®. */}
+        <p className="catalog__source">
+          Produktová data a fotografie: <strong>MALFINI®</strong>, značka a dodavatel textilu,
+          se kterým dlouhodobě pracujeme. Sortiment i dostupnost se řídí jejich katalogem —{" "}
+          <a href={CATALOG_DIRECT} target="_blank" rel="noopener">
+            zobrazit původní katalog{" "}
+            <span className="arr" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+          . Potisk, kalkulaci a předání zajišťuje Visibly.
+        </p>
       </section>
 
       <section className="section--tight container">

@@ -58,7 +58,7 @@ export function CatalogBrowser({ catalog }: { catalog: MalfiniCatalog }) {
         </div>
 
         <label className="cat__search">
-          <span className="sr-only">Hledat v katalogu</span>
+          <span className="sr-only">Hledat v katalogu</span>
           <input
             type="search"
             placeholder="Hledat — název nebo kód"
@@ -79,7 +79,7 @@ export function CatalogBrowser({ catalog }: { catalog: MalfiniCatalog }) {
 
       <div className="cat__grid">
         {shown.map((p) => (
-          <button className="cat-card" key={p.code} onClick={() => setOpen(p)} data-reveal>
+          <button className="cat-card" key={p.code} onClick={() => setOpen(p)}>
             <span className="cat-card__img">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
