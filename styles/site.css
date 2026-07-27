@@ -719,6 +719,12 @@
   gap: clamp(1rem, 2vw, 1.75rem);
 }
 
+/* Karty jsou viditelné bez jakékoli vstupní animace — schválně.
+   Mřížka se překresluje při každém filtrování i donačtení a cokoli, co
+   startuje na opacity: 0, znamená prázdnou stránku pokaždé, když se
+   animace nespustí. Přesně tím trpěl sdílený data-reveal systém: dává
+   .is-in jen prvkům přítomným při načtení, takže dorenderované karty
+   zůstaly navždy neviditelné. Pohyb tu má jen hover. */
 .cat-card {
   display: flex;
   flex-direction: column;
@@ -790,6 +796,28 @@
   display: flex;
   justify-content: center;
   margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* Přiznání zdroje dat — tiché, ale čitelné. */
+.catalog__source {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.25rem;
+  border-top: 2px solid var(--ink);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.45;
+  color: rgb(22 22 22 / 0.63);
+  max-width: 52em;
+}
+
+.catalog__source strong {
+  color: var(--ink);
+}
+
+.catalog__source a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ---------- Detail produktu v modálu ---------- */
