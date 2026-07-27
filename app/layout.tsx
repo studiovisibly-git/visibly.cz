@@ -64,11 +64,17 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
+  /* Značka (obrácené „y" v kruhu) — čitelná i na 16 px, kde ji Google
+     zobrazuje ve výsledcích. SVG pro moderní prohlížeče, ICO jako záloha,
+     96 px PNG kvůli doporučení Googlu (násobek 48). */
   icons: {
     icon: [
-      { url: "/images/favicon.png", type: "image/png" },
-      { url: "/images/favicon-512x512.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
     ],
+    shortcut: "/favicon.ico",
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180" },
   },
 };
 
