@@ -659,6 +659,47 @@
   scale: 0.55;
 }
 
+/* ---------- Vložený katalog dodavatele (iframe) ---------- */
+
+/* Rámeček 2 px jako u karet pásu — ať vložený obsah vypadá jako záměr,
+   ne jako cizí těleso ve stránce. */
+.catalog__frame {
+  position: relative;
+  width: 100%;
+  height: clamp(38rem, 82vh, 62rem);
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.catalog__frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.catalog__note {
+  margin-top: 1rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.catalog__note a {
+  position: relative;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Na mobilu je listování uvnitř iframu nepohodlné — necháme nižší rámec
+   a o to viditelnější odkaz na otevření v samostatném okně. */
+@media (max-width: 760px) {
+  .catalog__frame {
+    height: clamp(28rem, 72vh, 40rem);
+  }
+}
+
 /* ---------- Proof strip — karty v rámečku ---------- */
 
 /* Karty v rámečku podle originálu (.high-content): 2px rámeček bez zaoblení,
