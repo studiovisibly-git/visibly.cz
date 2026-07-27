@@ -7,6 +7,7 @@ export const tiskLinks: LinkItem[] = [
   { label: "Velkoformátový tisk", href: "/tisk/velkoformatovy-tisk" },
   { label: "Bannery a plachty", href: "/tisk/bannery-a-plachty" },
   { label: "Samolepky a fólie", href: "/tisk/samolepky-a-folie" },
+  { label: "Tisk tapet", href: "/tisk/tapety" },
   { label: "Roll-upy", href: "/tisk/roll-upy" },
   { label: "Billboardy a citylighty", href: "/tisk/billboardy-a-citylighty" },
   { label: "Plakáty", href: "/tisk/plakaty" },

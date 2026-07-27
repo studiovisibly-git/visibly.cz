@@ -15,6 +15,7 @@ const LABELS: [prefix: string, label: string][] = [
   ["/tisk/velkoformatovy-tisk", "Poptat velkoformát"],
   ["/tisk/bannery-a-plachty", "Poptat banner"],
   ["/tisk/samolepky-a-folie", "Poptat samolepky"],
+  ["/tisk/tapety", "Poptat tapetu"],
   ["/tisk/roll-upy", "Poptat roll-up"],
   ["/tisk/billboardy-a-citylighty", "Poptat billboard"],
   ["/tisk/plakaty", "Poptat plakáty"],

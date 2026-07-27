@@ -232,6 +232,81 @@ export const tiskServices: ServicePage[] = [
     finalCta: "Poptat samolepky",
   },
   {
+    slug: "tapety",
+    hub: "tisk",
+    navLabel: "Tisk tapet",
+    metaTitle: "Tisk tapet a fototapet na míru Opava | Visibly",
+    metaDescription:
+      "Tisk tapet a fototapet na míru v Opavě. Vliesové i samolepicí, omyvatelné, na přesný rozměr stěny. Zaměření, tisk i lepení — kanceláře, provozovny i byty.",
+    eyebrow: "Tisk · Tapety",
+    h1: "Tapety na míru vaší stěně.",
+    intro:
+      "Fototapeta do kanceláře, grafika na stěnu provozovny nebo motiv domů. Tiskneme na přesný rozměr — včetně vyřezání kolem dveří, oken a zásuvek.",
+    heroMedia: { label: "Kruhová fotografie · tapeta na stěně kanceláře", variant: "circle" },
+    split: {
+      title: "Stěnu už máte. Zbývá ji využít.",
+      text: "Největší plocha v místnosti obvykle nedělá nic. Tapeta na míru z ní udělá kus značky, klidné pozadí k práci nebo místo, které si lidé vyfotí — podle toho, co od prostoru čekáte.",
+      media: { label: "Detail · tisk tapety na velkoformátu", variant: "circle" },
+    },
+    proof: [
+      { title: "Na přesný rozměr", text: "Tiskneme podle zaměřené stěny, ne na standardní role." },
+      { title: "Do interiéru bez zápachu", text: "Inkousty po vytvrzení nezapáchají — prostor můžete hned používat." },
+      { title: "Nalepíme, nebo poradíme", text: "Lepení zvládneme u vás. Kutilům předáme popsané pruhy a postup." },
+    ],
+    variantsTitle: "Kam tapetu chystáte?",
+    variants: [
+      { title: "Do kanceláře a na recepci", text: "Značka na stěně za recepcí nebo klidný motiv do zasedačky.", href: "/kontakt#poptavka", cta: "Poptat tapetu" },
+      { title: "Do provozovny a prodejny", text: "Stěna, která ladí s označením i výlohou.", href: "/reklama/interierova-reklama", cta: "Projít interiérovou reklamu" },
+      { title: "Domů a do dětského pokoje", text: "Vlastní fotka nebo motiv na míru v interiérové kvalitě.", href: "/tisk-fotoobrazu", cta: "Projít fotoobrazy" },
+      { title: "Na sklo a příčky", text: "Kde má prosvítat světlo, řešíme mléčné a děrované fólie.", href: "/polepy/interierove-polepy", cta: "Projít interiérové polepy" },
+    ],
+    band: {
+      title: "Máte jen fotku a rozměr?",
+      text: "Stačí. Ověříme, jestli fotka na tu velikost stačí — a řekneme to dřív, než se tiskne.",
+      cta: "Poslat podklady",
+      href: "/kontakt#poptavka",
+    },
+    process: {
+      title: "Od zaměření po hotovou stěnu.",
+      steps: [
+        { title: "Zaměření", text: "Změříme šířku, výšku i překážky — zásuvky, vypínače, dveře." },
+        { title: "Podklad a kontrola", text: "Prověříme rozlišení na skutečný rozměr, ne na náhled." },
+        { title: "Tisk a nařezání", text: "Vytiskneme s přesahem a nařežeme na pruhy podle stěny." },
+        { title: "Lepení", text: "Nalepíme u vás, nebo předáme popsané pruhy s postupem." },
+      ],
+    },
+    faqTitle: "Než si objednáte tapetu",
+    faq: [
+      {
+        q: "Jaká fotka stačí na tapetu přes celou stěnu?",
+        a: "Na tapetu se díváte z metru, ne z dálky jako na billboard — potřebuje tedy víc detailu. Orientačně na stěnu 3 × 2,5 m chcete fotku aspoň kolem 20 Mpx. Pošlete originál, přepočítáme rozlišení na skutečný rozměr a řekneme to dřív, než se tiskne.",
+      },
+      {
+        q: "Musí být stěna dokonale rovná?",
+        a: "Nemusí. Vliesová tapeta drobné nerovnosti a vlasové praskliny schová. Co neschová: sypající se omítku, čerstvou vlhkost nebo mastnotu — tam je potřeba stěnu nejdřív opravit, jinak se tapeta časem pustí.",
+      },
+      {
+        q: "Dá se tapeta umýt?",
+        a: "Podle materiálu. Do chodeb, kuchyněk a provozoven volíme omyvatelný povrch nebo laminaci — otřete hadrem a nic se nestane. Do klidné kanceláře je to příplatek navíc, tak ho sami nedoporučíme.",
+      },
+      {
+        q: "Jak se tapeta jednou sundá?",
+        a: "Vliesová jde po pruzích odtáhnout nasucho a zeď většinou zůstane v pořádku. Samolepicí varianta se sundává hůř, proto ji používáme hlavně na hladké povrchy a tam, kde se s výměnou počítá.",
+      },
+      {
+        q: "Kolik tisk tapety stojí?",
+        a: "Účtuje se za metr čtvereční — cenu určuje materiál, povrchová úprava a jestli lepíme my. Pošlete rozměr stěny a fotku prostoru, vrátíme konkrétní číslo včetně lepení.",
+      },
+    ],
+    guides: [
+      { label: "Jak připravit data pro tisk", href: "/pruvodce/jak-pripravit-data-pro-tisk" },
+      { label: "Jak kvalitní fotku potřebuji na fotoobraz", href: "/pruvodce/jak-kvalitni-fotku-na-fotoobraz" },
+    ],
+    works: ["reformlab", "linealux"],
+    finalTitle: "Chcete tapetu na míru?",
+    finalCta: "Poptat tapetu",
+  },
+  {
     slug: "roll-upy",
     hub: "tisk",
     navLabel: "Roll-upy",
