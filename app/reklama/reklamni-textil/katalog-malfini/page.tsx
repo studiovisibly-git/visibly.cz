@@ -1,26 +1,28 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { CatalogBrowser } from "@/components/CatalogBrowser";
 import { Hero } from "@/components/Hero";
 import { Band, Directory, Process, SectionHead } from "@/components/Sections";
+import { getCatalog } from "@/lib/malfini";
 import { buildMetadata } from "@/lib/seo";
 import { INQUIRY_URL } from "@/lib/site";
 
-/** Katalog běží u dodavatele; `?iframe=1` je jeho režim pro vložení do stránky. */
-const CATALOG_EMBED = "https://onlinecatalog.malfini.com/visibly.cz/cs/catalog/?iframe=1";
+/** Původní katalog dodavatele — záloha, kdyby jeho API přestalo odpovídat. */
 const CATALOG_DIRECT = "https://onlinecatalog.malfini.com/visibly.cz/cs/catalog";
 
-export const metadata = {
-  ...buildMetadata({
-    title: "Online katalog firemního textilu | Visibly Opava",
-    description:
-      "Katalog trik, mikin, polokošil a pracovního oblečení k potisku. Vyberte střih, barvu a velikosti — potisk doporučíme a naceníme.",
-    path: "/reklama/reklamni-textil/katalog-malfini",
-  }),
-  /* Obsah katalogu je uvnitř iframu, takže z něj Google nic nevytěží — SEO
-     výkon necháváme na stránce Reklamní textil. Odkazy odsud ale sledovat chceme. */
-  robots: { index: false, follow: true },
-};
+/* Data se přegenerují dvakrát denně (12 h) — sortiment se mění po sezónách.
+   Next vyžaduje číselný literál, proto tu není konstanta z lib/malfini. */
+export const revalidate = 43200;
 
-export default function KatalogMalfiniPage() {
+export const metadata = buildMetadata({
+  title: "Katalog firemního textilu k potisku | Visibly Opava",
+  description:
+    "Katalog trik, mikin, polokošil a pracovního oblečení k potisku — přes 390 modelů. Vyberte střih a barvu, potisk doporučíme a naceníme.",
+  path: "/reklama/reklamni-textil/katalog-malfini",
+});
+
+export default async function KatalogMalfiniPage() {
+  const catalog = await getCatalog();
+
   return (
     <>
       <Breadcrumbs
@@ -35,34 +37,30 @@ export default function KatalogMalfiniPage() {
         variant="plain"
         displayClass="display-l"
         eyebrow="Reklamní textil · Katalog"
-        title="Online katalog firemního textilu."
-        sub="Trička, mikiny, polokošile i pracovní oblečení. Vyberte střih, barvu a velikosti — potisk doporučíme a naceníme my."
-        note="Ceny v katalogu jsou bez potisku. Kalkulaci s potiskem pošleme na míru."
+        title="Katalog firemního textilu."
+        sub="Trička, mikiny, polokošile i pracovní oblečení. Vyberte střih a barvu, potisk doporučíme a naceníme my."
+        note="Klikněte na produkt — ukážeme fotky, barvy i materiál. Ceny jsou bez potisku."
         primary={{ label: "Nechat nacenit potisk", href: INQUIRY_URL }}
         scroll={{ label: "Prohlédnout katalog", href: "#katalog" }}
       />
 
       <section className="section--tight container container--wide" id="katalog">
-        <div className="catalog" data-reveal>
-          <div className="catalog__frame">
-            <iframe
-              src={CATALOG_EMBED}
-              title="Online katalog reklamního textilu"
-              /* Katalog je hlavní obsah stránky — načítáme ho rovnou, ne až při scrollu. */
-              loading="eager"
-              allowFullScreen
-            />
+        {catalog ? (
+          <CatalogBrowser catalog={catalog} />
+        ) : (
+          /* Záloha, kdyby API dodavatele neodpovědělo — ať stránka neskončí prázdná. */
+          <div className="catalog">
+            <p className="catalog__note">
+              Katalog se teď nepodařilo načíst.{" "}
+              <a href={CATALOG_DIRECT} target="_blank" rel="noopener">
+                Otevřít katalog u dodavatele{" "}
+                <span className="arr" aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            </p>
           </div>
-          <p className="catalog__note">
-            Nenačetl se katalog, nebo se vám v něm špatně listuje?{" "}
-            <a href={CATALOG_DIRECT} target="_blank" rel="noopener">
-              Otevřít v novém okně{" "}
-              <span className="arr" aria-hidden="true">
-                ↗
-              </span>
-            </a>
-          </p>
-        </div>
+        )}
       </section>
 
       <section className="section--tight container">
