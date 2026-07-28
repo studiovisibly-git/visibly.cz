@@ -17,7 +17,7 @@ export function Media({
   sizes?: string;
   priority?: boolean;
 }) {
-  const cls = `media media--${media.variant}${className ? ` ${className}` : ""}`;
+  const cls = `media media--${media.variant}${media.blend ? " media--blend" : ""}${className ? ` ${className}` : ""}`;
 
   if (media.src?.endsWith(".mp4")) {
     return (

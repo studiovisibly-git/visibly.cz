@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+
+  images: {
+    // Produktové fotky katalogu textilu běží na doméně dodavatele.
+    remotePatterns: [{ protocol: "https", hostname: "onlinecatalog.malfini.com" }],
+  },
+
   trailingSlash: false,
   poweredByHeader: false,
   compress: true,

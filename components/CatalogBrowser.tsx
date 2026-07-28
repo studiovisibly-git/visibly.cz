@@ -32,13 +32,18 @@ const PRICE_BANDS = [
   { code: "600-", label: "nad 600 Kč", min: 600 },
 ] as const;
 
-/** Fotka produktu — u obuvi je „a" podrážka, proto primárně „c". */
-function CardImage({ product }: { product: MalfiniProduct }) {
-  const color = product.colors[0] ?? "00";
+/**
+ * Fotka produktu. U obuvi je „a" podrážka, proto primárně „c".
+ * Když je zvolený filtr barvy a produkt ji má, ukážeme rovnou tu barvu —
+ * jinak by karta lákala na bílé tričko, které jste si nevybrali.
+ */
+function CardImage({ product, preferColor }: { product: MalfiniProduct; preferColor?: string }) {
+  const color = preferColor && product.colors.includes(preferColor) ? preferColor : (product.colors[0] ?? "00");
   const [view, setView] = useState(PRIMARY_VIEW);
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
+      key={color}
       src={productImage(product.code, color, view, 480)}
       alt={`${product.subName} ${product.name}`}
       loading="lazy"
@@ -160,6 +165,29 @@ export function CatalogBrowser({
             )}
           </div>
 
+          {catalog.groups.length > 1 && (
+            <div className="cat__field">
+              <span>Komu</span>
+              <div className="cat__tabs" role="tablist" aria-label="Skupiny produktů">
+                {catalog.groups.map((g) => (
+                  <button
+                    key={g.name}
+                    role="tab"
+                    aria-selected={!query && g.name === group}
+                    className={`cat__tab${!query && g.name === group ? " is-on" : ""}`}
+                    onClick={() => {
+                      setGroup(g.name);
+                      setQuery("");
+                      setLimit(PAGE);
+                    }}
+                  >
+                    {g.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <label className="cat__field">
             <span>Hledat</span>
             <input
@@ -251,26 +279,6 @@ export function CatalogBrowser({
       </aside>
 
       <div className="cat__main">
-        {catalog.groups.length > 1 && (
-          <div className="cat__tabs" role="tablist" aria-label="Skupiny produktů">
-            {catalog.groups.map((g) => (
-              <button
-                key={g.name}
-                role="tab"
-                aria-selected={!query && g.name === group}
-                className={`cat__tab${!query && g.name === group ? " is-on" : ""}`}
-                onClick={() => {
-                  setGroup(g.name);
-                  setQuery("");
-                  setLimit(PAGE);
-                }}
-              >
-                {g.name}
-              </button>
-            ))}
-          </div>
-        )}
-
         <p className="cat__count" aria-live="polite">
           {loading
             ? "Načítám…"
@@ -283,7 +291,7 @@ export function CatalogBrowser({
           {shown.map((p) => (
             <button className="cat-card" key={p.code} onClick={() => setOpen(p)}>
               <span className="cat-card__img">
-                <CardImage product={p} />
+                <CardImage product={p} preferColor={color} />
               </span>
               <span className="cat-card__body">
                 <span className="cat-card__sub">{p.subName}</span>
@@ -309,7 +317,14 @@ export function CatalogBrowser({
         )}
       </div>
 
-      {open && <ProductModal product={open} colors={catalog.colors} onClose={() => setOpen(null)} />}
+      {open && (
+        <ProductModal
+          product={open}
+          colors={catalog.colors}
+          initialColor={color}
+          onClose={() => setOpen(null)}
+        />
+      )}
     </div>
   );
 }
@@ -317,13 +332,18 @@ export function CatalogBrowser({
 function ProductModal({
   product,
   colors,
+  initialColor,
   onClose,
 }: {
   product: MalfiniProduct;
   colors: MalfiniCatalog["colors"];
+  /** Barva zvolená ve filtru — otevřeme detail rovnou v ní. */
+  initialColor?: string;
   onClose: () => void;
 }) {
-  const [color, setColor] = useState(product.colors[0] ?? "00");
+  const [color, setColor] = useState(
+    initialColor && product.colors.includes(initialColor) ? initialColor : (product.colors[0] ?? "00"),
+  );
   const [view, setView] = useState(PRIMARY_VIEW);
   const [detail, setDetail] = useState<MalfiniDetail | null>(null);
   const [prices, setPrices] = useState<MalfiniPrice[] | null>(null);

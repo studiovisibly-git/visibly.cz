@@ -11,6 +11,8 @@ export type MediaSpec = {
   /** Náhledový obrázek videa. */
   poster?: string;
   alt?: string;
+  /** Produktová fotka na bílém — pozadí splyne s plochou (mix-blend-mode). */
+  blend?: boolean;
 };
 
 export type DirItem = {

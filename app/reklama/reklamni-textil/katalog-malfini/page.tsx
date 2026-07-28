@@ -38,10 +38,17 @@ export default async function KatalogMalfiniPage() {
       />
 
       <Hero
-        variant="plain"
+        variant="media"
         displayClass="display-l"
         eyebrow="Reklamní textil · Katalog"
         title="Katalog firemního textilu."
+        media={{
+          label: "Tričko z katalogu",
+          variant: "circle",
+          src: "https://onlinecatalog.malfini.com/image/product/819/819_96_C~w900.jpg",
+          alt: "Tričko ze sortimentu MALFINI k potisku",
+          blend: true,
+        }}
         sub="Trička, mikiny, polokošile i pracovní oblečení ze sortimentu MALFINI®. Vyberte střih a barvu, potisk doporučíme a naceníme my."
         note="Klikněte na produkt — ukážeme fotky, barvy i materiál. Ceny jsou bez potisku."
         primary={{ label: "Nechat nacenit potisk", href: INQUIRY_URL }}
