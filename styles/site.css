@@ -662,10 +662,22 @@
 /* ---------- Katalog textilu — vlastní mřížka nad API dodavatele ---------- */
 
 /* Produktové fotky mají bílé ateliérové pozadí. `multiply` ho nechá splynout
-   se šedou plochou kruhu, takže fotka sedne do webu. Jen tam, kde to dává
-   smysl — na běžné fotografie by to sedlo špatně. */
+   s plochou kruhu, takže fotka sedne do webu. Jen tam, kde to dává smysl —
+   na běžné fotografie by to sedlo špatně.
+   `isolation` drží blend uvnitř kruhu — jinak by se násobil i s tím, co je
+   pod ním (na tmavém panelu by fotka zčernala). */
+.media--blend {
+  isolation: isolate;
+}
+
 .media--blend img {
   mix-blend-mode: multiply;
+  /* Produkt je vyfocený natěsno — `cover` mu v kruhu ustřihne rukávy i lem.
+     `contain` ho vejde celý, `scale` přidá vzduch, aby se nedotýkal obruby.
+     Zmenšujeme přes scale, ne přes odsazení: obrázek je pozicovaný absolutně
+     a padding rodiče ho neposune (počítá se od padding boxu). */
+  object-fit: contain;
+  scale: 0.8;
 }
 
 /* Dvousloupcová sestava: filtry vlevo (při scrollu přilepené), mřížka vpravo. */
@@ -1527,6 +1539,132 @@
 
   .split__media {
     width: min(70%, 17rem);
+  }
+}
+
+/* ---------- Feature — tmavý panel pro hlavní akci stránky ----------
+   Jedna věc, kterou má návštěvník udělat. Tmavá plocha ji vytrhne z toku
+   světlých sekcí, takže se neztratí mezi kartami rozcestníku. */
+
+.feature {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5.5rem);
+  padding: clamp(2.25rem, 4.5vw, 4rem);
+  background: var(--ink);
+  color: var(--paper);
+  /* Parallax nadpisu jezdí do stran — ať kvůli němu nevzniká vodorovný posun. */
+  overflow: hidden;
+}
+
+.feature .eyebrow {
+  color: color-mix(in srgb, var(--paper) 62%, transparent);
+}
+
+.feature__media {
+  position: relative;
+  width: min(100%, 22rem);
+  margin-inline: auto;
+}
+
+/* Odznak na tmavém panelu musí být světlý — jinak splyne s pozadím.
+   Tenká linka mu drží obrys tam, kde přesahuje přes světlý kruh fotky. */
+.feature .spin-badge {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 0 0 2px var(--ink);
+}
+
+.feature .spin-badge svg text {
+  fill: var(--ink);
+}
+
+.feature__copy > * + * {
+  margin-top: 1.25rem;
+}
+
+.feature__title {
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+
+.feature__title .tline {
+  --amp: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.feature__title.tlines--stagger .tline:nth-child(2) {
+  margin-left: clamp(0.5rem, 2vw, 2rem);
+}
+
+.feature__title.tlines--stagger .tline:nth-child(3) {
+  margin-left: clamp(0.25rem, 1vw, 1rem);
+}
+
+.feature__text {
+  font-size: var(--fs-lead);
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 32em;
+  color: color-mix(in srgb, var(--paper) 84%, transparent);
+}
+
+.feature__points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.75rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
+.feature__points li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+/* Odškrtnutí nakreslené ze dvou hran — bez ikonového fontu. */
+.feature__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 0.7rem;
+  height: 0.38rem;
+  border-left: 2px solid var(--paper);
+  border-bottom: 2px solid var(--paper);
+  rotate: -45deg;
+}
+
+.feature__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 1.75rem;
+}
+
+.feature__note {
+  font-size: var(--fs-small);
+  font-weight: 500;
+  max-width: 40em;
+  color: color-mix(in srgb, var(--paper) 58%, transparent);
+}
+
+@media (max-width: 860px) {
+  .feature {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .feature__media {
+    width: min(100%, 15rem);
+    margin-inline: 0;
   }
 }
 
