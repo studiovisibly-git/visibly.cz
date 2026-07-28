@@ -91,6 +91,14 @@
 }
 
 /* Logo = černý kruh „visibly" + tagline pod ním (tagline absolutní, aby nezvedal řádek) */
+/* Claim pod značkou je mimo tok — aby mohl při scrollu mizet a zmenšovat se
+   bez přeskládání stránky. Nedělá si tedy místo sám a přesahuje pod hlavičku.
+   Obsah proto začíná níž; stejně na homepage i podstránkách, ať zůstane
+   zachované zarovnání H1, které jsme ladili. */
+main {
+  padding-top: 1.5rem;
+}
+
 .logo {
   position: relative;
   display: inline-flex;
@@ -369,13 +377,6 @@
     display: none;
   }
 
-  /* Claim pod značkou je mimo tok — aby mohl při scrollu mizet a zmenšovat
-     se bez přeskládání stránky. Nedělá si tedy místo sám a přesahuje pod
-     hlavičku. Na širokém displeji ho pohltí odsazení hero sekce, na úzkém
-     ale obsah začíná hned pod hlavičkou, takže mu vzduch přidáme tady. */
-  main {
-    padding-top: 1.5rem;
-  }
 
   /* Nav i CTA jsou skryté, takže v gridu zbývá logo + tlačítko Menu —
      dvousloupcová mřížka a zarovnání doprava. */
@@ -448,6 +449,8 @@
 /* ---------- Breadcrumbs ---------- */
 
 .breadcrumbs {
+  /* První obsah podstránek, a tedy nejblíž claimu pod značkou. */
+  padding-top: 0.75rem;
   font-size: var(--fs-eyebrow);
   font-weight: 700;
 }
@@ -781,6 +784,30 @@
    na běžné fotografie by to sedlo špatně.
    `isolation` drží blend uvnitř kruhu — jinak by se násobil i s tím, co je
    pod ním (na tmavém panelu by fotka zčernala). */
+/* Mapa v kruhu. Google si do rohů rámu kreslí vlastní ovládání, logo
+   a odkaz na podmínky. Rám je proto větší než kruh a přesahy se ořežou —
+   měřítko mapy se tím nemění, jen se odsunou okraje za hranu. */
+.map-circle iframe {
+  position: absolute;
+  top: -30%;
+  left: -30%;
+  width: 160%;
+  height: 160%;
+  border: 0;
+}
+
+/* Mapa je cizí dokument, obarvit se zvenčí nedá. Bílá plocha by v noci
+   svítila do tmy, proto ji jemně ztlumíme — čitelnost i barvy zůstávají. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .map-circle iframe {
+    filter: brightness(0.82);
+  }
+}
+
+:root[data-theme="dark"] .map-circle iframe {
+  filter: brightness(0.82);
+}
+
 .media--blend {
   isolation: isolate;
   /* Ne --surface: ta v tmavém režimu ztmavne a multiply by fotku sežral. */
@@ -2498,34 +2525,23 @@ a.circle-chip:hover small {
   transform: scaleX(1);
 }
 
-/* Nabídka webdesignu — jediný odkaz nad drobným textem, proto snese
-   velikost sekčního nadpisu. Linka nad ním ho odděluje od mapy patičky. */
+/* Nabídka webdesignu — drobnost v patě, na místě, kde dřív stály povinné
+   odkazy. Stejný jazyk jako ostatní odkazy: najíždějící podtržení. */
 .footer__pitch {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5em;
-  margin-top: clamp(2.5rem, 6vw, 4.5rem);
-  padding-top: clamp(1.75rem, 3.5vw, 2.75rem);
-  border-top: 2px solid var(--ink);
-  font-size: var(--fs-section);
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--ink);
-}
-
-.footer__pitch-text {
   position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  color: var(--muted);
 }
 
-/* Najíždějící podtržení jako u ostatních odkazů — jen silnější, ať sedí
-   k velikosti písma. */
-.footer__pitch-text::before {
+.footer__pitch::before {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -0.06em;
+  bottom: -0.15em;
   width: 100%;
-  height: 3px;
+  height: 2px;
   background: currentColor;
   transform: scaleX(0);
   transform-origin: 0 50%;
@@ -2533,17 +2549,14 @@ a.circle-chip:hover small {
   pointer-events: none;
 }
 
-.footer__pitch:hover .footer__pitch-text::before,
-.footer__pitch:focus-visible .footer__pitch-text::before {
+.footer__pitch:hover,
+.footer__pitch:focus-visible {
+  color: var(--ink);
+}
+
+.footer__pitch:hover::before,
+.footer__pitch:focus-visible::before {
   transform: scaleX(1);
-}
-
-.footer__pitch .arr {
-  transition: translate var(--dur-fast) var(--ease-out);
-}
-
-.footer__pitch:hover .arr {
-  translate: 0.15em -0.15em;
 }
 
 .footer__legal {

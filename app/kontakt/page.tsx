@@ -4,7 +4,7 @@ import { Hero } from "@/components/Hero";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { LeadForm } from "@/components/LeadForm";
-import { Media } from "@/components/Media";
+import { MapCircle } from "@/components/MapCircle";
 import { Process, SectionHead } from "@/components/Sections";
 import { buildMetadata } from "@/lib/seo";
 import { localBusinessSchema } from "@/lib/schema";
@@ -118,7 +118,7 @@ export default function KontaktPage() {
       <section className="section section--rule container">
         <div className="split">
           <div className="split__media" data-reveal>
-            <Media media={{ label: "Kruhová mapa · Opava, Komárovská 2662/2", variant: "circle" }} />
+            <MapCircle title="Mapa — Visibly, Komárovská 2662/2, Opava" />
           </div>
           <div className="split__copy" data-reveal>
             <h2 className="h2">Najdete nás v Opavě.</h2>
