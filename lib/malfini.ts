@@ -44,7 +44,10 @@ export type MalfiniCatalog = {
 };
 
 /** Filtry, které nabízíme v UI. Víc jich API umí, tyhle dávají smysl zákazníkovi. */
-export type CatalogFilters = { category?: string; trademark?: string };
+export type CatalogFilters = { category?: string; trademark?: string; color?: string };
+
+/** Nejnižší cena produktu (bez DPH) podle kódu — pro filtr a štítek na kartě. */
+export type PriceIndex = Record<string, number>;
 
 /** Cena a dostupnost jedné velikosti. */
 export type MalfiniPrice = {
@@ -71,8 +74,14 @@ export type MalfiniDetail = {
 const cs = (v: Localized | string | undefined | null): string =>
   typeof v === "string" ? v : (v?.cs ?? "");
 
+/**
+ * Hlavní pohled na produkt. API vrací pohledy v pořadí a „c" je konzistentně
+ * první — u obuvi je to bota z boku, kdežto „a" je podrážka.
+ */
+export const PRIMARY_VIEW = "c";
+
 /** URL fotky produktu. `view` je pohled (a/b/c/e…), `width` šířka v px. */
-export function productImage(code: string, colorCode: string, view = "a", width = 640): string {
+export function productImage(code: string, colorCode: string, view = PRIMARY_VIEW, width = 640): string {
   return `${HOST}/image/product/${code}/${code}_${colorCode}_${view}~w${width}.jpg`;
 }
 
@@ -81,9 +90,18 @@ export function fileUrl(path: string): string {
   return `${HOST}/file/${path}`;
 }
 
-/** Filtry, které vůbec ukazujeme — zbylých ~20 facetů je na katalog k potisku
+/** Filtry, které vůbec ukazujeme — zbylých ~19 facetů je na katalog k potisku
  *  příliš podrobných (šířka obuvi, bezpečnostní kategorie…). */
-const UI_FACETS = ["category", "trademark"];
+const UI_FACETS = ["category", "trademark", "color"];
+
+/**
+ * Sortiment, který na web nepatří — propagační a obalový materiál.
+ * Skrýváme jak produkty, tak celé skupiny i volbu ve filtru.
+ */
+const HIDDEN_CATEGORIES = ["promotional-materials"];
+const HIDDEN_GROUPS = ["PROPAGAČNÍ MATERIÁL", "OBALOVÝ MATERIÁL"];
+
+const isHiddenGroup = (name: string) => HIDDEN_GROUPS.includes(name.trim().toUpperCase());
 
 /**
  * Katalog — skupiny, produkty, barvy a nabídka filtrů.
@@ -95,6 +113,7 @@ export async function getCatalog(filters: CatalogFilters = {}): Promise<MalfiniC
     const qs = new URLSearchParams();
     if (filters.category) qs.set("category", filters.category);
     if (filters.trademark) qs.set("trademark", filters.trademark);
+    if (filters.color) qs.set("color", filters.color);
     const url = `${API}/product${qs.toString() ? `?${qs}` : ""}`;
 
     const res = await fetch(url, { next: { revalidate: CATALOG_REVALIDATE } });
@@ -112,7 +131,7 @@ export async function getCatalog(filters: CatalogFilters = {}): Promise<MalfiniC
           colors: (p.colors as string[]) ?? [],
         })),
       }))
-      .filter((g: MalfiniGroup) => g.products.length > 0);
+      .filter((g: MalfiniGroup) => g.products.length > 0 && !isHiddenGroup(g.name));
 
     const colors: Record<string, MalfiniColor> = {};
     for (const [code, c] of Object.entries<Record<string, unknown>>(raw.color ?? {})) {
@@ -126,7 +145,12 @@ export async function getCatalog(filters: CatalogFilters = {}): Promise<MalfiniC
         code: String(f.code),
         name: cs(f.name as Localized),
         options: ((f.options as Record<string, unknown>[]) ?? [])
-          .filter((o) => o.isValid !== false && Number(o.count ?? 0) > 0)
+          .filter(
+            (o) =>
+              o.isValid !== false &&
+              Number(o.count ?? 0) > 0 &&
+              !HIDDEN_CATEGORIES.includes(String(o.code)),
+          )
           .map((o) => ({
             code: String(o.code ?? ""),
             name: cs(o.name as Localized),
@@ -143,6 +167,32 @@ export async function getCatalog(filters: CatalogFilters = {}): Promise<MalfiniC
   } catch {
     return null;
   }
+}
+
+/**
+ * Nejnižší cena každého produktu. API filtr podle ceny nemá — nemá ho ani
+ * původní katalog dodavatele — takže si index postavíme sami a filtrujeme
+ * podle něj na klientovi. Souběžnost 20 zvládne celý katalog za ~6 s
+ * a výsledek se drží v cache stejně dlouho jako katalog.
+ */
+export async function getPriceIndex(catalog: MalfiniCatalog): Promise<PriceIndex> {
+  const codes = [...new Set(catalog.groups.flatMap((g) => g.products.map((p) => p.code)))];
+  const index: PriceIndex = {};
+  const BATCH = 20;
+
+  for (let i = 0; i < codes.length; i += BATCH) {
+    const slice = codes.slice(i, i + BATCH);
+    const results = await Promise.all(
+      slice.map(async (code) => {
+        const prices = await getPrices(code);
+        if (!prices || prices.length === 0) return null;
+        return [code, Math.min(...prices.map((p) => p.value))] as const;
+      }),
+    );
+    for (const r of results) if (r) index[r[0]] = r[1];
+  }
+
+  return index;
 }
 
 /** Ceny a dostupnost po velikostech. Bez nich zákazník netuší, na čem je. */

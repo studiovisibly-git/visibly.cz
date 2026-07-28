@@ -12,14 +12,16 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const category = searchParams.get("category") ?? "";
   const trademark = searchParams.get("trademark") ?? "";
+  const color = searchParams.get("color") ?? "";
 
-  if ((category && !SAFE.test(category)) || (trademark && !SAFE.test(trademark))) {
+  if ([category, trademark, color].some((v) => v && !SAFE.test(v))) {
     return Response.json({ error: "bad filter" }, { status: 400 });
   }
 
   const catalog = await getCatalog({
     category: category || undefined,
     trademark: trademark || undefined,
+    color: color || undefined,
   });
   if (!catalog) return Response.json({ error: "unavailable" }, { status: 502 });
 
