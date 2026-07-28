@@ -661,38 +661,56 @@
 
 /* ---------- Katalog textilu — vlastní mřížka nad API dodavatele ---------- */
 
-/* Filtry — typ oblečení a značka jdou přes API, hledání je lokální. */
-.cat__filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.cat__select {
+/* Dvousloupcová sestava: filtry vlevo (při scrollu přilepené), mřížka vpravo. */
+.cat {
   display: grid;
-  gap: 0.4rem;
-  min-width: 12rem;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
 }
 
-.cat__select--search {
-  min-width: min(18rem, 100%);
-  flex: 1;
+.cat__side-inner {
+  position: sticky;
+  /* Pod lepkavou hlavičkou webu (103 px) + trocha vzduchu. */
+  top: 7.5rem;
+  display: grid;
+  gap: 1rem;
+  max-height: calc(100vh - 9rem);
+  overflow-y: auto;
+  padding-right: 0.25rem;
 }
 
-.cat__select > span {
+.cat__side-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cat__side-title {
   font-size: var(--fs-eyebrow);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.cat__select select,
-.cat__select input {
+.cat__field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.cat__field > span {
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cat__field select,
+.cat__field input {
   border: 2px solid var(--ink);
   border-radius: var(--radius-btn);
-  padding: 0.55rem 0.9rem;
+  padding: 0.5rem 0.75rem;
   font: inherit;
   font-size: 0.9375rem;
   font-weight: 700;
@@ -701,12 +719,19 @@
   width: 100%;
 }
 
+.cat__hint {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: rgb(22 22 22 / 0.63);
+  line-height: 1.35;
+}
+
 .cat__reset {
   border: 0;
   background: transparent;
-  padding: 0.55rem 0;
+  padding: 0;
   font: inherit;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--ink);
   text-decoration: underline;
@@ -714,13 +739,23 @@
   cursor: pointer;
 }
 
-.cat__bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem 2rem;
-  margin-bottom: 1.25rem;
+/* Mobil a tablet: filtry nad mřížkou, bez lepení. */
+@media (max-width: 900px) {
+  .cat {
+    grid-template-columns: 1fr;
+  }
+
+  .cat__side-inner {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    align-items: end;
+  }
+
+  .cat__side-head {
+    grid-column: 1 / -1;
+  }
 }
 
 .cat__tabs {
@@ -843,6 +878,14 @@
   font-weight: 700;
   color: rgb(22 22 22 / 0.63);
   margin-top: 0.35rem;
+}
+
+.cat-card__price {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 0.5rem;
 }
 
 .cat__more {

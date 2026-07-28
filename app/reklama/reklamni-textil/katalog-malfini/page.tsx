@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CatalogBrowser } from "@/components/CatalogBrowser";
 import { Hero } from "@/components/Hero";
 import { Band, Directory, Process, SectionHead } from "@/components/Sections";
-import { getCatalog } from "@/lib/malfini";
+import { getCatalog, getPriceIndex } from "@/lib/malfini";
 import { buildMetadata } from "@/lib/seo";
 import { INQUIRY_URL } from "@/lib/site";
 
@@ -22,6 +22,10 @@ export const metadata = buildMetadata({
 
 export default async function KatalogMalfiniPage() {
   const catalog = await getCatalog();
+  /* Ceny se tahají po produktech (API nemá hromadný endpoint ani filtr ceny).
+     Stavíme je jednou při generování stránky — pak jsou v ceníku na kartách
+     i ve filtru okamžitě. */
+  const priceIndex = catalog ? await getPriceIndex(catalog) : {};
 
   return (
     <>
@@ -46,7 +50,7 @@ export default async function KatalogMalfiniPage() {
 
       <section className="section--tight container container--wide" id="katalog">
         {catalog ? (
-          <CatalogBrowser catalog={catalog} />
+          <CatalogBrowser catalog={catalog} priceIndex={priceIndex} />
         ) : (
           /* Záloha, kdyby API dodavatele neodpovědělo — ať stránka neskončí prázdná. */
           <div className="catalog">
