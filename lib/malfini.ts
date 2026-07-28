@@ -34,9 +34,24 @@ export type MalfiniGroup = {
 
 export type MalfiniColor = { code: string; name: string };
 
+export type MalfiniFacetOption = { code: string; name: string; count: number };
+export type MalfiniFacet = { code: string; name: string; options: MalfiniFacetOption[] };
+
 export type MalfiniCatalog = {
   groups: MalfiniGroup[];
   colors: Record<string, MalfiniColor>;
+  facets: MalfiniFacet[];
+};
+
+/** Filtry, které nabízíme v UI. Víc jich API umí, tyhle dávají smysl zákazníkovi. */
+export type CatalogFilters = { category?: string; trademark?: string };
+
+/** Cena a dostupnost jedné velikosti. */
+export type MalfiniPrice = {
+  size: string;
+  value: number;
+  valueWithVat: number;
+  availability: number;
 };
 
 export type MalfiniAttribute = { title: string; text: string };
@@ -66,10 +81,23 @@ export function fileUrl(path: string): string {
   return `${HOST}/file/${path}`;
 }
 
-/** Celý katalog — skupiny, produkty a číselník barev. */
-export async function getCatalog(): Promise<MalfiniCatalog | null> {
+/** Filtry, které vůbec ukazujeme — zbylých ~20 facetů je na katalog k potisku
+ *  příliš podrobných (šířka obuvi, bezpečnostní kategorie…). */
+const UI_FACETS = ["category", "trademark"];
+
+/**
+ * Katalog — skupiny, produkty, barvy a nabídka filtrů.
+ * Filtrování probíhá na straně API: seznam produktů sám o sobě neobsahuje
+ * kategorii ani značku, takže po nich filtrovat lokálně nejde.
+ */
+export async function getCatalog(filters: CatalogFilters = {}): Promise<MalfiniCatalog | null> {
   try {
-    const res = await fetch(`${API}/product`, { next: { revalidate: CATALOG_REVALIDATE } });
+    const qs = new URLSearchParams();
+    if (filters.category) qs.set("category", filters.category);
+    if (filters.trademark) qs.set("trademark", filters.trademark);
+    const url = `${API}/product${qs.toString() ? `?${qs}` : ""}`;
+
+    const res = await fetch(url, { next: { revalidate: CATALOG_REVALIDATE } });
     if (!res.ok) return null;
     const raw = await res.json();
 
@@ -92,7 +120,53 @@ export async function getCatalog(): Promise<MalfiniCatalog | null> {
       colors[code] = { code, name: cs(c.name as Localized) };
     }
 
-    return { groups, colors };
+    const facets: MalfiniFacet[] = (raw.facets ?? [])
+      .filter((f: Record<string, unknown>) => UI_FACETS.includes(String(f.code)))
+      .map((f: Record<string, unknown>) => ({
+        code: String(f.code),
+        name: cs(f.name as Localized),
+        options: ((f.options as Record<string, unknown>[]) ?? [])
+          .filter((o) => o.isValid !== false && Number(o.count ?? 0) > 0)
+          .map((o) => ({
+            code: String(o.code ?? ""),
+            name: cs(o.name as Localized),
+            count: Number(o.count ?? 0),
+          })),
+      }))
+      /* Pořadí jako v UI_FACETS — kategorie první, značka druhá. */
+      .sort(
+        (a: MalfiniFacet, b: MalfiniFacet) =>
+          UI_FACETS.indexOf(a.code) - UI_FACETS.indexOf(b.code),
+      );
+
+    return { groups, colors, facets };
+  } catch {
+    return null;
+  }
+}
+
+/** Ceny a dostupnost po velikostech. Bez nich zákazník netuší, na čem je. */
+export async function getPrices(code: string): Promise<MalfiniPrice[] | null> {
+  try {
+    const res = await fetch(`${API}/product/${encodeURIComponent(code)}/price/CZK`, {
+      next: { revalidate: CATALOG_REVALIDATE },
+    });
+    if (!res.ok) return null;
+    const raw = await res.json();
+    if (!Array.isArray(raw)) return null;
+
+    return raw
+      .map((r: Record<string, unknown>) => {
+        /* `prices` je ceník podle odebraného množství — bereme první stupeň. */
+        const p = ((r.prices as Record<string, unknown>[]) ?? [])[0] ?? {};
+        return {
+          size: cs(r.size as Localized),
+          value: Number(p.value ?? 0),
+          valueWithVat: Number(p.valueWithVat ?? 0),
+          availability: Number(r.availability ?? 0),
+        };
+      })
+      .filter((p: MalfiniPrice) => p.size && p.value > 0);
   } catch {
     return null;
   }

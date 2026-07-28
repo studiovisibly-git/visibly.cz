@@ -8,17 +8,63 @@ import {
   productImage,
   type MalfiniCatalog,
   type MalfiniDetail,
+  type MalfiniPrice,
   type MalfiniProduct,
 } from "@/lib/malfini";
 
 /** Kolik produktů ukázat, než si uživatel řekne o víc. */
 const PAGE = 24;
 
-export function CatalogBrowser({ catalog }: { catalog: MalfiniCatalog }) {
-  const [group, setGroup] = useState(catalog.groups[0]?.name ?? "");
+const czk = new Intl.NumberFormat("cs-CZ", {
+  style: "currency",
+  currency: "CZK",
+  maximumFractionDigits: 0,
+});
+
+export function CatalogBrowser({ catalog: initial }: { catalog: MalfiniCatalog }) {
+  const [catalog, setCatalog] = useState(initial);
+  const [category, setCategory] = useState("");
+  const [trademark, setTrademark] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [group, setGroup] = useState(initial.groups[0]?.name ?? "");
   const [query, setQuery] = useState("");
   const [limit, setLimit] = useState(PAGE);
   const [open, setOpen] = useState<MalfiniProduct | null>(null);
+
+  /* Kategorii a značku umí odfiltrovat jen API — seznam produktů tyhle
+     údaje neobsahuje. Při změně proto natáhneme nová data. */
+  useEffect(() => {
+    if (!category && !trademark) {
+      setCatalog(initial);
+      setGroup((g) => (initial.groups.some((x) => x.name === g) ? g : (initial.groups[0]?.name ?? "")));
+      return;
+    }
+    let alive = true;
+    setLoading(true);
+    const qs = new URLSearchParams();
+    if (category) qs.set("category", category);
+    if (trademark) qs.set("trademark", trademark);
+
+    fetch(`/api/katalog/produkty?${qs}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((c: MalfiniCatalog) => {
+        if (!alive) return;
+        setCatalog(c);
+        setGroup((g) => (c.groups.some((x) => x.name === g) ? g : (c.groups[0]?.name ?? "")));
+        setLimit(PAGE);
+      })
+      .catch(() => alive && setCatalog({ ...initial, groups: [] }))
+      .finally(() => alive && setLoading(false));
+
+    return () => {
+      alive = false;
+    };
+  }, [category, trademark, initial]);
+
+  const facet = (code: string) => catalog.facets.find((f) => f.code === code) ?? initial.facets.find((f) => f.code === code);
+  const categories = facet("category")?.options ?? [];
+  const brands = facet("trademark")?.options ?? [];
 
   const products = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -35,10 +81,78 @@ export function CatalogBrowser({ catalog }: { catalog: MalfiniCatalog }) {
   }, [catalog, group, query]);
 
   const shown = products.slice(0, limit);
+  const filtered = Boolean(category || trademark || query);
 
   return (
     <div className="cat">
-      <div className="cat__bar">
+      <div className="cat__filters">
+        <label className="cat__select">
+          <span>Typ oblečení</span>
+          <select
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              setQuery("");
+              setLimit(PAGE);
+            }}
+          >
+            <option value="">Vše</option>
+            {categories.map((o) => (
+              <option key={o.code} value={o.code}>
+                {o.name}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="cat__select">
+          <span>Značka</span>
+          <select
+            value={trademark}
+            onChange={(e) => {
+              setTrademark(e.target.value);
+              setQuery("");
+              setLimit(PAGE);
+            }}
+          >
+            <option value="">Všechny</option>
+            {brands.map((o) => (
+              <option key={o.code} value={o.code}>
+                {o.name}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="cat__select cat__select--search">
+          <span>Hledat</span>
+          <input
+            type="search"
+            placeholder="Název nebo kód"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setLimit(PAGE);
+            }}
+          />
+        </label>
+
+        {filtered && (
+          <button
+            className="cat__reset"
+            onClick={() => {
+              setCategory("");
+              setTrademark("");
+              setQuery("");
+              setLimit(PAGE);
+            }}
+          >
+            Zrušit filtry
+          </button>
+        )}
+      </div>
+
+      {catalog.groups.length > 1 && (
         <div className="cat__tabs" role="tablist" aria-label="Skupiny produktů">
           {catalog.groups.map((g) => (
             <button
@@ -56,25 +170,14 @@ export function CatalogBrowser({ catalog }: { catalog: MalfiniCatalog }) {
             </button>
           ))}
         </div>
+      )}
 
-        <label className="cat__search">
-          <span className="sr-only">Hledat v katalogu</span>
-          <input
-            type="search"
-            placeholder="Hledat — název nebo kód"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setLimit(PAGE);
-            }}
-          />
-        </label>
-      </div>
-
-      <p className="cat__count">
-        {products.length === 0
-          ? "Nic jsme nenašli. Zkuste jiný název nebo kód."
-          : `${products.length} ${products.length === 1 ? "produkt" : products.length < 5 ? "produkty" : "produktů"}`}
+      <p className="cat__count" aria-live="polite">
+        {loading
+          ? "Načítám…"
+          : products.length === 0
+            ? "Nic neodpovídá. Zkuste jiný filtr nebo název."
+            : `${products.length} ${products.length === 1 ? "produkt" : products.length < 5 ? "produkty" : "produktů"}`}
       </p>
 
       <div className="cat__grid">
@@ -127,6 +230,7 @@ function ProductModal({
   const [color, setColor] = useState(product.colors[0] ?? "00");
   const [view, setView] = useState("a");
   const [detail, setDetail] = useState<MalfiniDetail | null>(null);
+  const [prices, setPrices] = useState<MalfiniPrice[] | null>(null);
   const [failed, setFailed] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -160,7 +264,21 @@ function ProductModal({
     };
   }, [product.code, color]);
 
+  /* Ceny jsou na produkt, ne na barvu — načítáme je jen jednou. */
+  useEffect(() => {
+    let alive = true;
+    setPrices(null);
+    fetch(`/api/katalog/ceny?code=${encodeURIComponent(product.code)}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((p: MalfiniPrice[]) => alive && setPrices(p))
+      .catch(() => alive && setPrices([]));
+    return () => {
+      alive = false;
+    };
+  }, [product.code]);
+
   const colorName = colors[color]?.name ?? "";
+  const from = prices && prices.length > 0 ? Math.min(...prices.map((p) => p.value)) : null;
 
   return (
     <div className="modal" role="dialog" aria-modal="true" aria-label={`${product.subName} ${product.name}`}>
@@ -203,6 +321,13 @@ function ProductModal({
             {colorName && <> · barva {colorName}</>}
           </p>
 
+          {from !== null && (
+            <p className="modal__price">
+              od <strong>{czk.format(from)}</strong> bez DPH / kus
+              <span className="modal__price-note">samotný textil, bez potisku</span>
+            </p>
+          )}
+
           <div className="modal__colors">
             <span className="modal__label">Barvy ({product.colors.length})</span>
             <div className="modal__swatches">
@@ -221,6 +346,34 @@ function ProductModal({
               ))}
             </div>
           </div>
+
+          {prices && prices.length > 0 && (
+            <div className="modal__sizes">
+              <span className="modal__label">Velikosti, ceny a sklad</span>
+              <div className="modal__table-wrap">
+                <table className="modal__table">
+                  <thead>
+                    <tr>
+                      <th>Velikost</th>
+                      <th>Bez DPH</th>
+                      <th>S DPH</th>
+                      <th>Skladem</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {prices.map((p) => (
+                      <tr key={p.size}>
+                        <td>{p.size}</td>
+                        <td>{czk.format(p.value)}</td>
+                        <td>{czk.format(p.valueWithVat)}</td>
+                        <td>{p.availability > 0 ? `${p.availability.toLocaleString("cs-CZ")} ks` : "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
           {failed && <p className="modal__note">Podrobnosti se teď nepodařilo načíst — kód produktu ale platí.</p>}
 
