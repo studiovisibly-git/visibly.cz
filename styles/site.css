@@ -115,6 +115,7 @@
   width: 100%;
   height: 100%;
   display: block;
+  filter: var(--logo-filter);
 }
 
 .logo__tag {
@@ -189,7 +190,9 @@
   background: var(--paper);
   border-radius: 8px;
   padding: 1.1rem 1.4rem 1.2rem;
-  box-shadow: 0 18px 60px -18px rgb(0 0 0 / 0.22);
+  /* Stín odděluje rozbalené menu na světlém pozadí. V tmavém režimu je
+     černý stín na tmavé stránce neviditelný, hranu proto drží linka. */
+  box-shadow: var(--shadow), inset 0 0 0 1px var(--line);
   opacity: 0;
   visibility: hidden;
   translate: -50% 8px;
@@ -251,6 +254,88 @@
   justify-self: end;
 }
 
+/* Přepínač vzhledu vedle CTA — třetí sloupec mřížky drží obojí. */
+.header__actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ---------- Přepínač světlý / tmavý ---------- */
+
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--ink) 22%, transparent);
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.theme-toggle__icons {
+  display: grid;
+  place-items: center;
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.theme-toggle__label {
+  display: none;
+}
+
+/* Ikona ukazuje režim, ve kterém web právě je — ne ten, na který klik
+   přepne. Řídí ji stejné podmínky jako paletu, takže na to není potřeba JS
+   a nebliká to při načtení. */
+.theme-toggle__moon {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle__sun {
+    display: none;
+  }
+
+  :root:not([data-theme="light"]) .theme-toggle__moon {
+    display: block;
+  }
+}
+
+:root[data-theme="dark"] .theme-toggle__sun {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle__moon {
+  display: block;
+}
+
+/* Varianta s popiskem — v mobilním menu je místo a jméno stavu pomůže. */
+.theme-toggle--wide {
+  width: auto;
+  padding-inline: 1rem;
+  border-radius: var(--radius-btn);
+}
+
+.theme-toggle--wide .theme-toggle__label {
+  display: inline;
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
 /* Mobilní menu — čistý textový toggle bez rámečku (jako živý web) */
 .nav-toggle {
   display: none;
@@ -266,7 +351,8 @@
 
 @media (max-width: 960px) {
   .nav,
-  .header__cta {
+  .header__cta,
+  .header__actions {
     display: none;
   }
 
@@ -303,6 +389,12 @@
     align-items: center;
     min-height: 3.5rem;
     margin-bottom: 2.5rem;
+  }
+
+  .mobile-menu__tools {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
   }
 
   .mobile-menu__link {
@@ -418,7 +510,9 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--muted) 75%, transparent);
+  /* Plná šedá, ne ztlumená: při 75 % vycházel kontrast 3,1:1, tedy pod AA.
+     Odstup od eyebrow nad ním drží velikost a verzálky, ne barva. */
+  color: var(--muted);
   line-height: 1.5;
 }
 
@@ -646,7 +740,7 @@
 .cursor-dot__ring {
   width: 46px;
   height: 46px;
-  background: rgb(0 0 0 / 0.12);
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
   scale: 0;
   transition: scale 0.28s var(--ease-out);
 }
@@ -668,6 +762,8 @@
    pod ním (na tmavém panelu by fotka zčernala). */
 .media--blend {
   isolation: isolate;
+  /* Ne --surface: ta v tmavém režimu ztmavne a multiply by fotku sežral. */
+  background: var(--plate);
 }
 
 .media--blend img {
@@ -733,7 +829,7 @@
   appearance: none;
   -webkit-appearance: none;
   border: 0;
-  box-shadow: inset 0 0 0 1px rgb(22 22 22 / 0.22);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 22%, transparent);
   border-radius: 6px;
   padding: 0.6rem 0.75rem;
   font: inherit;
@@ -747,7 +843,8 @@
 
 .cat__field select {
   padding-right: 2.1rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%23161616' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  /* Šipka je datové URI, které nezná currentColor — bere se proto z tokenu. */
+  background-image: var(--select-arrow);
   background-repeat: no-repeat;
   background-position: right 0.85rem center;
   background-size: 12px 8px;
@@ -756,7 +853,7 @@
 
 .cat__field select:hover,
 .cat__field input:hover {
-  box-shadow: inset 0 0 0 1px rgb(22 22 22 / 0.45);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 45%, transparent);
 }
 
 .cat__field select:focus-visible,
@@ -768,7 +865,7 @@
 .cat__hint {
   font-size: 0.8125rem;
   font-weight: 700;
-  color: rgb(22 22 22 / 0.63);
+  color: var(--muted);
   line-height: 1.35;
 }
 
@@ -812,7 +909,7 @@
 
 .cat__tab {
   border: 0;
-  box-shadow: inset 0 0 0 1px rgb(22 22 22 / 0.22);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 22%, transparent);
   background: transparent;
   color: var(--ink);
   font: inherit;
@@ -828,7 +925,7 @@
 }
 
 .cat__tab:hover {
-  box-shadow: inset 0 0 0 1px rgb(22 22 22 / 0.45);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 45%, transparent);
 }
 
 .cat__tab.is-on {
@@ -888,7 +985,10 @@
 
 .cat-card__img {
   display: block;
-  background: var(--surface);
+  /* Katalogové fotky jsou vyfocené na bílé — stejné ošetření jako kruh
+     v heru: světlý podklad a multiply, ať bílý obdélník nesvítí z karty. */
+  background: var(--plate);
+  isolation: isolate;
   aspect-ratio: 1;
   overflow: hidden;
 }
@@ -897,6 +997,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  mix-blend-mode: multiply;
   display: block;
   transition: scale 0.4s var(--ease-out);
 }
@@ -931,7 +1032,7 @@
   display: block;
   font-size: var(--fs-small);
   font-weight: 700;
-  color: rgb(22 22 22 / 0.63);
+  color: var(--muted);
   margin-top: 0.35rem;
 }
 
@@ -957,7 +1058,7 @@
   font-size: var(--fs-small);
   font-weight: 700;
   line-height: 1.45;
-  color: rgb(22 22 22 / 0.63);
+  color: var(--muted);
   max-width: 52em;
 }
 
@@ -985,7 +1086,7 @@
 .modal__backdrop {
   position: absolute;
   inset: 0;
-  background: rgb(22 22 22 / 0.55);
+  background: var(--scrim);
   animation: fade-in 0.25s var(--ease-out) both;
 }
 
@@ -1025,13 +1126,23 @@
   color: var(--paper);
 }
 
-.modal__media img {
-  width: 100%;
-  height: auto;
+/* Světlá plocha pod fotkou — stejný princip jako u karet a kruhu v heru.
+   Musí být na rodiči: multiply se míchá s tím, co je pod prvkem, ne s jeho
+   vlastním pozadím. Kdyby byla na obrázku, v tmavém režimu by zčernal. */
+.modal__stage {
   display: block;
-  background: var(--surface);
-  object-fit: contain;
+  background: var(--plate);
+  isolation: isolate;
   aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.modal__stage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  mix-blend-mode: multiply;
 }
 
 .modal__views {
@@ -1045,8 +1156,8 @@
   width: 4rem;
   height: 4rem;
   padding: 0;
-  border: 2px solid rgb(22 22 22 / 0.25);
-  background: var(--surface);
+  border: 2px solid color-mix(in srgb, var(--ink) 25%, transparent);
+  background: var(--plate);
   cursor: pointer;
   overflow: hidden;
 }
@@ -1094,7 +1205,7 @@
 .modal__price-note {
   display: block;
   font-size: var(--fs-small);
-  color: rgb(22 22 22 / 0.63);
+  color: var(--muted);
   margin-top: 0.15rem;
 }
 
@@ -1138,11 +1249,11 @@
 }
 
 .modal__table tbody tr + tr td {
-  border-top: 1px solid rgb(22 22 22 / 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
 }
 
 .modal__table td:last-child {
-  color: rgb(22 22 22 / 0.63);
+  color: var(--muted);
 }
 
 .modal__swatches {
@@ -1157,8 +1268,8 @@
   width: 2.75rem;
   height: 2.75rem;
   padding: 0;
-  border: 2px solid rgb(22 22 22 / 0.2);
-  background: var(--surface);
+  border: 2px solid color-mix(in srgb, var(--ink) 20%, transparent);
+  background: var(--plate);
   cursor: pointer;
   overflow: hidden;
 }
@@ -1548,14 +1659,17 @@
   align-items: center;
   gap: clamp(2rem, 5vw, 5.5rem);
   padding: clamp(2.25rem, 4.5vw, 4rem);
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--panel);
+  color: var(--panel-ink);
+  /* V tmavém režimu je panel jen o odstín světlejší než stránka — linka
+     mu dá hranu. Ve světlém splyne s černým pozadím, takže neruší. */
+  box-shadow: inset 0 0 0 1px var(--line);
   /* Parallax nadpisu jezdí do stran — ať kvůli němu nevzniká vodorovný posun. */
   overflow: hidden;
 }
 
 .feature .eyebrow {
-  color: color-mix(in srgb, var(--paper) 62%, transparent);
+  color: color-mix(in srgb, var(--panel-ink) 62%, transparent);
 }
 
 .feature__media {
@@ -1567,13 +1681,13 @@
 /* Odznak na tmavém panelu musí být světlý — jinak splyne s pozadím.
    Tenká linka mu drží obrys tam, kde přesahuje přes světlý kruh fotky. */
 .feature .spin-badge {
-  background: var(--paper);
-  color: var(--ink);
-  box-shadow: 0 0 0 2px var(--ink);
+  background: var(--panel-ink);
+  color: var(--panel);
+  box-shadow: 0 0 0 2px var(--panel);
 }
 
 .feature .spin-badge svg text {
-  fill: var(--ink);
+  fill: var(--panel);
 }
 
 .feature__copy > * + * {
@@ -1604,7 +1718,7 @@
   font-weight: 500;
   line-height: 1.4;
   max-width: 32em;
-  color: color-mix(in srgb, var(--paper) 84%, transparent);
+  color: color-mix(in srgb, var(--panel-ink) 84%, transparent);
 }
 
 .feature__points {
@@ -1631,8 +1745,8 @@
   top: 0.3em;
   width: 0.7rem;
   height: 0.38rem;
-  border-left: 2px solid var(--paper);
-  border-bottom: 2px solid var(--paper);
+  border-left: 2px solid var(--panel-ink);
+  border-bottom: 2px solid var(--panel-ink);
   rotate: -45deg;
 }
 
@@ -1648,7 +1762,7 @@
   font-size: var(--fs-small);
   font-weight: 500;
   max-width: 40em;
-  color: color-mix(in srgb, var(--paper) 58%, transparent);
+  color: color-mix(in srgb, var(--panel-ink) 58%, transparent);
 }
 
 @media (max-width: 860px) {
@@ -2045,8 +2159,9 @@ a.circle-chip:hover small {
   width: auto;
   height: auto;
   object-fit: contain;
-  /* jednotný tón — loga v černé, mírně ztlumená, na hover plná */
-  filter: grayscale(1);
+  /* jednotný tón — loga v černé, mírně ztlumená, na hover plná.
+     V tmavém režimu se překlopí, jinak by zmizela do pozadí. */
+  filter: grayscale(1) var(--logo-filter);
   opacity: 0.55;
   transition: opacity var(--dur-fast) var(--ease-out);
 }
@@ -2310,11 +2425,12 @@ a.circle-chip:hover small {
   width: 100%;
   height: 100%;
   display: block;
+  filter: var(--logo-filter);
 }
 
 .footer__brand p {
   margin-top: 1.2rem;
-  color: rgb(22 22 22 / 0.63);
+  color: var(--muted);
   font-weight: 700;
   font-size: 1rem;
   max-width: 24em;
@@ -2369,7 +2485,7 @@ a.circle-chip:hover small {
   gap: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 700;
-  color: rgb(22 22 22 / 0.63);
+  color: var(--muted);
 }
 
 .footer__legal a:hover {
@@ -2407,7 +2523,7 @@ a.circle-chip:hover small {
        nutí prohlížeč přepočítat blur na každý snímek scrollu — na mobilu to
        byl hlavní zdroj sekání. Šablona backdrop-filter nepoužívá vůbec. */
     background: var(--paper);
-    box-shadow: 0 -1px 0 rgb(22 22 22 / 0.08);
+    box-shadow: 0 -1px 0 color-mix(in srgb, var(--ink) 14%, transparent);
     /* Vyjede až po kousku scrollu — v hero by jen překáželo. Delší náběh
        a měkčí křivka, ať to nezaklapne, ale plynule dojede. */
     translate: 0 115%;

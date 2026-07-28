@@ -7,15 +7,65 @@
    ============================================================ */
 
 :root {
-  /* Barvy */
-  --paper: #ffffff;
-  --ink: #000000;
-  --surface: #f5f5f3;
-  --line: #e9e9e6;
+  /* ---------- Paleta ----------
+     Hodnoty žijí tady na jednom místě; níž se jen přepínají role.
+     `--ink` je popředí a `--paper` pozadí — ne „černá" a „bílá", proto
+     jde celý web překlopit výměnou dvojice. */
+
+  /* Světlý režim */
+  --l-paper: #ffffff;
+  --l-ink: #000000;
+  --l-surface: #f5f5f3;
+  --l-line: #e9e9e6;
   /* O odstín tmavší, než bývala: na šedé ploše (--surface) měla dřívější
      hodnota kontrast 4,24:1, tedy pod hranicí AA. Takhle projde na bílé
      (5,1:1) i na šedé (4,7:1) a opticky je to nerozeznatelné. */
-  --muted: #6e6e6a;
+  --l-muted: #6e6e6a;
+  --l-panel: #000000;
+  --l-panel-ink: #ffffff;
+  --l-plate: #f5f5f3;
+  --l-shadow: 0 18px 60px -18px rgb(0 0 0 / 0.22);
+  --l-scrim: rgb(0 0 0 / 0.55);
+  --l-logo-filter: none;
+  --l-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%23161616' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  /* Tmavý režim. Ani pozadí, ani text nejsou čistě černá a bílá —
+     kontrast 21:1 na velkých plochách večer pálí a text se roztéká.
+     Kontrasty: text 17:1, doprovodná šedá 7,5:1 na pozadí a 6,8:1 na
+     ploše, tedy s rezervou nad AA. */
+  --d-paper: #0f0f0e;
+  --d-ink: #f2f2ee;
+  --d-surface: #1a1a18;
+  --d-line: #2e2e2b;
+  --d-muted: #a2a29b;
+  /* Panel se ve světlém režimu vytrhne tím, že ztmavne. V tmavém to samé
+     udělá naopak — o kus světlejší plocha než stránka, plus linka. */
+  --d-panel: #1e1e1b;
+  --d-panel-ink: #f2f2ee;
+  /* Produktové fotky jsou vyfocené na bílé a splývají přes multiply.
+     Podklad proto musí zůstat světlý i v noci, jinak je násobení pohltí.
+     Oproti dni je ztlumený, ať kruh nesvítí do tmy. */
+  --d-plate: #dcdcd7;
+  --d-shadow: 0 18px 60px -18px rgb(0 0 0 / 0.75);
+  --d-scrim: rgb(0 0 0 / 0.72);
+  /* Značka i loga klientů jsou jednobarevná černá kresba — překlopí se. */
+  --d-logo-filter: invert(1);
+  --d-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%23f2f2ee' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  /* ---------- Role (výchozí = světlý režim) ---------- */
+  color-scheme: light;
+  --paper: var(--l-paper);
+  --ink: var(--l-ink);
+  --surface: var(--l-surface);
+  --line: var(--l-line);
+  --muted: var(--l-muted);
+  --panel: var(--l-panel);
+  --panel-ink: var(--l-panel-ink);
+  --plate: var(--l-plate);
+  --shadow: var(--l-shadow);
+  --scrim: var(--l-scrim);
+  --logo-filter: var(--l-logo-filter);
+  --select-arrow: var(--l-select-arrow);
 
   /* Typografie — škála 1:1 podle Circle style-guidu */
   --font-sans: var(--font-satoshi), "Satoshi", -apple-system, "Helvetica Neue", sans-serif;
@@ -42,6 +92,47 @@
   --dur-fast: 260ms;
   --dur-medium: 420ms;
   --dur-slow: 700ms;
+}
+
+/* ---------- Přepnutí režimu ----------
+   Výchozí je nastavení zařízení. Volba v menu ho přebije — proto tu jsou
+   dvě sady: `[data-theme]` chybí, dokud si uživatel nevybere.
+   Přiřazení rolí je schválně dvakrát; kdyby se to řešilo přes light-dark(),
+   starší prohlížeč by nedostal barvu vůbec a text by zmizel. Hodnoty samotné
+   zůstávají na jednom místě nahoře. */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: var(--d-paper);
+    --ink: var(--d-ink);
+    --surface: var(--d-surface);
+    --line: var(--d-line);
+    --muted: var(--d-muted);
+    --panel: var(--d-panel);
+    --panel-ink: var(--d-panel-ink);
+    --plate: var(--d-plate);
+    --shadow: var(--d-shadow);
+    --scrim: var(--d-scrim);
+    --logo-filter: var(--d-logo-filter);
+    --select-arrow: var(--d-select-arrow);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: var(--d-paper);
+  --ink: var(--d-ink);
+  --surface: var(--d-surface);
+  --line: var(--d-line);
+  --muted: var(--d-muted);
+  --panel: var(--d-panel);
+  --panel-ink: var(--d-panel-ink);
+  --plate: var(--d-plate);
+  --shadow: var(--d-shadow);
+  --scrim: var(--d-scrim);
+  --logo-filter: var(--d-logo-filter);
+  --select-arrow: var(--d-select-arrow);
 }
 
 /* ---------- Reset ---------- */
@@ -356,23 +447,25 @@ button {
   color: var(--ink);
 }
 
-/* Světlá varianta pro tmavý panel — role barev prohozené proti základu. */
+/* Varianta pro invertovaný panel — vychází z jeho dvojice, ne ze stránky.
+   Ve světlém režimu je panel černý a tlačítko bílé; v tmavém je panel
+   tmavá plocha a tlačítko světlé. Obojím směrem tedy vystoupí. */
 .btn--invert {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--panel-ink);
+  color: var(--panel);
 }
 
 .btn--invert::after {
-  border-color: var(--paper);
+  border-color: var(--panel-ink);
 }
 
 .btn--invert::before {
-  background: var(--ink);
+  background: var(--panel);
 }
 
 .btn--invert:hover,
 .btn--invert:focus-visible {
-  color: var(--paper);
+  color: var(--panel-ink);
 }
 
 .btn--ghost {
