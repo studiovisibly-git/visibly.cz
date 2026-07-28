@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { themeBootScript } from "@/components/ThemeToggle";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MobileCta } from "@/components/MobileCta";
@@ -78,9 +79,25 @@ export const metadata: Metadata = {
   },
 };
 
+/* Barva lišty prohlížeče podle režimu zařízení. Ruční volbu v menu tady
+   zohlednit nejde — metadata se generují na serveru — ale výchozí stav sedí. */
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f0f0e" },
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="cs" className={satoshi.variable}>
+    /* data-theme dopisuje skript níž ještě před vykreslením — React o tom
+       neví, proto se u <html> potlačuje hlášení o rozdílu proti serveru. */
+    <html lang="cs" className={satoshi.variable} suppressHydrationWarning>
+      <head>
+        {/* Musí běžet dřív, než se cokoli vykreslí, jinak stránka blikne
+            světlá a teprve pak ztmavne. */}
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
       <body>
         {/* Bez JS by prvky čekající na reveal zůstaly neviditelné. */}
         <noscript>

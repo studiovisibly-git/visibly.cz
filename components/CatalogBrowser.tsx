@@ -405,13 +405,18 @@ function ProductModal({
         </button>
 
         <div className="modal__media">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={productImage(product.code, color, view, 900)}
-            alt={`${product.subName} ${product.name} — ${colorName}`}
-            width={900}
-            height={900}
-          />
+          {/* Fotka potřebuje vlastní světlou plochu, na které splyne její bílé
+              pozadí. Nestačí ji dát obrázku — multiply se míchá s tím, co je
+              pod ním, ne s jeho vlastním pozadím. */}
+          <span className="modal__stage">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={productImage(product.code, color, view, 900)}
+              alt={`${product.subName} ${product.name} — ${colorName}`}
+              width={900}
+              height={900}
+            />
+          </span>
           {detail && detail.views.length > 1 && (
             <div className="modal__views">
               {detail.views.map((v) => (

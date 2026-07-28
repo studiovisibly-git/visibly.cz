@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 import { LERP, onScrollFrame } from "@/lib/motion";
 import { mainNav, studioLinks } from "@/lib/nav";
 import { INQUIRY_URL, PHONE_DISPLAY, PHONE_HREF } from "@/lib/site";
@@ -113,9 +114,12 @@ export function Header() {
             ))}
           </nav>
 
-          <Link href={INQUIRY_URL} className="btn header__cta">
-            Poptat výrobu
-          </Link>
+          <div className="header__actions">
+            <ThemeToggle />
+            <Link href={INQUIRY_URL} className="btn header__cta">
+              Poptat výrobu
+            </Link>
+          </div>
 
           <button
             className="nav-toggle"
@@ -131,9 +135,12 @@ export function Header() {
       <div className={`mobile-menu${open ? " is-open" : ""}`} id="mobile-menu" aria-hidden={!open}>
         <div className="mobile-menu__top">
           <Logo compact />
-          <button className="nav-toggle" onClick={() => setOpen(false)}>
-            Zavřít
-          </button>
+          <div className="mobile-menu__tools">
+            <ThemeToggle className="theme-toggle--wide" />
+            <button className="nav-toggle" onClick={() => setOpen(false)}>
+              Zavřít
+            </button>
+          </div>
         </div>
 
         <nav aria-label="Mobilní navigace">
