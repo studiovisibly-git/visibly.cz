@@ -122,12 +122,15 @@
   position: absolute;
   top: 100%;
   left: 2px;
-  margin-top: 8px;
+  /* `top: 100%` míří na spodek layoutového boxu (60 px), jenže značka je
+     transformem zvětšená na 76 px a přesahuje 8 px pod něj. Prvních 8 px
+     odsazení tedy jen dorovná přesah — teprve zbytek je skutečná mezera. */
+  margin-top: 30px;
   max-width: 192px;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
-  color: var(--muted);
+  color: var(--ink);
   white-space: nowrap;
   opacity: calc(1 - var(--logo-progress, 0));
   transform: translateY(calc(-6px * var(--logo-progress, 0)));
@@ -298,28 +301,38 @@
   display: none;
 }
 
-/* Ikona ukazuje režim, ve kterém web právě je — ne ten, na který klik
-   přepne. Řídí ji stejné podmínky jako paletu, takže na to není potřeba JS
+/* Ikona nabízí režim, do kterého klik přepne: ve světlém měsíc, v tmavém
+   slunce. Řídí ji stejné podmínky jako paletu, takže na to není potřeba JS
    a nebliká to při načtení. */
-.theme-toggle__moon {
+.theme-toggle__sun {
   display: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-toggle__sun {
+  :root:not([data-theme="light"]) .theme-toggle__moon {
     display: none;
   }
 
-  :root:not([data-theme="light"]) .theme-toggle__moon {
+  :root:not([data-theme="light"]) .theme-toggle__sun {
     display: block;
   }
 }
 
-:root[data-theme="dark"] .theme-toggle__sun {
+:root[data-theme="dark"] .theme-toggle__moon {
   display: none;
 }
 
-:root[data-theme="dark"] .theme-toggle__moon {
+:root[data-theme="dark"] .theme-toggle__sun {
+  display: block;
+}
+
+/* Ruční volba „světlý" na zařízení v tmavém režimu — media query výš by
+   jinak nechala svítit slunce. */
+:root[data-theme="light"] .theme-toggle__sun {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-toggle__moon {
   display: block;
 }
 
@@ -354,6 +367,14 @@
   .header__cta,
   .header__actions {
     display: none;
+  }
+
+  /* Claim pod značkou je mimo tok — aby mohl při scrollu mizet a zmenšovat
+     se bez přeskládání stránky. Nedělá si tedy místo sám a přesahuje pod
+     hlavičku. Na širokém displeji ho pohltí odsazení hero sekce, na úzkém
+     ale obsah začíná hned pod hlavičkou, takže mu vzduch přidáme tady. */
+  main {
+    padding-top: 1.5rem;
   }
 
   /* Nav i CTA jsou skryté, takže v gridu zbývá logo + tlačítko Menu —
@@ -560,7 +581,7 @@
   font-size: 1.3125rem;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--muted);
+  color: var(--ink);
   max-width: 26em;
 }
 
@@ -1434,7 +1455,7 @@
   font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.29;
-  color: var(--muted);
+  color: var(--ink);
 }
 
 /* Tablet: dvě karty vedle sebe. */
@@ -1477,7 +1498,7 @@
 .section-head p {
   margin-top: 1.2rem;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--ink);
   max-width: 36em;
 }
 
@@ -1523,7 +1544,7 @@
 
 .dir-card p {
   font-weight: 700;
-  color: var(--muted);
+  color: var(--ink);
   max-width: 28em;
 }
 
@@ -1628,7 +1649,7 @@
 .split__copy p {
   font-size: var(--fs-body);
   font-weight: 700;
-  color: var(--muted);
+  color: var(--ink);
   line-height: 1.3;
   max-width: 28em;
 }
@@ -1897,7 +1918,7 @@ a.circle-chip:hover small {
 .cta-block__text {
   margin: clamp(1rem, 2vw, 1.5rem) auto 0;
   max-width: 40em;
-  color: var(--muted);
+  color: var(--ink);
   font-weight: 700;
 }
 
@@ -1942,7 +1963,7 @@ a.circle-chip:hover small {
   margin-top: 0.5rem;
   font-size: var(--fs-small);
   font-weight: 700;
-  color: var(--muted);
+  color: var(--ink);
   line-height: 1.45;
 }
 
@@ -1974,7 +1995,7 @@ a.circle-chip:hover small {
 .edit-card p {
   font-size: var(--fs-small);
   font-weight: 700;
-  color: var(--muted);
+  color: var(--ink);
   line-height: 1.45;
 }
 
@@ -2112,7 +2133,7 @@ a.circle-chip:hover small {
 
 .work-card__meta p {
   margin-top: 0.4rem;
-  color: var(--muted);
+  color: var(--ink);
   font-weight: 700;
   font-size: var(--fs-small);
   line-height: 1.45;
@@ -2305,7 +2326,7 @@ a.circle-chip:hover small {
 .faq__a-inner {
   padding: 0 0.25rem 1.6rem;
   max-width: 46em;
-  color: var(--muted);
+  color: var(--ink);
   font-weight: 700;
   line-height: 1.5;
 }
@@ -2334,7 +2355,7 @@ a.circle-chip:hover small {
 
 .final p {
   margin: 1.75rem auto 0;
-  color: var(--muted);
+  color: var(--ink);
   font-weight: 700;
   max-width: 34em;
 }
@@ -2475,6 +2496,54 @@ a.circle-chip:hover small {
 .footer ul a:hover::before,
 .footer ul a:focus-visible::before {
   transform: scaleX(1);
+}
+
+/* Nabídka webdesignu — jediný odkaz nad drobným textem, proto snese
+   velikost sekčního nadpisu. Linka nad ním ho odděluje od mapy patičky. */
+.footer__pitch {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  padding-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  border-top: 2px solid var(--ink);
+  font-size: var(--fs-section);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.footer__pitch-text {
+  position: relative;
+}
+
+/* Najíždějící podtržení jako u ostatních odkazů — jen silnější, ať sedí
+   k velikosti písma. */
+.footer__pitch-text::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.06em;
+  width: 100%;
+  height: 3px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--dur-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.footer__pitch:hover .footer__pitch-text::before,
+.footer__pitch:focus-visible .footer__pitch-text::before {
+  transform: scaleX(1);
+}
+
+.footer__pitch .arr {
+  transition: translate var(--dur-fast) var(--ease-out);
+}
+
+.footer__pitch:hover .arr {
+  translate: 0.15em -0.15em;
 }
 
 .footer__legal {
@@ -2928,7 +2997,7 @@ a.circle-chip:hover small {
 
 .statement__cols p {
   font-weight: 700;
-  color: var(--muted);
+  color: var(--ink);
   line-height: 1.35;
 }
 
@@ -3034,7 +3103,7 @@ a.circle-chip:hover small {
 .showcase__text {
   margin-top: 0.6rem;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--ink);
   max-width: 26em;
 }
 
@@ -3052,7 +3121,7 @@ a.circle-chip:hover small {
   font-size: var(--fs-project);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--muted);
+  color: var(--ink);
   max-width: 22em;
 }
 
