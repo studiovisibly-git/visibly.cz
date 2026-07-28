@@ -21,7 +21,7 @@
 }
 
 .topbar__note {
-  color: var(--ink);
+  color: var(--muted);
   font-weight: 700;
 }
 
@@ -126,7 +126,7 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
-  color: var(--ink);
+  color: var(--muted);
   white-space: nowrap;
   opacity: calc(1 - var(--logo-progress, 0));
   transform: translateY(calc(-6px * var(--logo-progress, 0)));
@@ -466,7 +466,7 @@
   font-size: 1.3125rem;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--ink);
+  color: var(--muted);
   max-width: 26em;
 }
 
@@ -505,7 +505,7 @@
 .hero__note {
   margin-top: 1.1rem;
   font-size: 0.875rem; /* Circle mikro-label: 14/20, Bold, černý */
-  color: var(--ink);
+  color: var(--muted);
   font-weight: 700;
   line-height: 1.4;
 }
@@ -852,7 +852,7 @@
 .cat__count {
   font-size: var(--fs-small);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--muted);
   margin-bottom: 1.5rem;
 }
 
@@ -1253,7 +1253,7 @@
   margin-top: 1rem;
   font-size: var(--fs-small);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--muted);
 }
 
 .catalog__note a {
@@ -1323,7 +1323,7 @@
   font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.29;
-  color: var(--ink);
+  color: var(--muted);
 }
 
 /* Tablet: dvě karty vedle sebe. */
@@ -1377,11 +1377,6 @@
   line-height: 1.1;
 }
 
-.section-head p {
-  color: var(--ink);
-  font-weight: 700;
-}
-
 /* ---------- Directory (rozcestník) — bez rámečků, jen typografie ---------- */
 
 .directory {
@@ -1417,7 +1412,7 @@
 
 .dir-card p {
   font-weight: 700;
-  color: var(--ink);
+  color: var(--muted);
   max-width: 28em;
 }
 
@@ -1522,7 +1517,7 @@
 .split__copy p {
   font-size: var(--fs-body);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--muted);
   line-height: 1.3;
   max-width: 28em;
 }
@@ -1788,7 +1783,7 @@ a.circle-chip:hover small {
 .cta-block__text {
   margin: clamp(1rem, 2vw, 1.5rem) auto 0;
   max-width: 40em;
-  color: var(--ink);
+  color: var(--muted);
   font-weight: 700;
 }
 
@@ -1833,7 +1828,7 @@ a.circle-chip:hover small {
   margin-top: 0.5rem;
   font-size: var(--fs-small);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--muted);
   line-height: 1.45;
 }
 
@@ -1865,7 +1860,7 @@ a.circle-chip:hover small {
 .edit-card p {
   font-size: var(--fs-small);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--muted);
   line-height: 1.45;
 }
 
@@ -2003,7 +1998,7 @@ a.circle-chip:hover small {
 
 .work-card__meta p {
   margin-top: 0.4rem;
-  color: var(--ink);
+  color: var(--muted);
   font-weight: 700;
   font-size: var(--fs-small);
   line-height: 1.45;
@@ -2195,7 +2190,7 @@ a.circle-chip:hover small {
 .faq__a-inner {
   padding: 0 0.25rem 1.6rem;
   max-width: 46em;
-  color: var(--ink);
+  color: var(--muted);
   font-weight: 700;
   line-height: 1.5;
 }
@@ -2224,7 +2219,7 @@ a.circle-chip:hover small {
 
 .final p {
   margin: 1.75rem auto 0;
-  color: var(--ink);
+  color: var(--muted);
   font-weight: 700;
   max-width: 34em;
 }
@@ -2817,7 +2812,7 @@ a.circle-chip:hover small {
 
 .statement__cols p {
   font-weight: 700;
-  color: var(--ink);
+  color: var(--muted);
   line-height: 1.35;
 }
 
@@ -2923,6 +2918,7 @@ a.circle-chip:hover small {
 .showcase__text {
   margin-top: 0.6rem;
   font-weight: 700;
+  color: var(--muted);
   max-width: 26em;
 }
 
@@ -2940,6 +2936,7 @@ a.circle-chip:hover small {
   font-size: var(--fs-project);
   font-weight: 700;
   line-height: 1.2;
+  color: var(--muted);
   max-width: 22em;
 }
 
