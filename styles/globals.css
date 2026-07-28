@@ -352,6 +352,25 @@ button {
   color: var(--ink);
 }
 
+/* Světlá varianta pro tmavý panel — role barev prohozené proti základu. */
+.btn--invert {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.btn--invert::after {
+  border-color: var(--paper);
+}
+
+.btn--invert::before {
+  background: var(--ink);
+}
+
+.btn--invert:hover,
+.btn--invert:focus-visible {
+  color: var(--paper);
+}
+
 .btn--ghost {
   /* stejný jazyk jako základ — alias kvůli markupu */
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Media } from "./Media";
 import { ParallaxHeading } from "./ParallaxHeading";
-import type { DirItem, LinkItem, MediaSpec, ProcessStep } from "@/lib/types";
+import type { DirItem, FeatureBlock, LinkItem, MediaSpec, ProcessStep } from "@/lib/types";
 
 /* ---------- Hlavička sekce ---------- */
 
@@ -75,13 +75,17 @@ export function Directory({ items, cols = 2 }: { items: DirItem[]; cols?: 2 | 3 
 
 /* ---------- Rotující kruhový badge (vzor: Circle „PLAY") ---------- */
 
+/** Popisek se sází po obvodu kružnice — nad ~32 znaků se konec ořízne. */
 export function SpinBadge({ label, href }: { label: string; href: string }) {
   const id = `spin-${label.replace(/\W/g, "").slice(0, 14)}`;
   return (
     <Link href={href} className="spin-badge" aria-label={label} data-loop>
       <svg viewBox="0 0 100 100" aria-hidden="true">
         <defs>
-          <path id={id} d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none" />
+          {/* Kružnice r=40 se středem 50,50. Záměrně bez relativního „m" —
+              doplňovač nezlomitelných mezer bere „50 m" jako číslo s jednotkou
+              a nezlomitelná mezera rozbije parsování cesty (text pak zmizí). */}
+          <path id={id} d="M 10,50 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none" />
         </defs>
         <text>
           <textPath href={`#${id}`}>{label}</textPath>
@@ -91,6 +95,51 @@ export function SpinBadge({ label, href }: { label: string; href: string }) {
         ↗
       </span>
     </Link>
+  );
+}
+
+/* ---------- Feature — výrazný tmavý panel pro hlavní akci stránky ----------
+   Jedna věc, kterou má návštěvník udělat. Tmavá plocha ji vytrhne z toku
+   světlých sekcí, takže se neztratí mezi kartami rozcestníku. */
+
+export function Feature({ block }: { block: FeatureBlock }) {
+  return (
+    <section className="feature" id={block.id} data-reveal>
+      <div className="feature__media">
+        <Media media={block.media} sizes="(max-width: 860px) 60vw, 22rem" />
+        {block.badge && <SpinBadge label={block.badge} href={block.cta.href} />}
+      </div>
+
+      <div className="feature__copy">
+        <span className="eyebrow">{block.eyebrow}</span>
+        <ParallaxHeading as="h2" text={block.title} className="feature__title" stagger />
+        <p className="feature__text">{block.text}</p>
+
+        {block.points.length > 0 && (
+          <ul className="feature__points">
+            {block.points.map((point) => (
+              <li key={point}>{point}</li>
+            ))}
+          </ul>
+        )}
+
+        <div className="feature__actions">
+          <Link href={block.cta.href} className="btn btn--invert">
+            {block.cta.label}
+          </Link>
+          {block.secondary && (
+            <Link href={block.secondary.href} className="arrow-link">
+              {block.secondary.label}{" "}
+              <span className="arr" aria-hidden="true">
+                ↗
+              </span>
+            </Link>
+          )}
+        </div>
+
+        {block.note && <p className="feature__note">{block.note}</p>}
+      </div>
+    </section>
   );
 }
 

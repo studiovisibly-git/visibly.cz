@@ -27,6 +27,29 @@ export type ProcessStep = { title: string; text?: string };
 
 export type LinkItem = { label: string; href: string };
 
+/**
+ * Výrazný blok pro jednu hlavní akci stránky — něco, co se nemá ztratit
+ * mezi kartami rozcestníku (např. online katalog textilu).
+ */
+export type FeatureBlock = {
+  /** Kotva, na kterou míří scroll CTA v heru. */
+  id: string;
+  eyebrow: string;
+  title: string;
+  text: string;
+  /** Co uvnitř najdu — krátké body, ne věty. */
+  points: string[];
+  cta: LinkItem;
+  secondary?: LinkItem;
+  /** Popisek rotujícího kruhového odznaku přes fotku. */
+  badge?: string;
+  media: MediaSpec;
+  /** Text scroll CTA v heru — vede sem místo rozcestníku. */
+  scrollLabel: string;
+  /** Drobná poznámka pod tlačítky (zdroj dat, podmínky). */
+  note?: string;
+};
+
 /** SEO podstránka služby (např. /polepy/polepy-aut). */
 export type ServicePage = {
   slug: string;
@@ -42,6 +65,8 @@ export type ServicePage = {
   /** Sekce s postojem — proč to děláme takhle. */
   split: { title: string; text: string; media: MediaSpec };
   proof: { title: string; text: string }[];
+  /** Volitelný výrazný blok pod proof stripem — hlavní akce stránky. */
+  feature?: FeatureBlock;
   /** „Jakou variantu / plochu řešíte?" — interní prolinkování. */
   variantsTitle: string;
   variantsText?: string;

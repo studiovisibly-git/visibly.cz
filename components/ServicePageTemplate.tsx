@@ -8,6 +8,7 @@ import {
   Band,
   Directory,
   EditorialList,
+  Feature,
   FinalCta,
   Process,
   ProofStrip,
@@ -49,12 +50,24 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
         sub={page.intro}
         note="Stačí fotka, rozměr nebo krátký popis. Ozveme se s návrhem řešení."
         primary={{ label: page.finalCta, href: INQUIRY_URL }}
-        scroll={{ label: page.variantsTitle, href: "#varianty" }}
+        /* Když má stránka výrazný blok, vede scroll CTA k němu — je to hlavní akce. */
+        scroll={
+          page.feature
+            ? { label: page.feature.scrollLabel, href: `#${page.feature.id}` }
+            : { label: page.variantsTitle, href: "#varianty" }
+        }
         media={page.heroMedia}
       />
 
       {/* Proof */}
       <ProofStrip items={page.proof} />
+
+      {/* Hlavní akce stránky — nahoře, dřív než delší čtení */}
+      {page.feature && (
+        <section className="section--tight container">
+          <Feature block={page.feature} />
+        </section>
+      )}
 
       {/* Postoj / split */}
       <section className="section container">

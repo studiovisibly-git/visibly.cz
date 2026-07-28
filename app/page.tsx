@@ -168,7 +168,7 @@ export default function HomePage() {
           title="Jsme tiskárna a studio reklamní výroby."
           text="Klíčové výrobní kroky držíme u sebe. Díky tomu na sebe navazuje grafika, tisk, dokončení i montáž."
           cta={{ label: "Naše výroba", href: "/technologie" }}
-          badge={{ label: "Naše výroba · podívejte se · naše výroba ·", href: "/technologie" }}
+          badge={{ label: "Naše výroba · podívejte se · ", href: "/technologie" }}
         />
       </section>
 

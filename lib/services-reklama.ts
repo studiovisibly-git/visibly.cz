@@ -468,9 +468,35 @@ export const reklamaServices: ServicePage[] = [
       { title: "Kvalitní textil", text: "Střihy a gramáže, které vydrží praní i práci." },
       { title: "Přesná pozice", text: "Logo tam, kde má být — na hrudi, zádech i rukávu." },
     ],
+    feature: {
+      id: "katalog",
+      eyebrow: "Online katalog · MALFINI®",
+      title: "Vyberte střih a barvu online.",
+      text:
+        "Trička, mikiny, polokošile i pracovní oblečení — všechno, co umíme potisknout, na jednom místě. Vy si vyberete střih a barvu, my doporučíme technologii potisku a naceníme.",
+      points: [
+        "390+ modelů",
+        "Filtr podle typu, značky, barvy i ceny",
+        "Velikosti a dostupnost u každého kusu",
+      ],
+      cta: { label: "Otevřít katalog", href: "/reklama/reklamni-textil/katalog-malfini" },
+      secondary: { label: "Vím, co chci — rovnou poptat", href: "/kontakt#poptavka" },
+      badge: "Otevřít katalog · 390+ modelů · ",
+      scrollLabel: "Prohlédnout katalog",
+      note:
+        "Sortiment, fotografie i ceny jsou z katalogu značky MALFINI®, se kterou dlouhodobě pracujeme. Potisk, kalkulaci a předání zajišťuje Visibly.",
+      media: {
+        label: "Tričko z katalogu",
+        variant: "circle",
+        src: "https://onlinecatalog.malfini.com/image/product/819/819_96_C~w900.jpg",
+        alt: "Tričko ze sortimentu MALFINI k potisku",
+        blend: true,
+      },
+    },
     variantsTitle: "Pro koho textil chystáte?",
+    variantsText:
+      "Podle nasazení se liší střih, gramáž i způsob potisku. Napište, kde se bude textil nosit — doporučíme, co vydrží praní i provoz.",
     variants: [
-      { title: "Chci si vybrat v katalogu", text: "Trička, mikiny i pracovní oblečení online.", href: "/reklama/reklamni-textil/katalog-malfini", cta: "Otevřít katalog" },
       { title: "Pro tým na provozovně", text: "Trička a polokošile pro každodenní nošení.", href: "/kontakt#poptavka", cta: "Poptat trička" },
       { title: "Pro řemeslníky v terénu", text: "Pracovní oblečení, které vydrží zátěž.", href: "/kontakt#poptavka", cta: "Poptat pracovní textil" },
       { title: "Na akci či event", text: "Rychlá série pro jednorázovou příležitost.", href: "/kontakt#poptavka", cta: "Stihnout akci" },
