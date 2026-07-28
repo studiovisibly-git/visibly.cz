@@ -90,6 +90,15 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Web je sám ukázka práce — nabídka patří nad drobný text, ne mezi
+            povinné odkazy. Ty se posunuly dolů k copyrightu. */}
+        <Link href="/webdesign" className="footer__pitch">
+          <span className="footer__pitch-text">Líbí se vám web? Taky ho umíme vyrobit.</span>
+          <span className="arr" aria-hidden="true">
+            ↗
+          </span>
+        </Link>
+
         <div className="footer__legal">
           <span>© {new Date().getFullYear()} Visibly — tiskárna a reklamní studio, Opava</span>
           <span>
