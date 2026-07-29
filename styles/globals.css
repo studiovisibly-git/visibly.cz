@@ -87,6 +87,15 @@
   --grid-gap: clamp(1.5rem, 3vw, 3.125rem);
   --radius-btn: 5px;
 
+  /* Výška bloku nad hero — oznamovací lišta (48), hlavička (103) a odsazení
+     obsahu pod přesahujícím claimem (24). Hero z okna odečítá právě tolik,
+     aby se jeho spodní blok vešel nad okraj obrazovky. */
+  --nad-hero: 175px;
+  /* Skutečná výška drobečkové navigace včetně jejího odsazení. Hero se o ni
+     na podstránkách vytahuje nahoru, aby H1 začínal ve stejné výšce jako
+     na homepage. Když se změní jedno, musí se změnit i druhé — proto token. */
+  --drobecky-h: 66px;
+
   /* Motion — 1:1 živý visibly.cz */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 260ms;
