@@ -699,16 +699,28 @@ main {
      stejně; liší se jen velikost H1 (display-xl vs display-l). */
   .hero--home,
   .hero--media {
-    padding-bottom: clamp(9rem, 15vw, 13rem);
-    min-height: 88vh;
+    /* Rezerva pro ukotvený spodní blok: nejvyšší varianta má 155 px a sedí
+       58 px nade dnem, tedy 213 px. Zbytek je vzduch, aby se čtyřřádkový H1
+       na nízkém okně o doplňkový text ani neotřel — při 13rem (208 px) se
+       obojí překrývalo. Spodní mez musí být 14rem: při 1080 px šířky by
+       prostřední člen (18vw) spadl na 194 px, tedy pod výšku bloku. */
+    padding-bottom: clamp(14rem, 18vw, 15rem);
+    /* Ne pevných 88 % okna: hero vyplní to, co z okna zbude pod lištou,
+       hlavičkou a odsazením obsahu. S 88 % se výška všeho nad hero
+       nepočítala, součet přerostl obrazovku a spodní blok s doplňkovým
+       textem spadl pod okraj. */
+    min-height: calc(100svh - var(--nad-hero));
   }
 
-  /* Podstránky mají nad hero drobečky (54 px), které HP nemá. Vytáhneme hero
+  /* Podstránky mají nad hero drobečky, které HP nemá. Vytáhneme hero přesně
      o jejich výšku nahoru, aby začínal (a při min-height i končil) ve stejné
      výšce jako HP — H1 nahoře i doplňkový blok dole tak sedí 1:1. Drobečky se
-     vejdou do horního odsazení hero, nadpis do nich nezasahuje. */
-  .hero--media {
-    margin-top: -3.375rem;
+     vejdou do horního odsazení hero, nadpis do nich nezasahuje.
+     Platí i pro plain variantu (kontakt, realizace, průvodce): ta sice nemá
+     kruh ani min-height, ale H1 má začínat ve stejné výšce jako všude jinde. */
+  .hero--media,
+  .hero--plain {
+    margin-top: calc(-1 * var(--drobecky-h));
   }
 
   .hero--home .hero__foot,
