@@ -1,19 +1,22 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export type TechItem = {
-  /** Druh tisku — to, co zákazník hledá. */
-  kind: string;
-  /** Konkrétní stroj. Jméno samo o sobě nic neprodá, ale doloží, že je náš. */
-  machine: string;
-  /** Jedna věta o tom, co z toho zákazník má. Ne parametry pro parametry. */
+  /** Značka stroje — do kruhu. */
+  brand: string;
+  /** Jedna věc, kterou s ním umíme. Ne parametry, ale výsledek. */
   what: string;
+  /**
+   * Cesta k logu výrobce, až bude. Do té doby je v kruhu nápis značky —
+   * vlastní sazbou, takže to nevypadá jako díra po chybějícím obrázku.
+   */
+  logo?: string;
 };
 
 /**
- * Pás o výrobní technice. Vědomě nevypisuje parametry strojů — ty nikomu,
- * kdo shání banner, nic neřeknou. Každý stroj je přeložený do jedné věty
- * o tom, co s ním jde vyrobit, a doplněný tím jedním údajem, který si
- * zákazník může ověřit proti svojí zakázce.
+ * Pás o výrobní technice. Značky v kruzích místo odstavců: „na čem tiskneme"
+ * se pozná na první pohled a text zůstane na to jediné, co si zákazník může
+ * ověřit proti svojí zakázce.
  *
  * Údaje musí sedět s /technologie — ta stránka je zdroj pravdy.
  */
@@ -33,29 +36,33 @@ export function TechStrip({
   cta: string;
 }) {
   return (
-    <section className="tech-strip" data-reveal>
-      <div className="tech-strip__head">
+    <Link href={href} className="tech-strip" data-reveal>
+      <div className="tech-strip__copy">
         <span className="eyebrow">{eyebrow}</span>
         <h2 className="tech-strip__title">{title}</h2>
         <p className="tech-strip__text">{text}</p>
+        <span className="arrow-link tech-strip__cta">
+          {cta}{" "}
+          <span className="arr" aria-hidden="true">
+            ↗
+          </span>
+        </span>
       </div>
 
-      <ul className="tech-strip__grid">
+      <ul className="tech-strip__items">
         {items.map((t) => (
-          <li className="tech-strip__item" key={t.machine}>
-            <span className="tech-strip__kind">{t.kind}</span>
-            <strong className="tech-strip__machine">{t.machine}</strong>
+          <li className="tech-strip__item" key={t.brand}>
+            <span className="tech-strip__disc">
+              {t.logo ? (
+                <Image src={t.logo} alt={t.brand} fill sizes="(max-width: 860px) 26vw, 10rem" />
+              ) : (
+                <span className="tech-strip__wordmark">{t.brand}</span>
+              )}
+            </span>
             <span className="tech-strip__what">{t.what}</span>
           </li>
         ))}
       </ul>
-
-      <Link href={href} className="arrow-link tech-strip__cta">
-        {cta}{" "}
-        <span className="arr" aria-hidden="true">
-          ↗
-        </span>
-      </Link>
-    </section>
+    </Link>
   );
 }

@@ -3628,20 +3628,20 @@ a.circle-chip:hover small {
 }
 
 /* ---------- Pás výrobní techniky ----------
-   Registr „technický list": sloupce oddělené vlasovou linkou, žádné rámečky
-   ani fotky. Odlišuje se tím od procesu (linka nahoře) i proof stripu
-   (celé rámečky), takže se na jedné stránce nepletou. */
+   Stejný rytmus jako pás katalogu: text vlevo, kruhy vpravo. Značky
+   v kruzích řeknou „na čem tiskneme" dřív, než kdo dočte větu. */
 
 .tech-strip {
-  border-top: 2px solid var(--ink);
-  padding-top: clamp(2rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  padding-block: clamp(2.25rem, 4.5vw, 3.5rem);
+  border-block: 2px solid var(--ink);
+  color: var(--ink);
 }
 
-.tech-strip__head {
-  max-width: 42rem;
-}
-
-.tech-strip__head > * + * {
+.tech-strip__copy > * + * {
   margin-top: 1rem;
 }
 
@@ -3657,70 +3657,109 @@ a.circle-chip:hover small {
   font-size: var(--fs-body);
   font-weight: 700;
   line-height: 1.35;
-  color: var(--ink);
+  max-width: 28em;
 }
 
-.tech-strip__grid {
+.tech-strip__cta {
+  margin-top: 1.4rem;
+}
+
+.tech-strip:hover .tech-strip__cta::before,
+.tech-strip:focus-visible .tech-strip__cta::before {
+  transform: scaleX(1);
+}
+
+.tech-strip__cta .arr {
+  transition: translate var(--dur-fast) var(--ease-out);
+}
+
+.tech-strip:hover .tech-strip__cta .arr {
+  translate: 0.15em -0.15em;
+}
+
+.tech-strip__items {
   list-style: none;
   padding: 0;
-  margin-top: clamp(2.25rem, 4.5vw, 3.25rem);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: clamp(0.75rem, 1.8vw, 1.5rem);
 }
 
 .tech-strip__item {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 10.5rem;
   display: grid;
-  align-content: start;
-  gap: 0.45rem;
+  justify-items: center;
+  gap: 0.7rem;
+  transition: translate 0.45s var(--ease-out);
 }
 
-/* Dělicí vlasovka mezi sloupci — vzduch místo krabic. */
-.tech-strip__item + .tech-strip__item {
-  padding-left: clamp(1.5rem, 3vw, 2.5rem);
-  border-left: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+/* Kusy se při najetí lehce rozjedou — stejné gesto jako u pásu katalogu. */
+.tech-strip:hover .tech-strip__item:nth-child(odd) {
+  translate: 0 -0.5rem;
 }
 
-.tech-strip__kind {
-  font-size: var(--fs-eyebrow);
+.tech-strip:hover .tech-strip__item:nth-child(even) {
+  translate: 0 0.4rem;
+}
+
+.tech-strip__disc {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--surface);
+  overflow: hidden;
+  padding: 18%;
+}
+
+/* Logo výrobce, až bude dodané. */
+.tech-strip__disc img {
+  object-fit: contain;
+}
+
+/* Než logo bude: nápis značky vlastní sazbou. Není to náhražka obrázku,
+   je to plnohodnotné řešení — proto verzálky a prostrkání, ne šedý blok. */
+.tech-strip__wordmark {
+  font-size: clamp(0.8125rem, 1.9vw, 1.375rem);
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--muted);
-}
-
-.tech-strip__machine {
-  font-size: var(--fs-h3);
-  font-weight: 700;
-  line-height: 1.15;
-  /* Označení strojů jsou dlouhá — ať se lámou vyváženě, ne s jedním slovem
-     na druhém řádku. Spojovník v modelu je nezlomitelný přímo v textu. */
-  text-wrap: balance;
+  line-height: 1.1;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .tech-strip__what {
   font-size: var(--fs-small);
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.3;
+  text-align: center;
+  text-wrap: balance;
   color: var(--muted);
 }
 
-.tech-strip__cta {
-  margin-top: clamp(2rem, 4vw, 2.75rem);
-}
-
 @media (max-width: 860px) {
-  .tech-strip__grid {
+  .tech-strip {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+    gap: 2rem;
   }
 
-  /* Na výšku se vlasovka přesune nad položku — svislá by nedávala smysl. */
-  .tech-strip__item + .tech-strip__item {
-    padding-left: 0;
-    border-left: 0;
-    margin-top: 1.4rem;
-    padding-top: 1.4rem;
-    border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  .tech-strip__items {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-strip__item {
+    transition: none;
+  }
+
+  .tech-strip:hover .tech-strip__item {
+    translate: none;
   }
 }
