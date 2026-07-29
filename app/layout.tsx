@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Analytics } from "@/components/Analytics";
+import { CookieBar } from "@/components/CookieBar";
 import { themeBootScript } from "@/components/ThemeToggle";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -89,9 +90,10 @@ export const viewport: Viewport = {
   ],
 };
 
-/* Měřicí ID datového proudu GA4 (G-XXXXXXXXXX). Nastavuje se v proměnných
-   prostředí, ne v kódu — na jiných větvích a v náhledech tak měření mlčí. */
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+/* Měřicí ID datového proudu GA4. Není to tajemství — ve zdroji stránky ho
+   vidí každý — proto může být v kódu. Proměnná prostředí ho přebije, kdyby
+   bylo potřeba měřit jinam (nebo v náhledu neměřit vůbec). */
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-CC6REV52KJ";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -117,8 +119,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MobileCta />
         <RevealInit />
         <CursorDot />
-        {/* Měření běží, jen když je v prostředí vyplněné měřicí ID.
-            Bez něj se nenačte žádný cizí skript. */}
+        <CookieBar />
+        {/* Skript se načte až po souhlasu v liště — viz Analytics. */}
         {GA_ID && <Analytics gaId={GA_ID} />}
       </body>
     </html>

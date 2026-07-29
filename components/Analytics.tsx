@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { useConsent } from "@/lib/consent";
 
 declare global {
   interface Window {
@@ -12,8 +13,8 @@ declare global {
 }
 
 /**
- * Google Analytics 4. Vykreslí se jen tehdy, když je vyplněné měřicí ID —
- * bez něj se nenačte nic a na návštěvníka nesahá žádný cizí skript.
+ * Google Analytics 4. Načte se, až když k tomu dal návštěvník souhlas
+ * v liště cookies — do té doby na něj nesahá žádný cizí skript.
  *
  * Pozor: `gaId` musí být měřicí ID datového proudu ve tvaru `G-XXXXXXXXXX`,
  * ne číslo služby. Číslo služby je jen interní identifikátor v účtu GA
@@ -21,18 +22,23 @@ declare global {
  */
 export function Analytics({ gaId }: { gaId: string }) {
   const pathname = usePathname();
+  const consent = useConsent();
   const prvni = useRef(true);
+  const povoleno = consent?.analytics === true;
 
   useEffect(() => {
     /* První zobrazení odešle sám `config` níž. Tady dohlašujeme jen přechody
        mezi stránkami — ty se v App Routeru dějí bez nového načtení dokumentu,
        takže by o nich GA jinak nevědělo. */
+    if (!povoleno) return;
     if (prvni.current) {
       prvni.current = false;
       return;
     }
     window.gtag?.("event", "page_view", { page_path: pathname });
-  }, [pathname]);
+  }, [pathname, povoleno]);
+
+  if (!povoleno) return null;
 
   return (
     <>

@@ -796,6 +796,30 @@ main {
   border: 0;
 }
 
+/* Než padne souhlas, je v kruhu jen nabídka — žádný požadavek na Google. */
+.map-circle--off {
+  display: grid;
+  place-items: center;
+  padding: 14%;
+  text-align: center;
+}
+
+.map-circle__ask {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+}
+
+.map-circle__ask p {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0;
+  max-width: 16em;
+}
+
 /* Mapa je cizí dokument, obarvit se zvenčí nedá. Bílá plocha by v noci
    svítila do tmy, proto ji jemně ztlumíme — čitelnost i barvy zůstávají. */
 @media (prefers-color-scheme: dark) {
@@ -2570,7 +2594,15 @@ a.circle-chip:hover small {
   color: var(--muted);
 }
 
-.footer__legal a:hover {
+/* Nastavení cookies je <button>, ne odkaz — ať vypadá stejně jako sousedi. */
+.footer__legal-link {
+  font: inherit;
+  color: inherit;
+  background: none;
+}
+
+.footer__legal a:hover,
+.footer__legal-link:hover {
   color: var(--ink);
 }
 
@@ -3205,4 +3237,195 @@ a.circle-chip:hover small {
   font-size: var(--fs-eyebrow);
   letter-spacing: 0.08em;
   color: var(--muted);
+}
+
+/* ---------- Lišta souhlasu s cookies ----------
+   Nemá křížek: zmizí až po volbě, protože bez rozhodnutí se nesmí měřit
+   ani načítat cizí obsah. Vrstvení: nad hlavičkou (50) a lepivým CTA (40),
+   pod mobilním menu (60) — otevřené menu ji tedy přebije. */
+
+.cookies {
+  position: fixed;
+  left: var(--gutter);
+  bottom: var(--gutter);
+  z-index: 55;
+  width: min(30rem, calc(100vw - 2 * var(--gutter)));
+  padding: clamp(1.4rem, 3vw, 1.9rem);
+  border-radius: 16px;
+  background: var(--panel);
+  color: var(--panel-ink);
+  box-shadow: var(--shadow), inset 0 0 0 1px var(--line);
+  animation: cookies-in 0.6s 0.5s var(--ease-out) both;
+}
+
+@keyframes cookies-in {
+  from {
+    opacity: 0;
+    translate: 0 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cookies {
+    animation: none;
+  }
+}
+
+.cookies__head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* Apple sada jako první — na iOS a macOS se vykreslí sušenka, kterou
+   uživatel zná ze systému. Jinde padne na systémovou emoji. */
+.cookies__emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.cookies__title {
+  margin: 0;
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.cookies__text {
+  margin-top: 1rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--panel-ink) 78%, transparent);
+}
+
+.cookies__text a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  color: var(--panel-ink);
+}
+
+.cookies__detail {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.25rem;
+}
+
+.cookies__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: start;
+  cursor: pointer;
+}
+
+.cookies__row input {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0.1rem 0 0;
+  accent-color: var(--panel-ink);
+  cursor: pointer;
+}
+
+.cookies__row input:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.cookies__row strong {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
+.cookies__row small {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--panel-ink) 58%, transparent);
+}
+
+.cookies__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-top: 1.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid color-mix(in srgb, var(--panel-ink) 20%, transparent);
+}
+
+.cookies__link {
+  position: relative;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: color-mix(in srgb, var(--panel-ink) 72%, transparent);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.cookies__link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2em;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--dur-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.cookies__link:hover,
+.cookies__link:focus-visible {
+  color: var(--panel-ink);
+}
+
+.cookies__link:hover::before,
+.cookies__link:focus-visible::before {
+  transform: scaleX(1);
+}
+
+/* Kruh jako všude na webu — hlavní volba, na kterou míří oko. */
+.cookies__yes {
+  margin-left: auto;
+  flex: none;
+  width: 6.25rem;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--panel-ink);
+  color: var(--panel);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.cookies__yes:hover,
+.cookies__yes:focus-visible {
+  transform: rotate(-6deg) scale(1.06);
+}
+
+@media (max-width: 560px) {
+  .cookies {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .cookies__actions {
+    gap: 1.1rem;
+  }
+
+  .cookies__yes {
+    width: 5.25rem;
+  }
 }
