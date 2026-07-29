@@ -3429,3 +3429,109 @@ a.circle-chip:hover small {
     width: 5.25rem;
   }
 }
+
+/* ---------- Pás katalogu textilu ----------
+   Tichá připomínka, že si textil jde vybrat online. Bez rámečku a bez
+   barevné plochy — váhu nese sortiment na fotkách, ne obal. */
+
+.cat-strip {
+  display: grid;
+  /* Fotky dostanou víc místa než text — jsou to ony, co tu nese sdělení. */
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  padding-block: clamp(2.25rem, 4.5vw, 3.5rem);
+  border-block: 2px solid var(--ink);
+  color: var(--ink);
+}
+
+.cat-strip__copy > * + * {
+  margin-top: 1rem;
+}
+
+.cat-strip__title {
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.cat-strip__text {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: 1.35;
+  max-width: 30em;
+}
+
+.cat-strip__cta {
+  margin-top: 1.4rem;
+}
+
+/* Podtržení a šipka reagují na najetí kamkoli po pásu, ne jen na odkaz. */
+.cat-strip:hover .cat-strip__cta::before,
+.cat-strip:focus-visible .cat-strip__cta::before {
+  transform: scaleX(1);
+}
+
+.cat-strip:hover .cat-strip__cta .arr {
+  translate: 0.15em -0.15em;
+}
+
+.cat-strip__cta .arr {
+  transition: translate var(--dur-fast) var(--ease-out);
+}
+
+.cat-strip__items {
+  display: flex;
+  justify-content: flex-end;
+  gap: clamp(0.5rem, 1.4vw, 1rem);
+}
+
+.cat-strip__item {
+  display: block;
+  /* Rozdělí si sloupec rovným dílem a doroste nanejvýš na 9 rem — pod tím
+     by z kusů byly nečitelné puntíky, nad tím by pás přerostl text. */
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 10.5rem;
+  transition: translate 0.45s var(--ease-out);
+}
+
+/* Kusy se při najetí lehce rozjedou nahoru — každý o kousek jinak, jako
+   rozhozené řádky nadpisů jinde na webu. */
+.cat-strip:hover .cat-strip__item:nth-child(odd) {
+  translate: 0 -0.5rem;
+}
+
+.cat-strip:hover .cat-strip__item:nth-child(even) {
+  translate: 0 0.4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-strip__item {
+    transition: none;
+  }
+
+  .cat-strip:hover .cat-strip__item {
+    translate: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .cat-strip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .cat-strip__items {
+    justify-content: flex-start;
+  }
+}
+
+/* Na úzkém displeji by z pěti kusů zbyly nečitelné puntíky. */
+@media (max-width: 560px) {
+  .cat-strip__item:nth-child(n + 4) {
+    display: none;
+  }
+}

@@ -51,7 +51,14 @@ export type HubPage = {
 };
 
 /** Přehledová (hub) stránka služby — /tisk, /polepy, /reklama. */
-export function HubPageTemplate({ hub }: { hub: HubPage }) {
+export function HubPageTemplate({
+  hub,
+  afterDirectory,
+}: {
+  hub: HubPage;
+  /** Volitelný blok pod rozcestníkem — dnes pás katalogu na /reklama. */
+  afterDirectory?: React.ReactNode;
+}) {
   const works = hub.works.map(getWork);
 
   return (
@@ -88,6 +95,8 @@ export function HubPageTemplate({ hub }: { hub: HubPage }) {
         <SectionHead title={hub.directoryTitle} text={hub.directoryText} indent={1} />
         <Directory items={hub.directory} />
       </section>
+
+      {afterDirectory && <section className="section--tight container">{afterDirectory}</section>}
 
       {/* Band */}
       <section className="section--tight container">
