@@ -49,6 +49,9 @@ export type CatalogFilters = { category?: string; trademark?: string; color?: st
 /** Nejnižší cena produktu (bez DPH) podle kódu — pro filtr a štítek na kartě. */
 export type PriceIndex = Record<string, number>;
 
+/** Značka produktu podle kódu, např. „MALFINI®" nebo „RIMECK®". */
+export type BrandIndex = Record<string, string>;
+
 /** Cena a dostupnost jedné velikosti. */
 export type MalfiniPrice = {
   size: string;
@@ -190,6 +193,33 @@ export async function getPriceIndex(catalog: MalfiniCatalog): Promise<PriceIndex
       }),
     );
     for (const r of results) if (r) index[r[0]] = r[1];
+  }
+
+  return index;
+}
+
+/**
+ * Značka každého produktu podle kódu. V seznamu produktů ji API nevrací —
+ * ani v detailu — zná ji jen jako filtr. Projdeme tedy katalog jednou za
+ * každou značku a poskládáme index sami. Značek je jednotky, takže je to
+ * pár požadavků navíc; drží se v cache stejně dlouho jako katalog.
+ */
+export async function getBrandIndex(catalog: MalfiniCatalog): Promise<BrandIndex> {
+  const znacky = catalog.facets.find((f) => f.code === "trademark")?.options ?? [];
+  const index: BrandIndex = {};
+
+  const casti = await Promise.all(
+    znacky.map(async (z) => {
+      const c = await getCatalog({ trademark: z.code });
+      if (!c) return null;
+      return [z.name, c.groups.flatMap((g) => g.products.map((p) => p.code))] as const;
+    }),
+  );
+
+  for (const cast of casti) {
+    if (!cast) continue;
+    const [nazev, kody] = cast;
+    for (const kod of kody) index[kod] = nazev;
   }
 
   return index;

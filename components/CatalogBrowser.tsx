@@ -10,6 +10,7 @@ import {
   type MalfiniCatalog,
   type MalfiniDetail,
   type MalfiniPrice,
+  type BrandIndex,
   type MalfiniProduct,
   type PriceIndex,
 } from "@/lib/malfini";
@@ -57,9 +58,11 @@ function CardImage({ product, preferColor }: { product: MalfiniProduct; preferCo
 export function CatalogBrowser({
   catalog: initial,
   priceIndex = {},
+  brandIndex = {},
 }: {
   catalog: MalfiniCatalog;
   priceIndex?: PriceIndex;
+  brandIndex?: BrandIndex;
 }) {
   const [catalog, setCatalog] = useState(initial);
   const [category, setCategory] = useState("");
@@ -296,7 +299,10 @@ export function CatalogBrowser({
               <span className="cat-card__body">
                 <span className="cat-card__sub">{p.subName}</span>
                 <span className="cat-card__name">{p.name}</span>
+                {/* Značka vede řádek s kódem — přibyde údaj, ne další řádek.
+                    Rozlišuje kvalitativní řady, takže patří k rozhodování. */}
                 <span className="cat-card__meta">
+                  {brandIndex[p.code] && <>{brandIndex[p.code]} · </>}
                   kód {p.code} · {p.colors.length}&nbsp;
                   {p.colors.length === 1 ? "barva" : p.colors.length < 5 ? "barvy" : "barev"}
                 </span>
@@ -322,6 +328,7 @@ export function CatalogBrowser({
           product={open}
           colors={catalog.colors}
           initialColor={color}
+          brand={brandIndex[open.code]}
           onClose={() => setOpen(null)}
         />
       )}
@@ -333,12 +340,15 @@ function ProductModal({
   product,
   colors,
   initialColor,
+  brand,
   onClose,
 }: {
   product: MalfiniProduct;
   colors: MalfiniCatalog["colors"];
   /** Barva zvolená ve filtru — otevřeme detail rovnou v ní. */
   initialColor?: string;
+  /** Značka produktu — API ji v detailu nevrací, chodí z indexu. */
+  brand?: string;
   onClose: () => void;
 }) {
   const [color, setColor] = useState(
@@ -438,7 +448,8 @@ function ProductModal({
           <span className="eyebrow">{product.subName}</span>
           <h2 className="h2">{product.name}</h2>
           <p className="modal__code">
-            Kód produktu <strong>{product.code}</strong>
+            {brand && <>{brand} · </>}
+            kód produktu <strong>{product.code}</strong>
             {colorName && <> · barva {colorName}</>}
           </p>
 
@@ -508,8 +519,10 @@ function ProductModal({
             <>
               {detail.attributes.length > 0 && (
                 <ul className="modal__attrs">
-                  {detail.attributes.slice(0, 6).map((a) => (
-                    <li key={a.title}>
+                  {/* Titulek se opakuje (dodavatel posílá „Materiálové složení"
+                      víckrát), takže sám o sobě není jedinečný klíč. */}
+                  {detail.attributes.slice(0, 6).map((a, i) => (
+                    <li key={`${a.title}-${i}`}>
                       <strong>{a.title}</strong>
                       <span>{a.text}</span>
                     </li>
