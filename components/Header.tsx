@@ -27,6 +27,18 @@ function Logo({ compact = false }: { compact?: boolean }) {
   );
 }
 
+/** Puntíky ze šablony (původně PNG 500×500, středy 150/350, poloměr 57,5). */
+function DotsIcon() {
+  return (
+    <svg className="nav-toggle__dots" viewBox="0 0 500 500" fill="currentColor" aria-hidden="true">
+      <circle cx="150" cy="150" r="57.5" />
+      <circle cx="350" cy="150" r="57.5" />
+      <circle cx="150" cy="350" r="57.5" />
+      <circle cx="350" cy="350" r="57.5" />
+    </svg>
+  );
+}
+
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -127,6 +139,7 @@ export function Header() {
             aria-controls="mobile-menu"
             onClick={() => setOpen(true)}
           >
+            <DotsIcon />
             Menu
           </button>
         </div>
