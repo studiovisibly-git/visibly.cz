@@ -166,7 +166,7 @@ export function CatalogBrowser({
           </div>
 
           {catalog.groups.length > 1 && (
-            <div className="cat__field">
+            <div className="cat__field cat__field--wide">
               <span>Komu</span>
               <div className="cat__tabs" role="tablist" aria-label="Skupiny produktů">
                 {catalog.groups.map((g) => (
@@ -188,7 +188,7 @@ export function CatalogBrowser({
             </div>
           )}
 
-          <label className="cat__field">
+          <label className="cat__field cat__field--wide">
             <span>Hledat</span>
             <input
               type="search"

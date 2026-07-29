@@ -357,13 +357,34 @@ main {
   font-weight: 700;
 }
 
-/* Mobilní menu — čistý textový toggle bez rámečku (jako živý web) */
+/* Mobilní menu — puntíky ze šablony těsně u popisku, bez rámečku */
 .nav-toggle {
   display: none;
+  align-items: center;
+  gap: 0.5rem;
   font-weight: 700;
   font-size: var(--fs-body);
   padding: 0.4em 0;
   background: none;
+}
+
+.nav-toggle__dots {
+  width: 1.05em;
+  height: 1.05em;
+  display: block;
+  flex: none;
+  transition: rotate var(--dur-medium) var(--ease-out);
+}
+
+.nav-toggle:hover .nav-toggle__dots,
+.nav-toggle:focus-visible .nav-toggle__dots {
+  rotate: 45deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle__dots {
+    transition: none;
+  }
 }
 
 .mobile-menu {
@@ -387,6 +408,13 @@ main {
   .nav-toggle {
     display: inline-flex;
     justify-self: end;
+  }
+
+  /* Nižší lišta — značka si drží velikost, ubírá se jen vzduch kolem ní.
+     Míň než 0,7 rem nejde: zvětšená značka přesahuje layoutový box o 8 px
+     nahoru i dolů a musí se do odsazení vejít. */
+  .header__inner {
+    padding-block: 0.7rem;
   }
 
   .mobile-menu {
@@ -960,16 +988,29 @@ main {
     grid-template-columns: 1fr;
   }
 
+  /* Dva pevné sloupce místo auto-fit. Auto-fit skládal pole podle toho, co
+     se zrovna vešlo, a různě vysoké bloky (záložky přes dva řádky, pole
+     s poznámkou pod ním) se pak lámaly na přeskáčku. `align-items: start`
+     je nutné: při `end` se popisky sousedních polí rozešly. */
   .cat__side-inner {
     position: static;
     max-height: none;
     overflow: visible;
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-    align-items: end;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem 1.25rem;
+    align-items: start;
   }
 
-  .cat__side-head {
+  /* Přes obě šířky: hlavička, záložky skupin a hledání. Označené třídou,
+     ne přes :has() — rozvržení nemá viset na novější vlastnosti. */
+  .cat__side-head,
+  .cat__field--wide {
     grid-column: 1 / -1;
+  }
+
+  /* Poznámka pod cenou nesmí roztáhnout sousední sloupec. */
+  .cat__hint {
+    min-height: 0;
   }
 }
 
