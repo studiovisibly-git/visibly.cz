@@ -3626,3 +3626,101 @@ a.circle-chip:hover small {
     display: none;
   }
 }
+
+/* ---------- Pás výrobní techniky ----------
+   Registr „technický list": sloupce oddělené vlasovou linkou, žádné rámečky
+   ani fotky. Odlišuje se tím od procesu (linka nahoře) i proof stripu
+   (celé rámečky), takže se na jedné stránce nepletou. */
+
+.tech-strip {
+  border-top: 2px solid var(--ink);
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
+.tech-strip__head {
+  max-width: 42rem;
+}
+
+.tech-strip__head > * + * {
+  margin-top: 1rem;
+}
+
+.tech-strip__title {
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.tech-strip__text {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.tech-strip__grid {
+  list-style: none;
+  padding: 0;
+  margin-top: clamp(2.25rem, 4.5vw, 3.25rem);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.tech-strip__item {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+}
+
+/* Dělicí vlasovka mezi sloupci — vzduch místo krabic. */
+.tech-strip__item + .tech-strip__item {
+  padding-left: clamp(1.5rem, 3vw, 2.5rem);
+  border-left: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+}
+
+.tech-strip__kind {
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tech-strip__machine {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.15;
+  /* Označení strojů jsou dlouhá — ať se lámou vyváženě, ne s jedním slovem
+     na druhém řádku. Spojovník v modelu je nezlomitelný přímo v textu. */
+  text-wrap: balance;
+}
+
+.tech-strip__what {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.tech-strip__cta {
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+}
+
+@media (max-width: 860px) {
+  .tech-strip__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  /* Na výšku se vlasovka přesune nad položku — svislá by nedávala smysl. */
+  .tech-strip__item + .tech-strip__item {
+    padding-left: 0;
+    border-left: 0;
+    margin-top: 1.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  }
+}
