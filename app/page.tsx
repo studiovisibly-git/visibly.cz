@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Accordion } from "@/components/Accordion";
 import { JsonLd } from "@/components/JsonLd";
+import { CatalogStrip } from "@/components/CatalogStrip";
 import { Hero } from "@/components/Hero";
 import { Media } from "@/components/Media";
 import {
@@ -133,6 +134,12 @@ export default function HomePage() {
             Popsat zadání
           </Link>
         </div>
+      </section>
+
+      {/* Textil — jediná služba, kterou si návštěvník prohlédne hned sám.
+          Stojí hned za rozcestníkem, protože právě tam si vybírá směr. */}
+      <section className="section--tight container">
+        <CatalogStrip />
       </section>
 
       {/* Vybrané realizace — full-bleed pás */}

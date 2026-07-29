@@ -1,3 +1,4 @@
+import { CatalogStrip } from "@/components/CatalogStrip";
 import { HubPageTemplate, type HubPage } from "@/components/HubPageTemplate";
 import { buildMetadata } from "@/lib/seo";
 
@@ -54,6 +55,18 @@ const hub: HubPage = {
       text: "Směrovky, piktogramy a značení budov.",
       href: "/reklama/orientacni-systemy",
       cta: "Projít orientaci",
+    },
+    {
+      title: "Obléknout tým",
+      text: "Trička, mikiny a pracovní oblečení s logem.",
+      href: "/reklama/reklamni-textil",
+      cta: "Projít textil",
+    },
+    {
+      title: "Dát něco do ruky",
+      text: "Hrnky, propisky, tašky a merch s potiskem.",
+      href: "/reklama/reklamni-predmety",
+      cta: "Projít předměty",
     },
   ],
   band: {
@@ -117,5 +130,5 @@ const hub: HubPage = {
 };
 
 export default function ReklamaPage() {
-  return <HubPageTemplate hub={hub} />;
+  return <HubPageTemplate hub={hub} afterDirectory={<CatalogStrip />} />;
 }
