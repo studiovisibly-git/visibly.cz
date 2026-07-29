@@ -74,11 +74,9 @@ export default function KontaktPage() {
           text="Nevíte rozměr nebo materiál? Nevadí. Pošlete fotografii a napište, kde má výsledek fungovat."
         />
         <div className="lead-form">
-          {/* Formulář čte ?produkt= z URL (předvyplnění z katalogu textilu),
-              což vyžaduje Suspense, aby stránka zůstala staticky generovaná. */}
-          <Suspense fallback={null}>
-            <LeadForm />
-          </Suspense>
+          {/* Panel je v kódu před formulářem schválně: na mobilu je jednosloupcová
+              sazba a kdo chce zavolat, nemá se prokousávat celým formulářem.
+              Na desktopu ho vedle formuláře vrátí `order` v CSS. */}
           <aside className="contact-panel">
             <span className="eyebrow">Raději rovnou?</span>
             <a href={PHONE_HREF}>
@@ -94,6 +92,12 @@ export default function KontaktPage() {
               <span className="val">{ADDRESS_FULL} ↗</span>
             </a>
           </aside>
+
+          {/* Formulář čte ?produkt= z URL (předvyplnění z katalogu textilu),
+              což vyžaduje Suspense, aby stránka zůstala staticky generovaná. */}
+          <Suspense fallback={null}>
+            <LeadForm />
+          </Suspense>
         </div>
       </section>
 
