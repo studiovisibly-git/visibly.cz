@@ -37,6 +37,18 @@ export function CookieBar() {
     return () => window.removeEventListener(CONSENT_OPEN, otevri);
   }, []);
 
+  /* Dokud se lišta ptá, drží na mobilu celý spodek obrazovky a překrývala by
+     lepivé CTA. Dvě výzvy přes sebe jsou k ničemu — příznak na <html> nechá
+     CSS to druhé schovat, dokud není rozhodnuto. */
+  useEffect(() => {
+    const root = document.documentElement;
+    if (ptat === true) root.dataset.consent = "ask";
+    else delete root.dataset.consent;
+    return () => {
+      delete root.dataset.consent;
+    };
+  }, [ptat]);
+
   if (ptat !== true) return null;
 
   function rozhodni(c: Consent) {
