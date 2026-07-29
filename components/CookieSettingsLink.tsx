@@ -10,3 +10,12 @@ export function CookieSettingsLink() {
     </button>
   );
 }
+
+/** Totéž na stránce o cookies, kde má váhu tlačítka. */
+export function CookieSettingsButton() {
+  return (
+    <button type="button" className="btn" onClick={openConsent}>
+      Změnit nastavení cookies
+    </button>
+  );
+}
