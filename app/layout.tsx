@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@/components/Analytics";
 import { themeBootScript } from "@/components/ThemeToggle";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -88,6 +89,10 @@ export const viewport: Viewport = {
   ],
 };
 
+/* Měřicí ID datového proudu GA4 (G-XXXXXXXXXX). Nastavuje se v proměnných
+   prostředí, ne v kódu — na jiných větvích a v náhledech tak měření mlčí. */
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     /* data-theme dopisuje skript níž ještě před vykreslením — React o tom
@@ -112,6 +117,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MobileCta />
         <RevealInit />
         <CursorDot />
+        {/* Měření běží, jen když je v prostředí vyplněné měřicí ID.
+            Bez něj se nenačte žádný cizí skript. */}
+        {GA_ID && <Analytics gaId={GA_ID} />}
       </body>
     </html>
   );

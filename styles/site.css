@@ -2498,7 +2498,7 @@ a.circle-chip:hover small {
   gap: 0.55rem;
 }
 
-.footer ul a {
+.footer ul a:not(.btn) {
   position: relative;
   display: inline-block;
   font-weight: 700;
@@ -2506,7 +2506,7 @@ a.circle-chip:hover small {
   line-height: 1.28;
 }
 
-.footer ul a::before {
+.footer ul a:not(.btn)::before {
   content: "";
   position: absolute;
   left: 0;
@@ -2520,8 +2520,8 @@ a.circle-chip:hover small {
   pointer-events: none;
 }
 
-.footer ul a:hover::before,
-.footer ul a:focus-visible::before {
+.footer ul a:not(.btn):hover::before,
+.footer ul a:not(.btn):focus-visible::before {
   transform: scaleX(1);
 }
 
@@ -2741,7 +2741,7 @@ a.circle-chip:hover small {
   margin-bottom: -0.5rem;
 }
 
-.contact-panel a {
+.contact-panel a:not(.btn) {
   display: block;
 }
 
@@ -2890,13 +2890,16 @@ a.circle-chip:hover small {
   font-size: var(--fs-small);
 }
 
-.aside-box a {
+/* Pozor na tlačítka: .btn je taky <a>, a „.aside-box a" má vyšší
+   specificitu než „.btn" — bez výjimky mu přepíše display (rozbije
+   vystředění textu) i ::before (přepíše hover animaci podtržením). */
+.aside-box a:not(.btn) {
   position: relative;
   display: inline-block;
   font-weight: 700;
 }
 
-.aside-box a::before {
+.aside-box a:not(.btn)::before {
   content: "";
   position: absolute;
   left: 0;
@@ -2910,8 +2913,8 @@ a.circle-chip:hover small {
   pointer-events: none;
 }
 
-.aside-box a:hover::before,
-.aside-box a:focus-visible::before {
+.aside-box a:not(.btn):hover::before,
+.aside-box a:not(.btn):focus-visible::before {
   transform: scaleX(1);
 }
 
