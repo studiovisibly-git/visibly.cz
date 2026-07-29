@@ -131,28 +131,16 @@ export default function TiskPage() {
       hub={hub}
       afterDirectory={
         <TechStrip
-          eyebrow="Vlastní výroba · Opava"
-          title="Tiskneme u sebe. Na strojích, které známe."
-          text="Zakázku neposíláme nikam dál. Proto víme, co jde slíbit — a proč u vašeho zadání doporučíme zrovna tenhle materiál."
+          eyebrow="Vlastní výroba"
+          title="Tiskneme na svých strojích."
+          text="Zakázku neposíláme dál. Tiskneme i přímo na desku — Dibond, sklo nebo hliník."
           items={[
-            {
-              kind: "Velkoformátový tisk",
-              machine: "Epson SureColor SC‑S80610",
-              what: "Fólie, bannery a plakáty i backlit do světelných rámů.",
-            },
-            {
-              kind: "Hybridní UV tisk",
-              machine: "Agfa Anapurna M2050i",
-              what: "Tiskne přímo na Dibond, sklo, hliník i keramiku — desku i roli.",
-            },
-            {
-              kind: "Rolový UV tisk",
-              machine: "Agfa Anapurna RTR3200i LED",
-              what: "Bannery a plachty až 3,2 m v jednom kuse, bez spojů.",
-            },
+            { brand: "Epson", what: "Fólie, bannery, backlit" },
+            { brand: "Agfa", what: "Až 3,2 m bez spoje" },
+            { brand: "Roland", what: "Tvar podle grafiky" },
           ]}
           href="/technologie"
-          cta="Projít všechny technologie"
+          cta="Projít technologie"
         />
       }
     />
