@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookieSettingsLink } from "./CookieSettingsLink";
 import {
   ADDRESS_FULL,
   EMAIL,
@@ -93,7 +94,8 @@ export function Footer() {
         <div className="footer__legal">
           <span>
             © {new Date().getFullYear()} studio visibly s.r.o. ·{" "}
-            <Link href="/cookies">Cookies</Link> · <Link href="/mapa-webu">Mapa webu</Link>
+            <Link href="/cookies">Cookies</Link> · <CookieSettingsLink /> ·{" "}
+            <Link href="/mapa-webu">Mapa webu</Link>
           </span>
           {/* Web je sám ukázka práce — drobná nabídka v patě, ne velký blok. */}
           <Link href="/webdesign" className="footer__pitch">
