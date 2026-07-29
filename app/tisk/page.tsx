@@ -19,7 +19,12 @@ const hub: HubPage = {
   intro:
     "Bannery, samolepky, plakáty i firemní tiskoviny. Materiál a dokončení podle skutečného použití.",
   heroCta: "Poptat tisk",
-  heroMedia: { label: "Kruhová fotografie · tiskoviny", variant: "circle" },
+  heroMedia: {
+    label: "Tiskoviny z výroby",
+    variant: "circle",
+    src: "/images/visibly-service-tisk-optimized.jpg",
+    alt: "Velkoformátová tiskárna Epson SureColor při tisku v\u00a0dílně Visibly",
+  },
   split: {
     title: "Dobrý tisk začíná dřív, než se spustí stroj.",
     text: "Materiál, formát i dokončení volíme podle toho, kde má výsledek fungovat.",

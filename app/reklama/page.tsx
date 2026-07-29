@@ -19,7 +19,12 @@ const hub: HubPage = {
   h1: "Reklama pro značky, prostory a provozovny.",
   intro: "Cedule, světelná reklama, 3D loga a orientační systémy od návrhu po montáž.",
   heroCta: "Poptat reklamu",
-  heroMedia: { label: "Kruhová fotografie · světelný 3D prvek", variant: "circle" },
+  heroMedia: {
+    label: "3D logo a\u00a0cedule",
+    variant: "circle",
+    src: "/images/visibly-service-reklama-optimized.jpg",
+    alt: "Prostorové logo hotelu Andante a\u00a0cedule nájemců v\u00a0recepci",
+  },
   split: {
     title: "Dobrá reklama nezačíná výrobkem.",
     text: "Začíná místem, vzdáleností a prvním dojmem. Návrh, výrobu a montáž řešíme jako jeden celek.",

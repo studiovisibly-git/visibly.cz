@@ -98,8 +98,8 @@ export default function HomePage() {
               media: {
                 label: "Tiskoviny z výroby Visibly",
                 variant: "wide",
-                src: "/images/realizace-reformlab-poukazy-optimized.jpg",
-                alt: "Tiskoviny a poukázky z výroby Visibly",
+                src: "/images/visibly-service-tisk-optimized.jpg",
+                alt: "Velkoformátová tiskárna Epson SureColor při tisku v dílně Visibly",
               },
             },
             {
@@ -110,8 +110,8 @@ export default function HomePage() {
               media: {
                 label: "Polep firemního vozu",
                 variant: "wide",
-                src: "/images/realizace-ps-green-polep-optimized.jpg",
-                alt: "Polep firemního vozu PS GREEN",
+                src: "/images/visibly-service-polepy-optimized.jpg",
+                alt: "Polepená firemní dodávka Smart Phoenix před provozovnou",
               },
             },
             {
@@ -122,8 +122,8 @@ export default function HomePage() {
               media: {
                 label: "Označení provozovny",
                 variant: "wide",
-                src: "/images/realizace-rezani-betonu-brand-optimized.jpg",
-                alt: "Označení provozovny Řezání betonu",
+                src: "/images/visibly-service-reklama-optimized.jpg",
+                alt: "Prostorové logo hotelu Andante a cedule nájemců v recepci",
               },
             },
           ]}

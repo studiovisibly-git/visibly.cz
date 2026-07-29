@@ -18,7 +18,12 @@ const hub: HubPage = {
   h1: "Polepy pro auta, výlohy a interiéry.",
   intro: "Návrh, výroba a aplikace sladěné s konkrétní plochou a provozem.",
   heroCta: "Poptat polep",
-  heroMedia: { label: "Kruhová fotografie · polep auta", variant: "circle" },
+  heroMedia: {
+    label: "Polep auta",
+    variant: "circle",
+    src: "/images/visibly-service-polepy-optimized.jpg",
+    alt: "Polepená firemní dodávka Smart Phoenix před provozovnou",
+  },
   split: {
     title: "Polep musí sedět značce, ploše i provozu.",
     text: "Proto řešíme návrh, materiál a čistou aplikaci společně.",
