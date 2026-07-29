@@ -1,4 +1,5 @@
 import { HubPageTemplate, type HubPage } from "@/components/HubPageTemplate";
+import { TechStrip } from "@/components/TechStrip";
 import { buildMetadata } from "@/lib/seo";
 
 const metaDescription =
@@ -125,5 +126,35 @@ const hub: HubPage = {
 };
 
 export default function TiskPage() {
-  return <HubPageTemplate hub={hub} />;
+  return (
+    <HubPageTemplate
+      hub={hub}
+      afterDirectory={
+        <TechStrip
+          eyebrow="Vlastní výroba · Opava"
+          title="Tiskneme u sebe. Na strojích, které známe."
+          text="Zakázku neposíláme nikam dál. Proto víme, co jde slíbit — a proč u vašeho zadání doporučíme zrovna tenhle materiál."
+          items={[
+            {
+              kind: "Velkoformátový tisk",
+              machine: "Epson SureColor SC‑S80610",
+              what: "Fólie, bannery a plakáty i backlit do světelných rámů.",
+            },
+            {
+              kind: "Hybridní UV tisk",
+              machine: "Agfa Anapurna M2050i",
+              what: "Tiskne přímo na Dibond, sklo, hliník i keramiku — desku i roli.",
+            },
+            {
+              kind: "Rolový UV tisk",
+              machine: "Agfa Anapurna RTR3200i LED",
+              what: "Bannery a plachty až 3,2 m v jednom kuse, bez spojů.",
+            },
+          ]}
+          href="/technologie"
+          cta="Projít všechny technologie"
+        />
+      }
+    />
+  );
 }
