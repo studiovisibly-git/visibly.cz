@@ -2684,6 +2684,13 @@ a.circle-chip:hover small {
   display: none;
 }
 
+/* Lišta souhlasu zabírá na mobilu celý spodek obrazovky a CTA by bylo pod ní
+   neviditelné. Než padne rozhodnutí, tlačítko tedy schováme — po volbě lišta
+   zmizí a CTA naskočí. Jedna výzva v jeden čas. */
+:root[data-consent="ask"] .mobile-cta {
+  display: none;
+}
+
 @media (max-width: 760px) {
   .mobile-cta {
     display: block;
