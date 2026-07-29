@@ -157,7 +157,12 @@ export const studioServices: ServicePage[] = [
     h1: "Fotoobrazy: vaše fotky si zaslouží stěnu.",
     intro:
       "Fotka z dovolené, rodinný portrét nebo záběr z dronu nad vaší firmou. Vytiskneme ji ve fotografické kvalitě jako obraz, který dělá interiéru radost.",
-    heroMedia: { label: "Kruhová fotografie · fotoobraz v interiéru", variant: "circle" },
+    heroMedia: {
+      label: "Fotoobraz v\u00a0interiéru",
+      variant: "circle",
+      src: "/images/visibly-service-fotoobrazy-optimized.jpg",
+      alt: "Zarámovaná kresba a\u00a0fotoobraz na stěně v\u00a0obývacím pokoji",
+    },
     split: {
       title: "Z galerie v mobilu na stěnu v obýváku.",
       text: "Nejlepší fotky si nezaslouží zůstat v telefonu. Poradíme s výběrem snímku, ověříme kvalitu dat a doporučíme formát podle stěny, na kterou obraz míří.",

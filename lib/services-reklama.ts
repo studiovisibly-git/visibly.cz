@@ -457,7 +457,12 @@ export const reklamaServices: ServicePage[] = [
     h1: "Firemní textil, který tým rád nosí.",
     intro:
       "Trička, mikiny a pracovní oblečení s vaším logem. Potiskneme textil, ve kterém tým vypadá k světu na provozovně, u zákazníka i na firemní akci.",
-    heroMedia: { label: "Kruhová fotografie · tričko s potiskem", variant: "circle" },
+    heroMedia: {
+      label: "Tričko s\u00a0potiskem",
+      variant: "circle",
+      src: "/images/visibly-service-textil-optimized.jpg",
+      alt: "Potištěná trika a\u00a0mikina s\u00a0firemními logy na stole v\u00a0dílně",
+    },
     split: {
       title: "Oblečený tým je chodící reklama.",
       text: "Sjednocené oblečení působí profesionálně a buduje sounáležitost. Tiskneme termolisem — technologií, která zvládne malé série, přesnou pozici i sytou barvu.",
