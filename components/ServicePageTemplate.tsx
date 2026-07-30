@@ -17,7 +17,8 @@ import {
 } from "./Sections";
 import { TechNote } from "./TechStrip";
 import { getWork } from "@/lib/works";
-import { INQUIRY_URL, SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
+import { poptavkaUrl } from "@/lib/poptavka";
 import { serviceSchema } from "@/lib/schema";
 import { TECH_NOTES } from "@/lib/technika";
 import type { LinkItem, ServicePage } from "@/lib/types";
@@ -42,6 +43,13 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
   /* Jen na službách, kde o výsledku rozhoduje konkrétní stroj. Který slug
      zmínku dostane, řeší lib/technika.ts — včetně důvodů, proč jinde není. */
   const technika = TECH_NOTES[page.slug];
+  /* Každé CTA na stránce nese, odkud vede — formulář pak nenutí vybírat
+     oblast, kterou člověk právě odklikl. */
+  const poptat = poptavkaUrl(page.slug);
+  /* Data stránek míří na formulář natvrdo („/kontakt#poptavka") na
+     šedesáti místech. Přepisujeme je tady, ať předvyplnění nezáleží na tom,
+     kterým tlačítkem člověk odešel, a data zůstanou bez logiky. */
+  const sKontextem = (href: string) => (href.startsWith("/kontakt#") ? poptat : href);
 
   return (
     <>
@@ -54,7 +62,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
         title={page.h1}
         sub={page.intro}
         note="Stačí fotka, rozměr nebo krátký popis. Ozveme se s návrhem řešení."
-        primary={{ label: page.finalCta, href: INQUIRY_URL }}
+        primary={{ label: page.finalCta, href: poptat }}
         /* Když má stránka výrazný blok, vede scroll CTA k němu — je to hlavní akce. */
         scroll={
           page.feature
@@ -80,7 +88,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
           media={page.split.media}
           title={page.split.title}
           text={page.split.text}
-          cta={{ label: page.finalCta, href: INQUIRY_URL }}
+          cta={{ label: page.finalCta, href: poptat }}
         />
       </section>
 
@@ -94,7 +102,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
       {/* Varianty — interní prolinkování */}
       <section className="section section--rule container" id="varianty">
         <SectionHead title={page.variantsTitle} text={page.variantsText} indent={1} />
-        <Directory items={page.variants} />
+        <Directory items={page.variants.map((v) => ({ ...v, href: sKontextem(v.href) }))} />
       </section>
 
       {/* Band */}
@@ -102,7 +110,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
         <Band
           title={page.band.title}
           text={page.band.text}
-          cta={{ label: page.band.cta, href: page.band.href }}
+          cta={{ label: page.band.cta, href: sKontextem(page.band.href) }}
         />
       </section>
 
@@ -161,7 +169,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
             <div className="aside-box">
               <h3>Nenašli jste odpověď?</h3>
               <p>Napište nám, co řešíte. Poradíme s materiálem, daty i rozpočtem.</p>
-              <Link href={INQUIRY_URL} className="btn btn--sm">
+              <Link href={poptat} className="btn btn--sm">
                 Probrat zadání
               </Link>
             </div>
@@ -172,7 +180,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
       {/* Final CTA */}
       <FinalCta
         title={page.finalTitle}
-        cta={{ label: page.finalCta, href: INQUIRY_URL }}
+        cta={{ label: page.finalCta, href: poptat }}
         secondary={{ label: "Prohlédnout realizace", href: "/realizace" }}
       />
 

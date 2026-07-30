@@ -8,6 +8,8 @@ import { MapCircle } from "@/components/MapCircle";
 import { Process, SectionHead } from "@/components/Sections";
 import { buildMetadata } from "@/lib/seo";
 import { localBusinessSchema } from "@/lib/schema";
+import { allServices } from "@/lib/services";
+import { OSTATNI_STRANKY, oblastSluzby, type PoptavkaSluzba } from "@/lib/poptavka";
 import {
   ADDRESS_FULL,
   EMAIL,
@@ -51,6 +53,18 @@ const kontaktFaq = [
   },
 ];
 
+/**
+ * Mapa slug → co formulář předvyplní. Skládá se tady na serveru z dat
+ * služeb, ne ručně: názvy tak nemůžou utéct od skutečných stránek a do
+ * klienta putuje jen tahle drobná mapa, ne obsah pětadvaceti podstránek.
+ */
+const sluzbyProFormular: Record<string, PoptavkaSluzba> = {
+  ...OSTATNI_STRANKY,
+  ...Object.fromEntries(
+    allServices.map((s) => [s.slug, { oblast: oblastSluzby(s.slug, s.hub), label: s.navLabel }]),
+  ),
+};
+
 export default function KontaktPage() {
   return (
     <>
@@ -93,10 +107,11 @@ export default function KontaktPage() {
             </a>
           </aside>
 
-          {/* Formulář čte ?produkt= z URL (předvyplnění z katalogu textilu),
-              což vyžaduje Suspense, aby stránka zůstala staticky generovaná. */}
+          {/* Formulář čte z URL ?sluzba= (odkud člověk přišel) a ?produkt=
+              (výběr z katalogu textilu), což vyžaduje Suspense, aby stránka
+              zůstala staticky generovaná. */}
           <Suspense fallback={null}>
-            <LeadForm />
+            <LeadForm sluzby={sluzbyProFormular} />
           </Suspense>
         </div>
       </section>

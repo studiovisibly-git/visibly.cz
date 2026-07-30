@@ -5,7 +5,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Media } from "@/components/Media";
 import { Band, FinalCta, ProofStrip, SectionHead } from "@/components/Sections";
 import { buildMetadata } from "@/lib/seo";
-import { INQUIRY_URL, PHONE_DISPLAY, PHONE_HREF } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/site";
+import { poptavkaUrl } from "@/lib/poptavka";
 
 export const metadata = buildMetadata({
   title: "Reklamní plochy Opava — pronájem ploch s tiskem | Visibly",
@@ -43,7 +44,7 @@ export default function ReklamniPlochyPage() {
         eyebrow="Lokální kampaně"
         title="Reklamní plochy v Opavě. S tiskem v ceně úvahy."
         sub="Pronajměte si plochu na frekventovaném místě — a tisk i instalaci vyřešte jednou objednávkou u nás."
-        primary={{ label: "Poptat plochu", href: INQUIRY_URL }}
+        primary={{ label: "Poptat plochu", href: poptavkaUrl("reklamni-plochy-opava") }}
         scroll={{ label: "Jedna objednávka. Celá kampaň.", href: "#jak-to-funguje" }}
         media={{ label: "Kruhová fotografie · reklamní plocha v Opavě", variant: "circle" }}
       />
@@ -102,7 +103,7 @@ export default function ReklamniPlochyPage() {
       <FinalCta
         title="Chcete viset v Opavě?"
         text="Napište termín a rozpočet — vrátíme nabídku volných ploch."
-        cta={{ label: "Poptat plochu", href: INQUIRY_URL }}
+        cta={{ label: "Poptat plochu", href: poptavkaUrl("reklamni-plochy-opava") }}
       />
     </>
   );

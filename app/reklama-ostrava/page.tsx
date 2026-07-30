@@ -5,7 +5,8 @@ import { JsonLd } from "@/components/JsonLd";
 import { Band, Directory, FinalCta, Process, ProofStrip, SectionHead } from "@/components/Sections";
 import { ostravaAreaServed, serviceSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
-import { INQUIRY_URL, SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
+import { poptavkaUrl } from "@/lib/poptavka";
 
 export const metadata = buildMetadata({
   title: "Reklama Ostrava — cedule, světelná reklama, 3D loga | Visibly",
@@ -47,7 +48,7 @@ export default function ReklamaOstravaPage() {
         eyebrow="Reklamní výroba · Ostrava"
         title="Reklama pro Ostravu. Včetně montáže u vás."
         sub="Cedule, světelná loga i navigace v budovách. Přijedeme na obhlídku, navrhneme podle místa, vyrobíme na vlastních strojích a namontujeme vlastní partou."
-        primary={{ label: "Poptat reklamu", href: INQUIRY_URL }}
+        primary={{ label: "Poptat reklamu", href: poptavkaUrl("reklama-ostrava") }}
         scroll={{ label: "Co pro Ostravu vyrábíme", href: "#sluzby" }}
         media={{
           label: "Označení provozovny",
@@ -116,7 +117,7 @@ export default function ReklamaOstravaPage() {
       <FinalCta
         title="Chcete být v Ostravě vidět?"
         text="Pošlete fotku místa — vrátíme návrh řešení s cenou a termínem."
-        cta={{ label: "Poslat poptávku", href: INQUIRY_URL }}
+        cta={{ label: "Poslat poptávku", href: poptavkaUrl("reklama-ostrava") }}
         secondary={{ label: "Prohlédnout realizace", href: "/realizace" }}
       />
 

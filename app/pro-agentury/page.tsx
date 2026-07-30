@@ -6,7 +6,8 @@ import { Media } from "@/components/Media";
 import { Band, FinalCta, Process, ProofStrip, SectionHead } from "@/components/Sections";
 import { TechStrip, VYROBCI } from "@/components/TechStrip";
 import { buildMetadata } from "@/lib/seo";
-import { EMAIL, EMAIL_HREF, INQUIRY_URL } from "@/lib/site";
+import { EMAIL, EMAIL_HREF } from "@/lib/site";
+import { poptavkaUrl } from "@/lib/poptavka";
 
 export const metadata = buildMetadata({
   title: "Partnerský tisk pro agentury a grafická studia | Visibly Opava",
@@ -49,7 +50,7 @@ export default function ProAgenturyPage() {
         title="Vy držíte klienta. My držíme výrobu."
         sub="Partnerský tisk pro agentury a grafická studia. Dodáte data, my pohlídáme kvalitu, termín a mlčenlivost."
         note="První odpověď obvykle do 24 hodin."
-        primary={{ label: "Chci partnerský ceník", href: INQUIRY_URL }}
+        primary={{ label: "Chci partnerský ceník", href: poptavkaUrl("pro-agentury") }}
         scroll={{ label: "Jedna výroba pro celé vaše portfolio", href: "#co-vyrobite" }}
         media={{ label: "Kruhová fotografie · výroba / tiskový stroj", variant: "circle" }}
       />
@@ -139,7 +140,7 @@ export default function ProAgenturyPage() {
           eyebrow="Férovost především"
           title="Nekonkurujeme vám. Tiskneme vám."
           text="Grafické služby nabízíme jen koncovým klientům, kteří přijdou přímo — vaše zakázky jsou u nás jen výroba."
-          cta={{ label: "Chci partnerský ceník", href: INQUIRY_URL }}
+          cta={{ label: "Chci partnerský ceník", href: poptavkaUrl("pro-agentury") }}
         />
       </section>
 
@@ -151,7 +152,7 @@ export default function ProAgenturyPage() {
       <FinalCta
         title="Pojďme tisknout pro vaše klienty."
         text="Napište pár řádků o studiu a objemech — vrátíme ceník a podmínky."
-        cta={{ label: "Chci partnerský ceník", href: INQUIRY_URL }}
+        cta={{ label: "Chci partnerský ceník", href: poptavkaUrl("pro-agentury") }}
         secondary={{ label: "Průvodce partnerským tiskem", href: "/pruvodce/partnersky-tisk-pro-agentury" }}
       />
     </>

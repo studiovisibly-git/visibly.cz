@@ -6,7 +6,8 @@ import { Band, Directory, FinalCta, Process, ProofStrip, SectionHead } from "@/c
 import { TechStrip, VYROBCI } from "@/components/TechStrip";
 import { ostravaAreaServed, serviceSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
-import { INQUIRY_URL, SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
+import { poptavkaUrl } from "@/lib/poptavka";
 
 export const metadata = buildMetadata({
   title: "Tiskárna Ostrava — tisk s dodáním a montáží | Visibly",
@@ -48,7 +49,7 @@ export default function TiskarnaOstravaPage() {
         eyebrow="Tiskárna pro Ostravu"
         title="Tiskárna pro Ostravu. Výroba 35 minut od vás."
         sub="Bannery, samolepky, plakáty i firemní tiskoviny. Data zkontrolujeme online, vytiskneme na vlastních strojích a do Ostravy dovezeme — nebo rovnou namontujeme."
-        primary={{ label: "Poptat tisk", href: INQUIRY_URL }}
+        primary={{ label: "Poptat tisk", href: poptavkaUrl("tiskarna-ostrava") }}
         scroll={{ label: "Jak funguje tisk na dálku", href: "#jak-to-funguje" }}
         media={{
           label: "Video z výroby",
@@ -147,7 +148,7 @@ export default function TiskarnaOstravaPage() {
       <FinalCta
         title="Potřebujete tisk v Ostravě?"
         text="Napište, co má vzniknout — vrátíme nabídku s termínem i dopravou."
-        cta={{ label: "Poslat poptávku", href: INQUIRY_URL }}
+        cta={{ label: "Poslat poptávku", href: poptavkaUrl("tiskarna-ostrava") }}
         secondary={{ label: "Prohlédnout realizace", href: "/realizace" }}
       />
 
