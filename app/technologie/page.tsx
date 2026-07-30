@@ -11,7 +11,7 @@ import { INQUIRY_URL } from "@/lib/site";
 export const metadata = buildMetadata({
   title: "Technologie — vlastní výroba v Opavě | Visibly",
   description:
-    "Strojový park Visibly: velkoformátový tisk Epson SureColor, řezací ploter Roland, laminace a termolis. Výroba, která hlídá výsledek od dat po předání.",
+    "Strojový park Visibly: desetibarevný velkoformátový tisk Epson SureColor, UV tisk Agfa, řezací ploter Roland. Výroba, která hlídá výsledek od dat po předání.",
   path: "/technologie",
 });
 
@@ -54,7 +54,10 @@ const techList: Tech[] = [
     name: "Epson SureColor SC-S80610",
     brand: "epson",
     points: [
-      { title: "Barva pod kontrolou", text: "Čitelnost odstínů a detailů i na metrech plochy." },
+      {
+        title: "Deset barev, ne čtyři",
+        text: "Ke CMYK přidává světlé odstíny, oranžovou a červenou. Fotka pak vypadá jako fotka, ne jako tisk.",
+      },
       { title: "Materiál podle místa", text: "Fólie, bannery, papíry — povrch podle použití." },
       { title: "Více typů výstupu", text: "Od samolepky po backlit do světelného rámu." },
     ],

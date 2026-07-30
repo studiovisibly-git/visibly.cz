@@ -108,7 +108,7 @@ export default function TiskarnaOstravaPage() {
           title="Do Ostravy vezeme hotovou práci."
           text="Nejsme překupník, který zakázku pošle dál. Tiskneme, řežeme a laminujeme na svých strojích, 30 minut od Ostravy."
           items={[
-            { ...VYROBCI.epson, what: "Fólie, bannery, backlit" },
+            { ...VYROBCI.epson, what: "Deset barev, ne jen CMYK" },
             { ...VYROBCI.agfa, what: "Až 3,2 m bez spoje" },
             { ...VYROBCI.roland, what: "Tvar podle grafiky" },
           ]}
