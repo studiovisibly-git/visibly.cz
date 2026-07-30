@@ -3,6 +3,7 @@ import { Accordion } from "@/components/Accordion";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { Band, Directory, FinalCta, Process, ProofStrip, SectionHead } from "@/components/Sections";
+import { TechStrip, VYROBCI } from "@/components/TechStrip";
 import { ostravaAreaServed, serviceSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 import { INQUIRY_URL, SITE_URL } from "@/lib/site";
@@ -96,6 +97,23 @@ export default function TiskarnaOstravaPage() {
             { title: "Billboardy a citylighty", text: "Přesné formáty pro pronajaté plochy v Ostravě.", href: "/tisk/billboardy-a-citylighty", cta: "Billboardy" },
             { title: "Firemní tiskoviny", text: "Vizitky, letáky a brožury sladěné se zbytkem značky.", href: "/tisk/tiskoviny", cta: "Tiskoviny" },
           ]}
+        />
+      </section>
+
+      {/* Ostravská stránka slibuje výrobu v Opavě pro Ostravu — pás strojů
+          dokládá, že se veze hotová práce, ne přeprodaná zakázka. */}
+      <section className="section--tight container">
+        <TechStrip
+          eyebrow="Vlastní výroba v Opavě"
+          title="Do Ostravy vezeme hotovou práci."
+          text="Nejsme překupník, který zakázku pošle dál. Tiskneme, řežeme a laminujeme na svých strojích, 30 minut od Ostravy."
+          items={[
+            { ...VYROBCI.epson, what: "Fólie, bannery, backlit" },
+            { ...VYROBCI.agfa, what: "Až 3,2 m bez spoje" },
+            { ...VYROBCI.roland, what: "Tvar podle grafiky" },
+          ]}
+          href="/technologie"
+          cta="Projít technologie"
         />
       </section>
 

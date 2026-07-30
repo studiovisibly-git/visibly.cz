@@ -2369,11 +2369,16 @@ a.circle-chip:hover small {
   border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
 }
 
+/* Podložka pod logem. Ve světlém režimu splyne s kartou, takže logo prostě
+   leží na ploše; v tmavém se objeví jako světlý štítek, bez kterého by
+   barevné logo na tmavé kartě nebylo vidět. */
 .tech-item__brand img {
   height: clamp(1.375rem, 2.4vw, 1.875rem);
   width: auto;
-  filter: grayscale(1) var(--logo-filter);
-  opacity: 0.75;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  background: var(--plate);
+  box-sizing: content-box;
 }
 
 .tech-item__points {
@@ -3737,18 +3742,19 @@ a.circle-chip:hover small {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--surface);
+  /* Ne --surface: ta v noci ztmavne a tmavě modrý Epson i břidlicový Roland
+     by na ní zmizely. --plate drží světlý podklad v obou režimech, stejně
+     jako u produktových fotek. */
+  background: var(--plate);
   overflow: hidden;
 }
 
-/* Logo výrobce. Šedě jako loga klientů v pásu na homepage — v jednobarevném
-   webu by tři značkové barvy působily jako nálepky, ne jako doklad. Poměry
-   stran se hodně liší, proto šířku dolaďuje `width` u položky, ne tahle třída.
-   Výška dojde sama, aby se logo nedeformovalo. */
+/* Logo výrobce v původních barvách. Poměry stran se hodně liší, proto šířku
+   dolaďuje `width` u položky, ne tahle třída. Výška dojde sama, aby se logo
+   nedeformovalo. */
 .tech-strip__disc img {
   width: 70%;
   height: auto;
-  filter: grayscale(1) var(--logo-filter);
 }
 
 /* Než logo bude: nápis značky vlastní sazbou. Není to náhražka obrázku,
