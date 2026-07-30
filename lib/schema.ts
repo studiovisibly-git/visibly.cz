@@ -2,6 +2,9 @@ import { allServices } from "./services";
 import {
   ADDRESS_CITY,
   ADDRESS_STREET,
+  COMPANY_DIC,
+  COMPANY_ICO,
+  COMPANY_LEGAL,
   EMAIL,
   GEO_LAT,
   GEO_LNG,
@@ -87,11 +90,20 @@ export const localBusinessSchema = {
   "@type": ["LocalBusiness", "ProfessionalService"],
   "@id": BUSINESS_ID,
   name: "Visibly",
-  legalName: "studio visibly s.r.o.",
+  legalName: COMPANY_LEGAL,
   alternateName: "visibly.cz",
   description:
     "Visibly je tiskárna a výrobní reklamní studio z Opavy. Tiskneme a vyrábíme reklamu, která je vidět — velkoformátový tisk, polepy, cedule a světelnou reklamu pro firmy z Opavy, Ostravy a celého Moravskoslezského kraje.",
   slogan: "Reklama, která je vidět.",
+  /* IČO a DIČ: Google je používá k propojení firmy s rejstříky. taxID je
+     české IČO, vatID plátcovské DIČ — to jsou dvě různá čísla, ne překlep. */
+  taxID: COMPANY_ICO,
+  vatID: COMPANY_DIC,
+  identifier: {
+    "@type": "PropertyValue",
+    propertyID: "ICO",
+    value: COMPANY_ICO,
+  },
   url: `${SITE_URL}/`,
   logo: {
     "@type": "ImageObject",

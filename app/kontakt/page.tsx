@@ -12,6 +12,10 @@ import { allServices } from "@/lib/services";
 import { OSTATNI_STRANKY, oblastSluzby, type PoptavkaSluzba } from "@/lib/poptavka";
 import {
   ADDRESS_FULL,
+  COMPANY_BANK,
+  COMPANY_DIC,
+  COMPANY_ICO,
+  COMPANY_LEGAL,
   EMAIL,
   EMAIL_HREF,
   MAPS_URL,
@@ -152,6 +156,36 @@ export default function KontaktPage() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Fakturační údaje patří sem, ne do patičky: hledá je účetní, když má
+          co platit nebo zakládá dodavatele — a to je přesně ta chvíle, kdy
+          je člověk na kontaktu. Do patičky jde jen IČ a DIČ, číslo účtu na
+          každou stránku webu nepatří. */}
+      <section className="section section--rule container">
+        <SectionHead eyebrow="Pro účetní" title="Fakturační údaje" indent={1} />
+        <dl className="fakturace">
+          <div>
+            <dt>Firma</dt>
+            <dd>{COMPANY_LEGAL}</dd>
+          </div>
+          <div>
+            <dt>Sídlo</dt>
+            <dd>{ADDRESS_FULL}</dd>
+          </div>
+          <div>
+            <dt>IČ</dt>
+            <dd>{COMPANY_ICO}</dd>
+          </div>
+          <div>
+            <dt>DIČ</dt>
+            <dd>{COMPANY_DIC}</dd>
+          </div>
+          <div>
+            <dt>Bankovní účet</dt>
+            <dd>{COMPANY_BANK}</dd>
+          </div>
+        </dl>
       </section>
 
       <JsonLd data={localBusinessSchema} />
