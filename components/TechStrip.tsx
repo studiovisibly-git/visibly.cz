@@ -87,3 +87,42 @@ export function TechStrip({
     </Link>
   );
 }
+
+/**
+ * Drobná zmínka o technice na podstránku služby — jeden řádek, ne pás.
+ *
+ * Podstránek služeb je pětadvacet. Kdyby na každé stál celý pás, přestane
+ * to být doklad a začne to být tapeta: ten samý blok počtvrté už nikdo
+ * nečte. Proto je tady jen značka, jedna věta a odkaz — velikostí patří
+ * mezi text stránky, ne mezi její sekce.
+ */
+export function TechLine({
+  brands,
+  text,
+}: {
+  brands: (keyof typeof VYROBCI)[];
+  text: string;
+}) {
+  return (
+    <Link href="/technologie" className="tech-line" data-reveal>
+      {/* Loga nesou informaci („na čem"), kterou věta vždycky neopakuje —
+          proto mají alt se značkou a nejsou schovaná před čtečkou. */}
+      <span className="tech-line__marks">
+        {brands.map((key) => (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img key={key} src={VYROBCI[key].logo} alt={VYROBCI[key].name} loading="lazy" />
+        ))}
+      </span>
+
+      <span className="tech-line__body">
+        <span className="tech-line__text">{text}</span>{" "}
+        <span className="arrow-link tech-line__cta">
+          Naše technologie{" "}
+          <span className="arr" aria-hidden="true">
+            ↗
+          </span>
+        </span>
+      </span>
+    </Link>
+  );
+}

@@ -15,9 +15,11 @@ import {
   SectionHead,
   Split,
 } from "./Sections";
+import { TechLine } from "./TechStrip";
 import { getWork } from "@/lib/works";
 import { INQUIRY_URL, SITE_URL } from "@/lib/site";
 import { serviceSchema } from "@/lib/schema";
+import { TECH_NOTES } from "@/lib/technika";
 import type { LinkItem, ServicePage } from "@/lib/types";
 
 const HUB_LABELS: Record<string, string> = {
@@ -37,6 +39,9 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
     : [{ label: page.navLabel, href: path }];
 
   const works = page.works.map(getWork);
+  /* Jen na službách, kde o výsledku rozhoduje konkrétní stroj. Který slug
+     zmínku dostane, řeší lib/technika.ts — včetně důvodů, proč jinde není. */
+  const technika = TECH_NOTES[page.slug];
 
   return (
     <>
@@ -69,7 +74,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
         </section>
       )}
 
-      {/* Postoj / split */}
+      {/* Postoj / split — a hned pod ním doklad, na čem se to vyrobí. */}
       <section className="section container">
         <Split
           media={page.split.media}
@@ -77,6 +82,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
           text={page.split.text}
           cta={{ label: page.finalCta, href: INQUIRY_URL }}
         />
+        {technika && <TechLine brands={technika.brands} text={technika.text} />}
       </section>
 
       {/* Varianty — interní prolinkování */}
