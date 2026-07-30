@@ -2,6 +2,9 @@ import Link from "next/link";
 import { CookieSettingsLink } from "./CookieSettingsLink";
 import {
   ADDRESS_FULL,
+  COMPANY_DIC,
+  COMPANY_ICO,
+  COMPANY_LEGAL,
   EMAIL,
   EMAIL_HREF,
   MAPS_URL,
@@ -93,9 +96,9 @@ export function Footer() {
 
         <div className="footer__legal">
           <span>
-            © {new Date().getFullYear()} studio visibly s.r.o. ·{" "}
-            <Link href="/cookies">Cookies</Link> · <CookieSettingsLink /> ·{" "}
-            <Link href="/mapa-webu">Mapa webu</Link>
+            © {new Date().getFullYear()} {COMPANY_LEGAL} · IČ {COMPANY_ICO} ·{" "}
+            DIČ {COMPANY_DIC} · <Link href="/cookies">Cookies</Link> ·{" "}
+            <CookieSettingsLink /> · <Link href="/mapa-webu">Mapa webu</Link>
           </span>
           {/* Web je sám ukázka práce — drobná nabídka v patě, ne velký blok. */}
           <Link href="/webdesign" className="footer__pitch">

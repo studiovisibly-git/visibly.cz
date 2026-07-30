@@ -11,6 +11,14 @@ export const ADDRESS_STREET = "Komárovská 2662/2";
 export const ADDRESS_CITY = "Opava";
 export const ADDRESS_FULL = `${ADDRESS_STREET}, ${ADDRESS_CITY}`;
 
+/* Zapsaný název je „studio visibly s.r.o." — malými a s tečkami u „s.r.o."
+   bez mezer. Nepřepisovat na „s. r. o.", i když to typografická příručka
+   doporučuje: v rejstříku je to takhle a fakturační údaje musí sedět. */
+export const COMPANY_LEGAL = "studio visibly s.r.o.";
+export const COMPANY_ICO = "17760712";
+export const COMPANY_DIC = "CZ17760712";
+export const COMPANY_BANK = "8912255002/5500";
+
 /** Souřadnice studia — převzaté z mapového odkazu na současném webu. */
 export const GEO_LAT = 49.9370015;
 export const GEO_LNG = 17.9120775;

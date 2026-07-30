@@ -3942,7 +3942,11 @@ a.circle-chip:hover small {
 /* ---------- Štítky služeb na realizacích ----------
    Štítek je zároveň odkaz na službu: kdo si prohlíží realizaci, dostane se
    z ní rovnou k tomu, co si chce objednat. Na kartě v přehledu jsou to jen
-   texty (celá karta už odkazem je — odkaz v odkazu nejde). */
+   texty (celá karta už odkazem je — odkaz v odkazu nejde).
+
+   Rádius i výška jsou z tlačítka, ne pilulka: web má jen tři poloměry —
+   kruh, 5 px u tlačítek a 8 px u ploch na --surface. Zaoblený obdélník
+   999 px do téhle sady nepatří. */
 
 .stitky {
   list-style: none;
@@ -3954,14 +3958,18 @@ a.circle-chip:hover small {
 }
 
 .stitek {
-  display: inline-block;
-  padding: 0.4rem 0.85rem;
-  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+  border-radius: var(--radius-btn);
   font-size: var(--fs-eyebrow);
   font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
   color: var(--muted);
   transition:
     border-color var(--dur-fast) var(--ease-out),
@@ -3977,4 +3985,49 @@ a.stitek:focus-visible {
 
 .stitky--karta {
   margin-top: 1.1rem;
+}
+
+/* Na úzkém displeji by delší názvy („Logo a vizuální identita") přetekly
+   ven z karty — verzálky s prostrkáním jsou široké. */
+@media (max-width: 560px) {
+  .stitek {
+    height: auto;
+    padding: 0.45rem 0.7rem;
+    line-height: 1.25;
+    white-space: normal;
+  }
+}
+
+/* ---------- Fakturační údaje ----------
+   Řádky jako na kartě realizace: popisek inkoustem, hodnota šedě. Čísla
+   sázíme tabulkovými číslicemi a bez zlomu — IČ ani číslo účtu se nesmí
+   rozpadnout přes konec řádku, jinak se špatně opisuje. */
+
+.fakturace {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0 0;
+}
+
+.fakturace dt {
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.fakturace dd {
+  margin: 0.45rem 0 0;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: 1.35;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Sídlo a název firmy se zalomit smí — nejsou to čísla k opisování. */
+.fakturace div:nth-child(-n + 2) dd {
+  white-space: normal;
 }
