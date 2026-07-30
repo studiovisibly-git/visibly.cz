@@ -3799,151 +3799,156 @@ a.circle-chip:hover small {
   }
 }
 
-/* ---------- Poznámka o technice ----------
-   Malá varianta pásu pro podstránky služeb: vlasovka, kruhy se značkou,
-   jedna věta. Žádný rám s výplní — web mluví vlasovkami a kruhy, panel
-   s pozadím v něm působí jako cizí prvek odjinud.
+/* ---------- Blok o technice na podstránce služby ----------
+   Navazuje na velký pás na rozcestích: stejný 2px tah, stejné kruhy, stejný
+   rytmus text vlevo / značky vpravo. Neopisuje ho ale — značky tady stojí
+   v kartách a nesou devízu stroje.
 
-   Vlasovka je jen nahoře. Poznámka tak visí na bloku nad sebou jako jeho
-   podpis, místo aby se ohradila do vlastní sekce. Na pětadvaceti
-   podstránkách je to rozdíl mezi dokladem a výplní. */
+   Karta s kruhem na horní hraně je vzor z původní šablony (u referencí):
+   kruh probíjí rám, prstenec v barvě podkladu přeruší linku a vznikne
+   jeden tvar místo loga přilepeného na obdélník. */
 
-.tech-line {
+.tech-note {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  /* Vystředěné, ne od horní hrany: sloupec značek je vyšší než dvě řádky
-     věty a od horního zarovnání zbývala vpravo prázdná díra. */
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   align-items: center;
-  gap: clamp(1.5rem, 3.5vw, 3.25rem);
-  padding-top: clamp(1.5rem, 3vw, 2.25rem);
-  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  gap: clamp(2rem, 4vw, 3.5rem);
   color: var(--ink);
 }
 
-/* Blíž, než je běžná mezera mezi bloky: patří k „postoji" nad sebou. */
-.split + .tech-line {
-  margin-top: clamp(2.5rem, 5vw, 4rem);
+.tech-note__copy > * + * {
+  margin-top: 1rem;
 }
 
-/* Značky pod sebou. Vedle sebe by devíza musela být vycentrovaná pod kruhem
-   a lámala by se na tři řádky; takhle stojí vlevo u loga a čte se jako údaj. */
-.tech-line__marks {
+.tech-note__title {
+  font-size: clamp(1.625rem, 3vw, 2.375rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.tech-note__text {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: 1.4;
+  max-width: 30em;
+}
+
+.tech-note__cta {
+  margin-top: 1.4rem;
+}
+
+.tech-note:hover .tech-note__cta::before,
+.tech-note:focus-visible .tech-note__cta::before {
+  transform: scaleX(1);
+}
+
+.tech-note__cta .arr {
+  transition: translate var(--dur-fast) var(--ease-out);
+}
+
+.tech-note:hover .tech-note__cta .arr {
+  translate: 0.15em -0.15em;
+}
+
+.tech-note__cards {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  gap: clamp(0.9rem, 1.8vw, 1.25rem);
-  width: clamp(16.5rem, 23vw, 19.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: clamp(1.25rem, 2.6vw, 2.25rem);
 }
 
-.tech-line__mark {
+/* Horní odsazení musí uhlídat spodní půlku kruhu — proto je tak velké.
+   Kdyby bylo menší, logo by naskočilo na devízu. */
+.tech-note__card {
+  position: relative;
+  flex: 1 1 9.5rem;
+  max-width: 15rem;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(0.75rem, 1.4vw, 1rem);
+  gap: 0.35rem;
+  padding: clamp(3.25rem, 5vw, 4rem) clamp(1rem, 2vw, 1.5rem) clamp(1.5rem, 2.5vw, 1.75rem);
+  border: 2px solid var(--ink);
+  text-align: center;
   transition: translate 0.45s var(--ease-out);
 }
 
-/* Kruh na světlé podložce — stejné řešení jako u velkého pásu. --plate,
-   ne --surface: ta v noci ztmavne a modrý Epson i břidlicový Roland by
-   na ní zmizely. */
-/* Nesmí být menší: kruh je pro široké logo nehospodárný tvar. Roland má
-   poměr stran 6,6:1, takže při průměru 52 px z něj zbyla devítipixelová
-   nitka. Na 80 px je značka čitelná a kruh pořád drží drobný rozměr. */
-.tech-line__disc {
+/* Kruh sedí na horní hraně karty a přerušuje ji. Prstenec musí být v barvě
+   podkladu stránky (--paper), ne bílý: v tmavém režimu by z bílého kroužku
+   byl svítící obrys. Procenta v `translate` se počítají z rozměru prvku,
+   takže -55 % je přesně ten posun ze šablony (66 z 120 px). */
+.tech-note__disc {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% -55%;
   display: grid;
   place-items: center;
-  width: clamp(4.5rem, 5.4vw, 5rem);
+  width: clamp(4.5rem, 6vw, 5.5rem);
   aspect-ratio: 1;
   border-radius: 50%;
+  /* Ne --surface: ta v noci ztmavne a modrý Epson i břidlicový Roland
+     by na ní zmizely. --plate drží světlý podklad v obou režimech. */
   background: var(--plate);
+  border: 6px solid var(--paper);
+  box-sizing: content-box;
   overflow: hidden;
-  flex: 0 0 auto;
 }
 
 /* Šířku řídí `width` u položky ve VYROBCI, aby loga s různým poměrem stran
    působila opticky stejně velká. Výška dojde sama. */
-.tech-line__disc img {
+.tech-note__disc img {
   height: auto;
 }
 
-/* Devíza stroje vedle loga: tvrzení inkoustem, důkaz šedě. Stejná dvojice
-   jako na kartách strojů na /technologie, jen v drobném. */
-.tech-line__deviza {
-  display: grid;
-  gap: 0.1rem;
-  font-size: var(--fs-eyebrow);
-  line-height: 1.35;
-}
-
-.tech-line__deviza strong {
+.tech-note__deviza {
+  font-size: var(--fs-body);
   font-weight: 700;
-  color: var(--ink);
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
-.tech-line__deviza span {
+.tech-note__proof {
+  font-size: var(--fs-small);
   font-weight: 500;
+  line-height: 1.35;
+  text-wrap: balance;
   color: var(--muted);
 }
 
-.tech-line__copy {
-  max-width: 40em;
+/* Karty se při najetí rozjedou cik-cak — stejné gesto jako u velkého pásu. */
+.tech-note:hover .tech-note__card:nth-child(odd) {
+  translate: 0 -0.5rem;
 }
 
-.tech-line__text {
-  font-size: var(--fs-small);
-  font-weight: 700;
-  line-height: 1.5;
+.tech-note:hover .tech-note__card:nth-child(even) {
+  translate: 0 0.4rem;
 }
 
-/* .arrow-link sází --fs-body; tady má odkaz zůstat v rytmu poznámky,
-   ne ji přerůst. */
-.tech-line__cta {
-  margin-top: 0.9rem;
-  font-size: var(--fs-small);
-  color: var(--muted);
-}
-
-.tech-line:hover .tech-line__cta::before,
-.tech-line:focus-visible .tech-line__cta::before {
-  transform: scaleX(1);
-}
-
-.tech-line__cta .arr {
-  transition: translate var(--dur-fast) var(--ease-out);
-}
-
-.tech-line:hover .tech-line__cta .arr {
-  translate: 0.15em -0.15em;
-}
-
-/* Kruhy se při najetí nadzvednou — stejné gesto jako u velkého pásu, jen
-   všechny zároveň: při jedné nebo dvou značkách by cik-cak vypadal jako
-   chyba sazby. */
-.tech-line:hover .tech-line__mark,
-.tech-line:focus-visible .tech-line__mark {
-  translate: 0 -0.3rem;
-}
-
-/* Na úzkém displeji se značky přesunou nad větu — vedle sebe by na devízy
-   i celou větu nezbyla čitelná šířka. */
-@media (max-width: 760px) {
-  .tech-line {
+@media (max-width: 900px) {
+  .tech-note {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1.75rem;
+    gap: clamp(1.5rem, 3vw, 2rem);
   }
 
-  .tech-line__marks {
-    width: auto;
+  /* Kruh je mimo tok a přečnívá nad kartu asi o 46 px. Ve dvou sloupcích si
+     na to vezme místo z vystředění, ale nad sebou by najel na CTA — proto
+     tady kartám odsazení navrch. */
+  .tech-note__cards {
+    justify-content: flex-start;
+    padding-top: 4.25rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tech-line__mark {
+  .tech-note__card {
     transition: none;
   }
 
-  .tech-line:hover .tech-line__mark {
+  .tech-note:hover .tech-note__card {
     translate: none;
   }
 }

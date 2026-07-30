@@ -15,7 +15,7 @@ import {
   SectionHead,
   Split,
 } from "./Sections";
-import { TechLine } from "./TechStrip";
+import { TechNote } from "./TechStrip";
 import { getWork } from "@/lib/works";
 import { INQUIRY_URL, SITE_URL } from "@/lib/site";
 import { serviceSchema } from "@/lib/schema";
@@ -74,7 +74,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
         </section>
       )}
 
-      {/* Postoj / split — a hned pod ním doklad, na čem se to vyrobí. */}
+      {/* Postoj / split */}
       <section className="section container">
         <Split
           media={page.split.media}
@@ -82,8 +82,14 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
           text={page.split.text}
           cta={{ label: page.finalCta, href: INQUIRY_URL }}
         />
-        {technika && <TechLine brands={technika.brands} text={technika.text} />}
       </section>
+
+      {/* Doklad, na čem se to vyrobí — hned za postojem, dřív než varianty. */}
+      {technika && (
+        <section className="section--tight container">
+          <TechNote title={technika.title} brands={technika.brands} text={technika.text} />
+        </section>
+      )}
 
       {/* Varianty — interní prolinkování */}
       <section className="section section--rule container" id="varianty">
