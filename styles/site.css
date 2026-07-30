@@ -2846,6 +2846,23 @@ a.circle-chip:hover small {
   margin-bottom: 1.4rem;
 }
 
+/* Hláška, že jsme oblast vyplnili za návštěvníka. Sedí těsně pod selectem
+   a je uvozená svislicí — tak se čte jako poznámka k tomu poli, ne jako
+   další text formuláře. */
+.form-prefill {
+  margin: -0.6rem 0 1.4rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--ink);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.form-prefill strong {
+  color: var(--ink);
+}
+
 .form-actions {
   display: flex;
   flex-wrap: wrap;

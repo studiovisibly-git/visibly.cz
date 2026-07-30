@@ -5,7 +5,8 @@ import { JsonLd } from "@/components/JsonLd";
 import { Band, Directory, FinalCta, Process, ProofStrip, SectionHead } from "@/components/Sections";
 import { ostravaAreaServed, serviceSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
-import { INQUIRY_URL, SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
+import { poptavkaUrl } from "@/lib/poptavka";
 
 export const metadata = buildMetadata({
   title: "Polepy Ostrava — auta, dodávky, výlohy | Visibly",
@@ -47,7 +48,7 @@ export default function PolepyOstravaPage() {
         eyebrow="Polepy · Ostrava"
         title="Polepy pro Ostravu. Od jednoho auta po flotilu."
         sub="Auta, dodávky, výlohy i interiéry. Grafiku navrhneme a vyrobíme ve vlastní dílně — auto polepíme v krytém zázemí, výlohy aplikujeme přímo u vás v Ostravě."
-        primary={{ label: "Poptat polep", href: INQUIRY_URL }}
+        primary={{ label: "Poptat polep", href: poptavkaUrl("polepy-ostrava") }}
         scroll={{ label: "Co v Ostravě polepujeme", href: "#sluzby" }}
         media={{
           label: "Polep firemního vozu",
@@ -102,7 +103,7 @@ export default function PolepyOstravaPage() {
           eyebrow="Flotily"
           title="Jedna značka na všech autech."
           text="Šablony pro každý typ vozu a termíny, při kterých flotila nestojí."
-          cta={{ label: "Probrat flotilu", href: INQUIRY_URL }}
+          cta={{ label: "Probrat flotilu", href: poptavkaUrl("polepy-ostrava") }}
         />
       </section>
 
@@ -114,7 +115,7 @@ export default function PolepyOstravaPage() {
       <FinalCta
         title="Chcete polep v Ostravě?"
         text="Pošlete fotku auta nebo výlohy — vrátíme návrh řešení s cenou."
-        cta={{ label: "Poslat poptávku", href: INQUIRY_URL }}
+        cta={{ label: "Poslat poptávku", href: poptavkaUrl("polepy-ostrava") }}
         secondary={{ label: "Tiskárna pro Ostravu", href: "/tiskarna-ostrava" }}
       />
 

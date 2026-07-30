@@ -1,19 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { EMAIL } from "@/lib/site";
+import { OBLASTI, type PoptavkaSluzba } from "@/lib/poptavka";
 
 /**
  * Dvoukrokový poptávkový formulář podle wireframu.
  * Web je statický — odeslání zatím skládá připravený e-mail (mailto).
  * Až bude backend/formulářová služba, stačí vyměnit handleSubmit.
+ *
+ * `sluzby` staví kontaktní stránka na serveru z dat služeb — do klienta se
+ * tak dostane jen mapa slug → oblast, ne celý obsah pětadvaceti stránek.
  */
-export function LeadForm() {
+export function LeadForm({ sluzby = {} }: { sluzby?: Record<string, PoptavkaSluzba> }) {
   const [step, setStep] = useState<1 | 2>(1);
+  /* Oblast a popis se předvyplňují z URL, a proto nejsou v `data`: drží se
+     jako „null = zatím nesaháno". Hodnota do pole se pak skládá až při
+     vykreslení z toho, co víme z odkazu.
+
+     Přes useEffect to nešlo. Kontaktní stránka je staticky generovaná
+     a formulář čte parametry, takže React ten podstrom po jejich doplnění
+     přemountuje — a co efekt stihl uložit do useState, je pryč. Odvozená
+     hodnota přemount přežije, protože se nedrží nikde. (Stejnou chybu měl
+     i starší předvyplňovač z katalogu, jen si toho nikdo nevšiml: fungoval
+     při prokliku z webu, ne při otevření odkazu.) */
+  const [oblastRucne, setOblastRucne] = useState<string | null>(null);
+  const [popisRucne, setPopisRucne] = useState<string | null>(null);
   const [data, setData] = useState({
-    oblast: "",
-    popis: "",
     rozmer: "",
     pocet: "",
     termin: "",
@@ -27,26 +41,42 @@ export function LeadForm() {
   const set = (key: keyof typeof data) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setData((d) => ({ ...d, [key]: e.target.value }));
 
-  /* Předvyplnění z katalogu textilu: /kontakt?produkt=…#poptavka.
-     Zákazník tak nemusí kód produktu nikam opisovat. */
   const params = useSearchParams();
+
+  /* Vybraný kus z katalogu textilu: /kontakt?produkt=…#poptavka.
+     Zákazník tak nemusí kód produktu nikam opisovat. */
   const produkt = params.get("produkt");
-  useEffect(() => {
-    if (!produkt) return;
-    setData((d) => ({
-      ...d,
-      oblast: d.oblast || "Reklamní textil (potisk trik, mikin…)",
-      popis: d.popis || `Mám vybráno z katalogu: ${produkt}.\n\nPotřebuji potisk (logo/motiv):\nVelikosti a počty kusů:`,
-    }));
-  }, [produkt]);
+
+  /* Stránka, ze které člověk přišel: /kontakt?sluzba=polepy-aut#poptavka.
+     Kdo na podstránce klikne na „Poptat polep auta", nemá co vybírat —
+     už to řekl tím klikem. Neznámý slug se prostě nenajde a nic se nestane. */
+  const sluzba = sluzby[params.get("sluzba") ?? ""];
+
+  /* Katalog má přednost: ví o zakázce víc než jméno stránky. */
+  const predvyplneno = produkt
+    ? {
+        oblast: OBLASTI.textil,
+        popis: `Mám vybráno z katalogu: ${produkt}.\n\nPotřebuji potisk (logo/motiv):\nVelikosti a počty kusů:`,
+        zdroj: `Katalog textilu — ${produkt}`,
+      }
+    : { oblast: sluzba?.oblast ?? "", popis: "", zdroj: sluzba?.label };
+
+  const oblast = oblastRucne ?? predvyplneno.oblast;
+  const popis = popisRucne ?? predvyplneno.popis;
+
+  /* Aby v e-mailu stálo „Polepy aut", ne jen široká oblast ze selectu.
+     Drží se, i když si člověk v selectu vybere jinak — je to informace
+     o tom, odkud přišel, ne o tom, co vyplnil. */
+  const zdroj = predvyplneno.zdroj;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const subject = `Poptávka z webu — ${data.oblast || "výroba"}`;
+    const subject = `Poptávka z webu — ${zdroj || oblast || "výroba"}`;
     const body = [
-      `Co řeším: ${data.oblast}`,
+      `Co řeším: ${oblast}`,
+      zdroj && `Ze stránky: ${zdroj}`,
       "",
-      data.popis,
+      popis,
       "",
       data.rozmer && `Rozměr: ${data.rozmer}`,
       data.pocet && `Počet / rozsah: ${data.pocet}`,
@@ -64,7 +94,7 @@ export function LeadForm() {
   }
 
   return (
-    <form className="form-card" onSubmit={handleSubmit} id="poptavka">
+    <form className="form-card" onSubmit={handleSubmit}>
       {step === 1 ? (
         <>
           <p className="form-step-note">Krok 1 ze 2 · Zakázka a podklady</p>
@@ -72,7 +102,7 @@ export function LeadForm() {
 
           <label className="field">
             <span>Co řešíte? *</span>
-            <select required value={data.oblast} onChange={set("oblast")}>
+            <select required value={oblast} onChange={(e) => setOblastRucne(e.target.value)}>
               <option value="">Vyberte oblast…</option>
               <option>Tisk (banner, samolepky, plakáty, tiskoviny…)</option>
               <option>Polep (auto, výloha, interiér…)</option>
@@ -83,14 +113,23 @@ export function LeadForm() {
             </select>
           </label>
 
+          {/* Tiché předvyplnění mate — člověk musí vidět, že za něj někdo
+              rozhodl, a že to smí přepsat. */}
+          {zdroj && (
+            <p className="form-prefill">
+              Vyplnili jsme podle toho, odkud jdete: <strong>{zdroj}</strong>. Když se
+              netrefili, přepněte to výš.
+            </p>
+          )}
+
           <label className="field">
             <span>
               Napište, co už víte * <small>— klidně jen pár vět</small>
             </span>
             <textarea
               required
-              value={data.popis}
-              onChange={set("popis")}
+              value={popis}
+              onChange={(e) => setPopisRucne(e.target.value)}
               placeholder="Např.: Potřebuji polepit dodávku, logo mám v PDF. Auto je bílý Transporter."
             />
           </label>

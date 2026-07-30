@@ -6,7 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LERP, onScrollFrame } from "@/lib/motion";
 import { mainNav, studioLinks } from "@/lib/nav";
-import { INQUIRY_URL, PHONE_DISPLAY, PHONE_HREF } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/site";
+import { poptavkaUrl, tematStranky } from "@/lib/poptavka";
 
 /** Logo (černý kruh „visibly") + tagline, který se scrollem mizí a logo se zmenšuje.
     Řízeno CSS proměnnou --logo-progress (0 nahoře → 1 po odscrollování), stejně jako živý web. */
@@ -42,6 +43,8 @@ function DotsIcon() {
 export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  /* I tlačítko v hlavičce nese, na které stránce se kliklo. */
+  const poptat = poptavkaUrl(tematStranky(pathname).slug);
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -128,7 +131,7 @@ export function Header() {
 
           <div className="header__actions">
             <ThemeToggle />
-            <Link href={INQUIRY_URL} className="btn header__cta">
+            <Link href={poptat} className="btn header__cta">
               Poptat výrobu
             </Link>
           </div>
@@ -185,7 +188,7 @@ export function Header() {
         </nav>
 
         <div className="mobile-menu__cta">
-          <Link href={INQUIRY_URL} className="btn">
+          <Link href={poptat} className="btn">
             Poptat výrobu
           </Link>
           <p className="hero__note" style={{ marginTop: "1rem" }}>

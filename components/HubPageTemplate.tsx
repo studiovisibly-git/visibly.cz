@@ -16,7 +16,8 @@ import {
   Split,
 } from "./Sections";
 import { getWork } from "@/lib/works";
-import { INQUIRY_URL, SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
+import { poptavkaUrl, slugZCesty } from "@/lib/poptavka";
 import { serviceSchema } from "@/lib/schema";
 import type { DirItem, Faq, LinkItem, MediaSpec, ProcessStep } from "@/lib/types";
 
@@ -60,6 +61,11 @@ export function HubPageTemplate({
   afterDirectory?: React.ReactNode;
 }) {
   const works = hub.works.map(getWork);
+  /* CTA nesou, odkud vedou — formulář pak předvyplní oblast sám. */
+  const poptat = poptavkaUrl(slugZCesty(hub.path));
+  /* Odkazy na formulář z dat rozcestí nesou kontext taky — viz stejná
+     poznámka v ServicePageTemplate. */
+  const sKontextem = (href: string) => (href.startsWith("/kontakt#") ? poptat : href);
 
   return (
     <>
@@ -72,7 +78,7 @@ export function HubPageTemplate({
         title={hub.h1}
         sub={hub.intro}
         note="Stačí fotka, rozměr nebo krátký popis. Ozveme se s návrhem řešení."
-        primary={{ label: hub.heroCta, href: INQUIRY_URL }}
+        primary={{ label: hub.heroCta, href: poptat }}
         scroll={{ label: hub.directoryTitle, href: "#rozcestnik" }}
         media={hub.heroMedia}
       />
@@ -83,7 +89,7 @@ export function HubPageTemplate({
           media={hub.split.media}
           title={hub.split.title}
           text={hub.split.text}
-          cta={{ label: hub.heroCta, href: INQUIRY_URL }}
+          cta={{ label: hub.heroCta, href: poptat }}
         />
       </section>
 
@@ -93,7 +99,7 @@ export function HubPageTemplate({
       {/* Rozcestník */}
       <section className="section container" id="rozcestnik">
         <SectionHead title={hub.directoryTitle} text={hub.directoryText} indent={1} />
-        <Directory items={hub.directory} />
+        <Directory items={hub.directory.map((d) => ({ ...d, href: sKontextem(d.href) }))} />
       </section>
 
       {afterDirectory && <section className="section--tight container">{afterDirectory}</section>}
@@ -104,7 +110,7 @@ export function HubPageTemplate({
           eyebrow={hub.band.eyebrow}
           title={hub.band.title}
           text={hub.band.text}
-          cta={{ label: hub.band.cta, href: hub.band.href }}
+          cta={{ label: hub.band.cta, href: sKontextem(hub.band.href) }}
         />
       </section>
 
@@ -167,7 +173,7 @@ export function HubPageTemplate({
 
       <FinalCta
         title={hub.finalTitle}
-        cta={{ label: hub.finalCta, href: INQUIRY_URL }}
+        cta={{ label: hub.finalCta, href: poptat }}
         secondary={{ label: "Prohlédnout realizace", href: "/realizace" }}
       />
 
