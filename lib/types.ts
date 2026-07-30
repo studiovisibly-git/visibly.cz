@@ -110,8 +110,8 @@ export type Guide = {
 export type Work = {
   slug: string;
   client: string;
+  /** Město, kde zakázka vznikla. Do drobného popisku i do structured dat. */
   location: string;
-  scopeLabel: string;
   title: string;
   summary: string;
   metaTitle: string;
@@ -120,5 +120,6 @@ export type Work = {
   intro: string;
   sections: { heading: string; text: string; media?: MediaSpec }[];
   deliverables: string[];
-  services: LinkItem[];
+  /** Slugy služeb, které na zakázce byly. Viz lib/stitky.ts. */
+  stitky: string[];
 };

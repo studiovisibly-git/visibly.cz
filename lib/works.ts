@@ -4,13 +4,12 @@ export const works: Work[] = [
   {
     slug: "ps-green",
     client: "PS GREEN",
-    location: "Opava / ČR",
-    scopeLabel: "Polep · textil · tisk · web",
+    location: "Opava",
     title: "Jedna značka. Od auta po tiskoviny.",
     summary: "Polep vozu, firemní textil, vizitky a tiskoviny propojené jedním vizuálním systémem.",
-    metaTitle: "PS GREEN — polep auta, textil a tiskoviny | Realizace Visibly Opava",
+    metaTitle: "PS GREEN Opava — polep auta, textil a tiskoviny | Realizace Visibly",
     metaDescription:
-      "Případová studie PS GREEN: polep firemního vozu, potisk textilu, vizitky a tiskoviny v jednom vizuálním systému. Návrh a výroba Visibly Opava.",
+      "Případová studie PS GREEN z Opavy: polep firemního vozu, potisk textilu, vizitky a tiskoviny v jednom vizuálním systému. Návrh a výroba Visibly Opava.",
     hero: { label: "Fotografie · PS GREEN — polep vozu", variant: "tall", src: "/images/realizace-ps-green-optimized.jpg" },
     intro:
       "PS GREEN potřebovala, aby firma vypadala stejně na silnici, na stavbě i na papíře. Místo hromady samostatných zakázek vznikl jeden vizuální systém — a z něj polep auta, oblečení pro tým, vizitky i tiskoviny.",
@@ -31,22 +30,17 @@ export const works: Work[] = [
       },
     ],
     deliverables: ["Polep firemního vozu", "Firemní textil s potiskem", "Vizitky a tiskoviny", "Grafika a webové podklady"],
-    services: [
-      { label: "Polepy aut", href: "/polepy/polepy-aut" },
-      { label: "Reklamní textil", href: "/reklama/reklamni-textil" },
-      { label: "Tiskoviny", href: "/tisk/tiskoviny" },
-    ],
+    stitky: ["polepy-aut", "reklamni-textil", "tiskoviny"],
   },
   {
     slug: "reformlab",
     client: "REFORMLAB",
-    location: "Značka / prostor / tisk",
-    scopeLabel: "Identita · web · polepy · tiskoviny",
+    location: "Brno",
     title: "Studio, které drží pohromadě online i na místě.",
     summary: "Identita, web, polepy výlohy, dárkové poukázky a tiskoviny v jednom systému.",
-    metaTitle: "ReformLab — identita, polepy výlohy a tiskoviny | Realizace Visibly Opava",
+    metaTitle: "ReformLab Brno — identita, polep výlohy a tiskoviny | Realizace Visibly",
     metaDescription:
-      "Případová studie ReformLab: vizuální identita, web, polep výlohy a provozovny, poukázky a tiskoviny. Návrh a výroba Visibly Opava.",
+      "Případová studie ReformLab z Brna: vizuální identita, web, polep výlohy a provozovny, poukázky a tiskoviny. Návrh a výroba Visibly Opava.",
     hero: { label: "Fotografie · ReformLab — výloha", variant: "tall", src: "/images/realizace-reformlab-hero-optimized.jpg" },
     intro:
       "ReformLab je studio, kam klienti přicházejí poprvé často z internetu — a podruhé už dveřmi. Proto muselo obojí mluvit stejně: web, výloha, dveře i poukázka, kterou si klient odnese domů.",
@@ -67,22 +61,17 @@ export const works: Work[] = [
       },
     ],
     deliverables: ["Vizuální identita", "Web", "Polep výlohy a interiéru", "Dárkové poukázky", "Firemní tiskoviny"],
-    services: [
-      { label: "Polepy výloh", href: "/polepy/polepy-vyloh" },
-      { label: "Interiérové polepy", href: "/polepy/interierove-polepy" },
-      { label: "Tiskoviny", href: "/tisk/tiskoviny" },
-    ],
+    stitky: ["polepy-vyloh", "interierove-polepy", "tiskoviny", "navrh-loga-a-vizualni-identity", "webdesign"],
   },
   {
     slug: "linealux",
     client: "LINEALUX",
-    location: "Značka / showroom / web",
-    scopeLabel: "Logo · identita · showroom · web",
+    location: "Brno",
     title: "Čistý vizuální systém pro showroom.",
     summary: "Logo, identita, webová vizitka a značení showroomu s tiskovými podklady.",
-    metaTitle: "LineaLux — logo, identita a značení showroomu | Realizace Visibly Opava",
+    metaTitle: "LineaLux Brno — logo, identita a značení showroomu | Realizace Visibly",
     metaDescription:
-      "Případová studie LineaLux: návrh loga a vizuální identity, webová vizitka a značení showroomu včetně tiskových podkladů. Visibly Opava.",
+      "Případová studie LineaLux z Brna: návrh loga a vizuální identity, webová vizitka a značení showroomu včetně tiskových podkladů. Visibly Opava.",
     hero: { label: "Fotografie · LineaLux — showroom", variant: "tall", src: "/images/realizace-linealux-hero-optimized.jpg" },
     intro:
       "LineaLux prodává estetiku — takže značka nesměla zůstat pozadu za produktem. Od nového loga vedla přímá cesta k identitě, webové vizitce a značení showroomu, kde se všechno potkává naživo.",
@@ -103,22 +92,17 @@ export const works: Work[] = [
       },
     ],
     deliverables: ["Logo a vizuální identita", "Webová vizitka", "Značení showroomu", "Tiskové podklady"],
-    services: [
-      { label: "Návrh loga a vizuální identity", href: "/navrh-loga-a-vizualni-identity" },
-      { label: "Webdesign", href: "/webdesign" },
-      { label: "Interiérová reklama", href: "/reklama/interierova-reklama" },
-    ],
+    stitky: ["navrh-loga-a-vizualni-identity", "webdesign", "interierova-reklama"],
   },
   {
     slug: "rezani-betonu",
     client: "ŘEZÁNÍ BETONU",
-    location: "Identita / provozovna",
-    scopeLabel: "Identita · označení provozovny · banner",
+    location: "Opava",
     title: "Technická značka čitelná v reálném provozu.",
     summary: "Identita, označení provozovny, banner a tisková data pro stavební řemeslo.",
-    metaTitle: "Řezání betonu — identita a označení provozovny | Realizace Visibly Opava",
+    metaTitle: "Řezání betonu Opava — identita a označení provozovny | Realizace Visibly",
     metaDescription:
-      "Případová studie Řezání betonu: vizuální identita, označení provozovny, banner a tisková data. Návrh a výroba Visibly Opava.",
+      "Případová studie Řezání betonu z Opavy: vizuální identita, označení provozovny, banner a tisková data. Návrh a výroba Visibly Opava.",
     hero: { label: "Fotografie · Řezání betonu — provozovna", variant: "tall", src: "/images/realizace-rezani-betonu-hero-optimized.jpg" },
     intro:
       "Stavební řemeslo nepotřebuje ozdoby — potřebuje, aby značku bylo vidět z projíždějícího auta a aby působila spolehlivě. Přesně tak jsme stavěli identitu i označení provozovny.",
@@ -139,11 +123,7 @@ export const works: Work[] = [
       },
     ],
     deliverables: ["Vizuální identita", "Označení provozovny", "Banner", "Tisková data"],
-    services: [
-      { label: "Reklamní cedule", href: "/reklama/reklamni-cedule" },
-      { label: "Bannery a plachty", href: "/tisk/bannery-a-plachty" },
-      { label: "Návrh loga a vizuální identity", href: "/navrh-loga-a-vizualni-identity" },
-    ],
+    stitky: ["reklamni-cedule", "bannery-a-plachty", "navrh-loga-a-vizualni-identity"],
   },
 ];
 
