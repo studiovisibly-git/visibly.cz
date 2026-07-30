@@ -40,6 +40,8 @@ export type TechItem = {
   name: string;
   /** Jedna věc, kterou s ním umíme — ne parametry, ale výsledek. */
   what: string;
+  /** Důkaz pod tvrzením. Na rozcestích ho nepoužíváme, tam stačí `what`. */
+  note?: string;
   logo?: string;
   width?: string;
 };
@@ -81,8 +83,16 @@ export function TechStrip({
   href: string;
   cta: string;
 }) {
+  // Když značky nesou i důkaz, dostane tvrzení inkoust a důkaz šeď. Bez toho
+  // by dva šedé řádky pod sebou splynuly v jeden odstaveček.
+  const sDukazem = items.some((t) => t.note);
+
   return (
-    <Link href={href} className="tech-strip" data-reveal>
+    <Link
+      href={href}
+      className={sDukazem ? "tech-strip tech-strip--dukaz" : "tech-strip"}
+      data-reveal
+    >
       <div className="tech-strip__copy">
         <span className="eyebrow">{eyebrow}</span>
         <h2 className="tech-strip__title">{title}</h2>
@@ -102,6 +112,7 @@ export function TechStrip({
               <BrandMark item={t} />
             </span>
             <span className="tech-strip__what">{t.what}</span>
+            {t.note && <span className="tech-strip__note">{t.note}</span>}
           </li>
         ))}
       </ul>
@@ -110,16 +121,15 @@ export function TechStrip({
 }
 
 /**
- * Blok o technice na podstránce služby.
+ * Technika na podstránce služby.
  *
- * Karta s kruhem sedícím na horní hraně je vzor z původní šablony — tam ho
- * mají u referencí. Značka nestojí vedle rámu, ale probíjí ho: kruh přeruší
- * linku a je z toho jeden tvar, ne logo přilepené na obdélník.
+ * Je to tentýž pás jako na rozcestích, ne jeho příbuzný — stejná komponenta,
+ * stejné CSS. Liší se jen obsahem: nadpis mluví o téhle jedné službě a pod
+ * značkou stojí navíc důkaz („Deset inkoustů, ne jen CMYK"). Kdo přijde
+ * z /tisk na /tisk/bannery, pozná blok okamžitě a čte jen to, co je nové.
  *
- * Na velký pás na rozcestích to navazuje, ale neopisuje ho: stejný 2px tah,
- * stejné kruhy, stejný rytmus text vlevo / značky vpravo. Kdo přijde
- * z /tisk na /tisk/bannery, nevidí dvakrát tentýž blok — vidí dva díly
- * jedné rodiny, druhý navíc s devízou uvnitř.
+ * Devízy visí na značkách ve VYROBCI, ne na stránkách. Devatenáct podstránek
+ * tak nemusí opisovat totéž jinými slovy a při změně stačí jedno místo.
  */
 export function TechNote({
   title,
@@ -131,38 +141,17 @@ export function TechNote({
   text: string;
 }) {
   return (
-    <Link href="/technologie" className="tech-note" data-reveal>
-      <div className="tech-note__copy">
-        <span className="eyebrow">Vlastní výroba</span>
-        <h2 className="tech-note__title">{title}</h2>
-        <p className="tech-note__text">{text}</p>
-        <span className="arrow-link tech-note__cta">
-          Projít technologie{" "}
-          <span className="arr" aria-hidden="true">
-            ↗
-          </span>
-        </span>
-      </div>
-
-      {/* Loga nesou informaci („na čem"), kterou věta vždycky neopakuje —
-          proto mají alt se značkou a nejsou schovaná před čtečkou. */}
-      <ul className="tech-note__cards">
-        {brands.map((key) => (
-          <li className="tech-note__card" key={key}>
-            <span className="tech-note__disc">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={VYROBCI[key].logo}
-                alt={VYROBCI[key].name}
-                style={{ width: VYROBCI[key].width }}
-                loading="lazy"
-              />
-            </span>
-            <strong className="tech-note__deviza">{VYROBCI[key].deviza.title}</strong>
-            <span className="tech-note__proof">{VYROBCI[key].deviza.note}</span>
-          </li>
-        ))}
-      </ul>
-    </Link>
+    <TechStrip
+      eyebrow="Vlastní výroba"
+      title={title}
+      text={text}
+      items={brands.map((key) => ({
+        ...VYROBCI[key],
+        what: VYROBCI[key].deviza.title,
+        note: VYROBCI[key].deviza.note,
+      }))}
+      href="/technologie"
+      cta="Projít technologie"
+    />
   );
 }
