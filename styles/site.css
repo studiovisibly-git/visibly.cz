@@ -3938,3 +3938,43 @@ a.circle-chip:hover small {
     max-width: none;
   }
 }
+
+/* ---------- Štítky služeb na realizacích ----------
+   Štítek je zároveň odkaz na službu: kdo si prohlíží realizaci, dostane se
+   z ní rovnou k tomu, co si chce objednat. Na kartě v přehledu jsou to jen
+   texty (celá karta už odkazem je — odkaz v odkazu nejde). */
+
+.stitky {
+  list-style: none;
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.stitek {
+  display: inline-block;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  border-radius: 999px;
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+/* Jen u odkazů — na kartě je štítek `li` a nikam neklikne. */
+a.stitek:hover,
+a.stitek:focus-visible {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.stitky--karta {
+  margin-top: 1.1rem;
+}
