@@ -110,36 +110,46 @@ export function TechStrip({
 }
 
 /**
- * Drobná zmínka o technice na podstránku služby.
+ * Blok o technice na podstránce služby.
  *
- * Podstránek služeb je pětadvacet. Kdyby na každé stál celý pás, přestane
- * to být doklad a začne to být tapeta. Tohle je proto poznámka, ne sekce:
- * vlasovka, kruhy se značkou a jedna věta. Žádný panel s rámem a výplní —
- * ten na webu, který mluví vlasovkami a kruhy, působí jako cizí prvek.
+ * Karta s kruhem sedícím na horní hraně je vzor z původní šablony — tam ho
+ * mají u referencí. Značka nestojí vedle rámu, ale probíjí ho: kruh přeruší
+ * linku a je z toho jeden tvar, ne logo přilepené na obdélník.
  *
- * Kruhy a doladění šířky log jsou schválně stejné jako u velkého pásu
- * a u karet strojů. Je to jeden vizuální jazyk ve třech velikostech,
- * ne tři různé nápady.
- *
- * Značky stojí pod sebou, ne vedle sebe: devíza je pak zarovnaná vlevo
- * u loga a čte se jako údaj. Vycentrovaný trojřádkový titulek pod kruhem
- * dělá z drobnosti hlavolam.
+ * Na velký pás na rozcestích to navazuje, ale neopisuje ho: stejný 2px tah,
+ * stejné kruhy, stejný rytmus text vlevo / značky vpravo. Kdo přijde
+ * z /tisk na /tisk/bannery, nevidí dvakrát tentýž blok — vidí dva díly
+ * jedné rodiny, druhý navíc s devízou uvnitř.
  */
-export function TechLine({
+export function TechNote({
+  title,
   brands,
   text,
 }: {
+  title: string;
   brands: (keyof typeof VYROBCI)[];
   text: string;
 }) {
   return (
-    <Link href="/technologie" className="tech-line" data-reveal>
+    <Link href="/technologie" className="tech-note" data-reveal>
+      <div className="tech-note__copy">
+        <span className="eyebrow">Vlastní výroba</span>
+        <h2 className="tech-note__title">{title}</h2>
+        <p className="tech-note__text">{text}</p>
+        <span className="arrow-link tech-note__cta">
+          Projít technologie{" "}
+          <span className="arr" aria-hidden="true">
+            ↗
+          </span>
+        </span>
+      </div>
+
       {/* Loga nesou informaci („na čem"), kterou věta vždycky neopakuje —
           proto mají alt se značkou a nejsou schovaná před čtečkou. */}
-      <ul className="tech-line__marks">
+      <ul className="tech-note__cards">
         {brands.map((key) => (
-          <li className="tech-line__mark" key={key}>
-            <span className="tech-line__disc">
+          <li className="tech-note__card" key={key}>
+            <span className="tech-note__disc">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={VYROBCI[key].logo}
@@ -148,23 +158,11 @@ export function TechLine({
                 loading="lazy"
               />
             </span>
-            <span className="tech-line__deviza">
-              <strong>{VYROBCI[key].deviza.title}</strong>
-              <span>{VYROBCI[key].deviza.note}</span>
-            </span>
+            <strong className="tech-note__deviza">{VYROBCI[key].deviza.title}</strong>
+            <span className="tech-note__proof">{VYROBCI[key].deviza.note}</span>
           </li>
         ))}
       </ul>
-
-      <div className="tech-line__copy">
-        <p className="tech-line__text">{text}</p>
-        <span className="arrow-link tech-line__cta">
-          Naše technologie{" "}
-          <span className="arr" aria-hidden="true">
-            ↗
-          </span>
-        </span>
-      </div>
     </Link>
   );
 }
