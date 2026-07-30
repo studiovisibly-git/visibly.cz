@@ -1,5 +1,5 @@
 import { HubPageTemplate, type HubPage } from "@/components/HubPageTemplate";
-import { TechStrip } from "@/components/TechStrip";
+import { TechStrip, VYROBCI } from "@/components/TechStrip";
 import { buildMetadata } from "@/lib/seo";
 
 const metaDescription =
@@ -135,9 +135,9 @@ export default function TiskPage() {
           title="Tiskneme na svých strojích."
           text="Zakázku neposíláme dál. Tiskneme i přímo na desku — Dibond, sklo nebo hliník."
           items={[
-            { brand: "Epson", what: "Fólie, bannery, backlit" },
-            { brand: "Agfa", what: "Až 3,2 m bez spoje" },
-            { brand: "Roland", what: "Tvar podle grafiky" },
+            { ...VYROBCI.epson, what: "Fólie, bannery, backlit" },
+            { ...VYROBCI.agfa, what: "Až 3,2 m bez spoje" },
+            { ...VYROBCI.roland, what: "Tvar podle grafiky" },
           ]}
           href="/technologie"
           cta="Projít technologie"

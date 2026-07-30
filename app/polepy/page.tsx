@@ -1,4 +1,5 @@
 import { HubPageTemplate, type HubPage } from "@/components/HubPageTemplate";
+import { TechStrip, VYROBCI } from "@/components/TechStrip";
 import { buildMetadata } from "@/lib/seo";
 
 const metaDescription =
@@ -122,5 +123,23 @@ const hub: HubPage = {
 };
 
 export default function PolepyPage() {
-  return <HubPageTemplate hub={hub} />;
+  return (
+    <HubPageTemplate
+      hub={hub}
+      afterDirectory={
+        <TechStrip
+          eyebrow="Vlastní výroba"
+          title="Tiskneme i řežeme u sebe."
+          text="Fólii vytiskneme, vyřežeme do tvaru a zalaminujeme. Nic z toho neputuje k někomu dál."
+          items={[
+            { ...VYROBCI.epson, what: "Tisk fólií a polepů" },
+            { ...VYROBCI.roland, what: "Řez do tvaru" },
+            { ...VYROBCI.agfa, what: "Velké plochy bez spojů" },
+          ]}
+          href="/technologie"
+          cta="Projít technologie"
+        />
+      }
+    />
+  );
 }

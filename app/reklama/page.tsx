@@ -1,4 +1,5 @@
 import { CatalogStrip } from "@/components/CatalogStrip";
+import { TechStrip, VYROBCI } from "@/components/TechStrip";
 import { HubPageTemplate, type HubPage } from "@/components/HubPageTemplate";
 import { buildMetadata } from "@/lib/seo";
 
@@ -135,5 +136,26 @@ const hub: HubPage = {
 };
 
 export default function ReklamaPage() {
-  return <HubPageTemplate hub={hub} afterDirectory={<CatalogStrip />} />;
+  return (
+    <HubPageTemplate
+      hub={hub}
+      afterDirectory={
+        <>
+          <CatalogStrip />
+        <TechStrip
+          eyebrow="Vlastní výroba"
+          title="Cedule tiskneme přímo na materiál."
+          text="Bez podlepování fólií. Písmena a tvary si vyřežeme sami, takže drží i termín."
+          items={[
+            { ...VYROBCI.agfa, what: "Přímo na Dibond i sklo" },
+            { ...VYROBCI.epson, what: "Backlit do světelných rámů" },
+            { ...VYROBCI.roland, what: "Písmena a tvary na míru" },
+          ]}
+          href="/technologie"
+          cta="Projít technologie"
+        />
+        </>
+      }
+    />
+  );
 }

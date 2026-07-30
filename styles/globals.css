@@ -26,7 +26,11 @@
   --l-plate: #f5f5f3;
   --l-shadow: 0 18px 60px -18px rgb(0 0 0 / 0.22);
   --l-scrim: rgb(0 0 0 / 0.55);
-  --l-logo-filter: none;
+  /* Ne `none`! Token se skládá do seznamu (`grayscale(1) var(--logo-filter)`)
+     a `grayscale(1) none` je neplatná deklarace — prohlížeč zahodí celý
+     filtr, takže loga přestala být šedá. `brightness(1)` nic nedělá
+     a ve složeném seznamu obstojí. */
+  --l-logo-filter: brightness(1);
   --l-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%23161616' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 
   /* Tmavý režim. Ani pozadí, ani text nejsou čistě černá a bílá —

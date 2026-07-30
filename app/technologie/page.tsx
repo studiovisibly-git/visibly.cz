@@ -4,6 +4,7 @@ import { Accordion } from "@/components/Accordion";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Media } from "@/components/Media";
 import { Directory, FinalCta, Process, SectionHead, Split } from "@/components/Sections";
+import { VYROBCI } from "@/components/TechStrip";
 import { buildMetadata } from "@/lib/seo";
 import { INQUIRY_URL } from "@/lib/site";
 
@@ -37,10 +38,21 @@ const techFaq = [
   },
 ];
 
-const techList = [
+/* `brand` je klíč do VYROBCI — logo výrobce v hlavičce karty. Procesy bez
+   značkového stroje (laminace, termolis, kompletace) ho schválně nemají;
+   dokreslovat jim logo by bylo zavádějící. */
+type Tech = {
+  num: string;
+  name: string;
+  brand?: keyof typeof VYROBCI;
+  points: { title: string; text: string }[];
+};
+
+const techList: Tech[] = [
   {
     num: "01 · Velkoformátový tisk",
     name: "Epson SureColor SC-S80610",
+    brand: "epson",
     points: [
       { title: "Barva pod kontrolou", text: "Čitelnost odstínů a detailů i na metrech plochy." },
       { title: "Materiál podle místa", text: "Fólie, bannery, papíry — povrch podle použití." },
@@ -50,6 +62,7 @@ const techList = [
   {
     num: "02 · Hybridní UV tisk",
     name: "Agfa Anapurna M2050i",
+    brand: "agfa",
     points: [
       { title: "Deska i role", text: "Tiskne přímo na Dibond, sklo, hliník, keramiku i fólie." },
       { title: "Bílá barva", text: "Podklad pod barvy i tisk na průhledné materiály." },
@@ -59,6 +72,7 @@ const techList = [
   {
     num: "03 · Rolový UV tisk",
     name: "Agfa Anapurna RTR3200i LED",
+    brand: "agfa",
     points: [
       { title: "Až 3,2 metru", text: "Bannery a plachty v jednom kuse, bez spojů." },
       { title: "Dvě role zároveň", text: "Vyšší průchodnost u velkých sérií a formátů." },
@@ -68,6 +82,7 @@ const techList = [
   {
     num: "04 · Přesný řez",
     name: "Roland CAMM-1 GR2-640",
+    brand: "roland",
     points: [
       { title: "Čisté hrany", text: "Detail odpovídá datům, ne náladě nože." },
       { title: "Tvar podle grafiky", text: "Logo nemusí končit obdélníkem." },
@@ -144,6 +159,18 @@ export default function TechnologiePage() {
               <div className="tech-item__head">
                 <span className="eyebrow">{tech.num}</span>
                 <h3>{tech.name}</h3>
+                {tech.brand && (
+                  /* Logo výrobce jako podpis pod jméno stroje — oddělené
+                     vlasovkou, aby to čtelo jako údaj, ne jako reklama. */
+                  <span className="tech-item__brand">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={VYROBCI[tech.brand].logo}
+                      alt={VYROBCI[tech.brand].name}
+                      loading="lazy"
+                    />
+                  </span>
+                )}
               </div>
               <div className="tech-item__points">
                 {tech.points.map((point) => (
