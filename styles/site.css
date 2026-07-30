@@ -2358,6 +2358,24 @@ a.circle-chip:hover small {
   letter-spacing: -0.01em;
 }
 
+/* Podpis výrobce pod jménem stroje. Vlasovka nad ním z toho dělá údaj,
+   ne reklamní panel; šedě a menší kvůli jednobarevnému webu. Výška je
+   pevná a šířka dojde sama, takže loga s různým poměrem stran působí
+   opticky stejně velká. */
+.tech-item__brand {
+  display: block;
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  padding-top: clamp(0.9rem, 1.8vw, 1.25rem);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+.tech-item__brand img {
+  height: clamp(1.375rem, 2.4vw, 1.875rem);
+  width: auto;
+  filter: grayscale(1) var(--logo-filter);
+  opacity: 0.75;
+}
+
 .tech-item__points {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
@@ -3641,6 +3659,13 @@ a.circle-chip:hover small {
   color: var(--ink);
 }
 
+/* Na /reklama stojí pás techniky hned pod pásem katalogu. Oba mají linku
+   nahoře i dole, takže na styku vznikaly dvě přes sebe. Sdílenou hranu
+   necháme jen jednu — čte se to jako dva díly jednoho bloku. */
+.cat-strip + .tech-strip {
+  border-top: 0;
+}
+
 .tech-strip__copy > * + * {
   margin-top: 1rem;
 }
@@ -3714,12 +3739,16 @@ a.circle-chip:hover small {
   border-radius: 50%;
   background: var(--surface);
   overflow: hidden;
-  padding: 18%;
 }
 
-/* Logo výrobce, až bude dodané. */
+/* Logo výrobce. Šedě jako loga klientů v pásu na homepage — v jednobarevném
+   webu by tři značkové barvy působily jako nálepky, ne jako doklad. Poměry
+   stran se hodně liší, proto šířku dolaďuje `width` u položky, ne tahle třída.
+   Výška dojde sama, aby se logo nedeformovalo. */
 .tech-strip__disc img {
-  object-fit: contain;
+  width: 70%;
+  height: auto;
+  filter: grayscale(1) var(--logo-filter);
 }
 
 /* Než logo bude: nápis značky vlastní sazbou. Není to náhražka obrázku,

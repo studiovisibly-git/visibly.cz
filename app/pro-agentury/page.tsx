@@ -4,6 +4,7 @@ import { Accordion } from "@/components/Accordion";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Media } from "@/components/Media";
 import { Band, FinalCta, Process, ProofStrip, SectionHead } from "@/components/Sections";
+import { TechStrip, VYROBCI } from "@/components/TechStrip";
 import { buildMetadata } from "@/lib/seo";
 import { EMAIL, EMAIL_HREF, INQUIRY_URL } from "@/lib/site";
 
@@ -102,6 +103,23 @@ export default function ProAgenturyPage() {
             </Link>
           </article>
         </div>
+      </section>
+
+      {/* Agentury se na stroje ptají jako na první — pás proto stojí hned
+          za tím, co u nás jde vyrobit. */}
+      <section className="section--tight container">
+        <TechStrip
+          eyebrow="Výrobní zázemí"
+          title="Naše stroje, váš termín."
+          text="Žádný mezičlánek, který by přehazoval odpovědnost. Co stojí na dílně, to naceníme i vyrobíme."
+          items={[
+            { ...VYROBCI.epson, what: "Velkoformát a fólie" },
+            { ...VYROBCI.agfa, what: "UV na desku i roli" },
+            { ...VYROBCI.roland, what: "Přesný řez do tvaru" },
+          ]}
+          href="/technologie"
+          cta="Projít technologie"
+        />
       </section>
 
       <section className="section section--rule container">
