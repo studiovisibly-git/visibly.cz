@@ -1,6 +1,8 @@
 export type Faq = { q: string; a: string };
 
-export type MediaVariant = "circle" | "wide" | "tall";
+/** `square` je pro fotky, které přišly jako čtverec — 16/9 by z nich ubralo
+    skoro polovinu výšky, aniž by za to něco dalo. */
+export type MediaVariant = "circle" | "wide" | "tall" | "square";
 
 export type MediaSpec = {
   /** Popisek placeholderu — říká, jaká fotografie sem patří. */

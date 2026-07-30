@@ -62,21 +62,37 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
-      {work.sections.map((section) => (
+      {/* Jádro případovky. Fotka je tu hlavní argument, ne ilustrace k textu —
+          dostane většinu šířky a strany se po sekcích střídají, aby stránka
+          nebyla sloupec obrázků u pravého okraje. */}
+      {work.sections.map((section, i) => (
         <section className="section section--rule container" key={section.heading}>
-          <div className="article-layout">
-            <div data-reveal>
-              <h2 className="h2" style={{ maxWidth: "18em" }}>
-                {section.heading}
-              </h2>
-              <p className="muted" style={{ marginTop: "1.2rem", maxWidth: "38em", lineHeight: 1.65 }}>
-                {section.text}
-              </p>
+          {/* Střídání stran musí přijít odsud: každá sekce je vlastní <section>,
+              takže CSS `:nth-of-type` by uvnitř vždycky vidělo jen první kus. */}
+          <div
+            className={[
+              "case-shot",
+              section.media ? "" : "case-shot--text",
+              section.media && i % 2 === 1 ? "case-shot--obraceny" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            <div className="case-shot__copy" data-reveal>
+              <span className="eyebrow">{String(i + 1).padStart(2, "0")}</span>
+              <h2 className="case-shot__title">{section.heading}</h2>
+              <p className="case-shot__text">{section.text}</p>
             </div>
             {section.media && (
-              <div data-reveal>
-                <Media media={section.media} />
-              </div>
+              <figure className="case-shot__foto" data-reveal>
+                <Media
+                  media={section.media}
+                  /* Fotka drží přes půl kontejneru — bez tohohle by prohlížeč
+                     sáhl po zbytečně malé variantě. */
+                  sizes="(max-width: 900px) 92vw, 55vw"
+                />
+                <figcaption>{section.media.label}</figcaption>
+              </figure>
             )}
           </div>
         </section>
