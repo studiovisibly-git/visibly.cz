@@ -135,7 +135,7 @@ export default function TiskPage() {
           title="Tiskneme na svých strojích."
           text="Zakázku neposíláme dál. Tiskneme i přímo na desku — Dibond, sklo nebo hliník."
           items={[
-            { ...VYROBCI.epson, what: "Fólie, bannery, backlit" },
+            { ...VYROBCI.epson, what: "Deset barev, ne jen CMYK" },
             { ...VYROBCI.agfa, what: "Až 3,2 m bez spoje" },
             { ...VYROBCI.roland, what: "Tvar podle grafiky" },
           ]}

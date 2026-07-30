@@ -8,11 +8,32 @@ import Link from "next/link";
  * stran (Agfa 3,9:1 · Epson 4,1:1 · Roland 6,6:1). Kdyby se sázely na stejnou
  * šířku, Roland by v kruhu vypadal jako nitka. Sjednocujeme tedy dojem,
  * ne čísla.
+ *
+ * `deviza` je jedna věc, kterou ten stroj umí a jiné neumí — patří ke značce,
+ * ne k textu stránky. Tak se objeví všude, kde značka je, a věta na stránce
+ * ji nemusí na deseti místech opisovat jinými slovy. Dvojice tvrzení + důkaz
+ * je schválně: „fotorealistická barva" sama je reklama, „deset inkoustů"
+ * je ověřitelný důvod, proč to tak je.
  */
 export const VYROBCI = {
-  epson: { name: "Epson", logo: "/logos/vyrobci/epson.svg", width: "70%" },
-  agfa: { name: "Agfa", logo: "/logos/vyrobci/agfa.svg", width: "66%" },
-  roland: { name: "Roland", logo: "/logos/vyrobci/roland.svg", width: "86%" },
+  epson: {
+    name: "Epson",
+    logo: "/logos/vyrobci/epson.svg",
+    width: "70%",
+    deviza: { title: "Fotorealistická barva", note: "Deset inkoustů, ne jen CMYK" },
+  },
+  agfa: {
+    name: "Agfa",
+    logo: "/logos/vyrobci/agfa.svg",
+    width: "66%",
+    deviza: { title: "UV tisk přímo na materiál", note: "Deska i role do 3,2 m" },
+  },
+  roland: {
+    name: "Roland",
+    logo: "/logos/vyrobci/roland.svg",
+    width: "86%",
+    deviza: { title: "Přesný řez do tvaru", note: "Kontura přesně podle dat" },
+  },
 } as const;
 
 export type TechItem = {
@@ -89,12 +110,20 @@ export function TechStrip({
 }
 
 /**
- * Drobná zmínka o technice na podstránku služby — jeden řádek, ne pás.
+ * Drobná zmínka o technice na podstránku služby.
  *
  * Podstránek služeb je pětadvacet. Kdyby na každé stál celý pás, přestane
- * to být doklad a začne to být tapeta: ten samý blok počtvrté už nikdo
- * nečte. Proto je tady jen značka, jedna věta a odkaz — velikostí patří
- * mezi text stránky, ne mezi její sekce.
+ * to být doklad a začne to být tapeta. Tohle je proto poznámka, ne sekce:
+ * vlasovka, kruhy se značkou a jedna věta. Žádný panel s rámem a výplní —
+ * ten na webu, který mluví vlasovkami a kruhy, působí jako cizí prvek.
+ *
+ * Kruhy a doladění šířky log jsou schválně stejné jako u velkého pásu
+ * a u karet strojů. Je to jeden vizuální jazyk ve třech velikostech,
+ * ne tři různé nápady.
+ *
+ * Značky stojí pod sebou, ne vedle sebe: devíza je pak zarovnaná vlevo
+ * u loga a čte se jako údaj. Vycentrovaný trojřádkový titulek pod kruhem
+ * dělá z drobnosti hlavolam.
  */
 export function TechLine({
   brands,
@@ -107,22 +136,35 @@ export function TechLine({
     <Link href="/technologie" className="tech-line" data-reveal>
       {/* Loga nesou informaci („na čem"), kterou věta vždycky neopakuje —
           proto mají alt se značkou a nejsou schovaná před čtečkou. */}
-      <span className="tech-line__marks">
+      <ul className="tech-line__marks">
         {brands.map((key) => (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img key={key} src={VYROBCI[key].logo} alt={VYROBCI[key].name} loading="lazy" />
+          <li className="tech-line__mark" key={key}>
+            <span className="tech-line__disc">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={VYROBCI[key].logo}
+                alt={VYROBCI[key].name}
+                style={{ width: VYROBCI[key].width }}
+                loading="lazy"
+              />
+            </span>
+            <span className="tech-line__deviza">
+              <strong>{VYROBCI[key].deviza.title}</strong>
+              <span>{VYROBCI[key].deviza.note}</span>
+            </span>
+          </li>
         ))}
-      </span>
+      </ul>
 
-      <span className="tech-line__body">
-        <span className="tech-line__text">{text}</span>{" "}
+      <div className="tech-line__copy">
+        <p className="tech-line__text">{text}</p>
         <span className="arrow-link tech-line__cta">
           Naše technologie{" "}
           <span className="arr" aria-hidden="true">
             ↗
           </span>
         </span>
-      </span>
+      </div>
     </Link>
   );
 }

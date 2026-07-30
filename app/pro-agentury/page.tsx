@@ -113,7 +113,7 @@ export default function ProAgenturyPage() {
           title="Naše stroje, váš termín."
           text="Žádný mezičlánek, který by přehazoval odpovědnost. Co stojí na dílně, to naceníme i vyrobíme."
           items={[
-            { ...VYROBCI.epson, what: "Velkoformát a fólie" },
+            { ...VYROBCI.epson, what: "Deset barev, ne jen CMYK" },
             { ...VYROBCI.agfa, what: "UV na desku i roli" },
             { ...VYROBCI.roland, what: "Přesný řez do tvaru" },
           ]}
