@@ -2,6 +2,105 @@ import type { Work } from "./types";
 
 export const works: Work[] = [
   {
+    slug: "bbq-art",
+    client: "BBQ ART BISTRO",
+    location: "Opava",
+    rok: "2023–26",
+    clientUrl: "https://bbqart-cz.webnode.cz/",
+    title: "Stříbro, které určilo všechno ostatní.",
+    summary:
+      "Zrcadlový food truck, polep tištěný na stříbrnou fólii, poukazy na stříbrném papíru, textil se stříbrnou nažehlovačkou a věrnostní systém s vyřezanými body.",
+    metaTitle: "BBQ Art Bistro Opava — polep food trucku a věrnostní systém | Realizace Visibly",
+    metaDescription:
+      "Případová studie BBQ Art Bistro z Opavy: polep zrcadlového food trucku tištěný na stříbrnou fólii, dárkové poukazy na stříbrném papíru, firemní textil, věrnostní kartičky a vyřezané body. Visibly Opava.",
+    hero: {
+      label: "Fotografie · BBQ Art — zrcadlový food truck",
+      variant: "tall",
+      src: "/images/realizace-bbqart-hero-optimized.jpg",
+      alt: "Zrcadlový food truck BBQ Art bistro s černým polepem loga",
+    },
+    intro:
+      "BBQ Art v Opavě zná každý — a pozná ho podle food trucku, který je celý zrcadlový. Ten truck je zadání i omezení zároveň: všechno ostatní se muselo podřídit lesklému kovu. Od roku 2023 pro bistro vyrábíme průběžně, ne jednorázově.",
+    sections: [
+      {
+        heading: "Polep, který obstojí na zrcadle",
+        text: "Na leštěném plechu se běžný polep ztratí — plocha za ním prosvítá a odráží ulici. Logo proto tiskneme na stříbrnou fólii s bílou konturou: obrys drží tvar i ve chvíli, kdy se v plechu zrcadlí strom nebo projíždějící auto.",
+        media: {
+          label: "Detail polepu na leštěném plechu",
+          variant: "square",
+          src: "/images/realizace-bbqart-polep-optimized.jpg",
+          alt: "Detail černého loga BBQ Art s bílou konturou na zrcadlovém plechu",
+        },
+      },
+      {
+        heading: "Stříbro místo bílé",
+        text: "Dárkové poukazy netiskneme na bílý karton, ale na stříbrný papír. Poukaz tak vypadá jako kus toho trucku — a zákazník, který ho dostane, drží v ruce stejný materiál, jaký viděl na ulici.",
+        media: {
+          label: "Dárkový poukaz na stříbrném papíru",
+          variant: "square",
+          src: "/images/realizace-bbqart-poukazka-optimized.jpg",
+          alt: "Stříbrný dárkový poukaz BBQ Art s černým potiskem",
+        },
+      },
+      {
+        heading: "Textil, který se dokupuje",
+        text: "Trika pro obsluhu jedou na stříbrnou nažehlovačku, ne na bílý potisk. Odstín tak sedí k trucku i k poukazům — a protože bistro dokupuje průběžně, máme podklady i postup uložené a další série vypadá stejně jako ta první.",
+        media: {
+          label: "Firemní triko se stříbrným potiskem",
+          variant: "square",
+          src: "/images/realizace-bbqart-textil-optimized.jpg",
+          alt: "Černé triko BBQ Art se stříbrným nažehleným logem",
+        },
+      },
+      {
+        heading: "Věrnostní kartička, na kterou se lepí",
+        text: "Kartička není jen leták s razítkovým polem. Navrhli a vytiskli jsme ji tak, aby na ní bylo pět míst pro nalepení bodu — sbírání je vidět, hotovo se pozná na první pohled a zákazník ví, kolik mu zbývá k burgeru zdarma.",
+        media: {
+          label: "Věrnostní kartička se sběrnými poli",
+          variant: "square",
+          src: "/images/realizace-bbqart-vernostni-optimized.jpg",
+          alt: "Věrnostní kartička BBQ Art s pěti poli pro nalepení bodů",
+        },
+      },
+      {
+        heading: "Body vyřezané do kolečka",
+        text: "Body jsou samostatné samolepky — tištěné a vyřezané do kruhu, ve variantách pro různé akce. Vyřezaný tvar drží kartičku čistou: bod se nalepí přesně do pole a nikdo neřeší, co s bílým rohem okolo.",
+        media: {
+          label: "Vyřezané věrnostní body",
+          variant: "square",
+          src: "/images/realizace-bbqart-samolepky-optimized.jpg",
+          alt: "Arch kulatých samolepek s logem BBQ Art ve dvou barvách",
+        },
+      },
+      {
+        heading: "Jedna sada, ne sedm zakázek",
+        text: "Truck, textil, poukazy, kartičky i venkovní bannery upozorňující na food truck vznikají u nás. Bistro tak neřeší, jestli stříbrná na triku sedí se stříbrnou na poukazu — my to hlídáme napříč materiály i napříč lety.",
+        media: {
+          label: "Textil a poukaz vedle sebe",
+          variant: "square",
+          src: "/images/realizace-bbqart-sada-optimized.jpg",
+          alt: "Firemní textil a dárkový poukaz BBQ Art se stejnou stříbrnou",
+        },
+      },
+    ],
+    deliverables: [
+      "Polep zrcadlového food trucku",
+      "Tisk na stříbrnou fólii",
+      "Dárkové poukazy na stříbrném papíru",
+      "Firemní textil se stříbrnou nažehlovačkou",
+      "Návrh a tisk věrnostních kartiček",
+      "Vyřezané věrnostní body",
+      "Venkovní bannery na food truck",
+    ],
+    stitky: [
+      "polepy-aut",
+      "reklamni-textil",
+      "tiskoviny",
+      "samolepky-a-folie",
+      "bannery-a-plachty",
+    ],
+  },
+  {
     slug: "hotel-andante",
     client: "HOTEL ANDANTE",
     location: "Praha",
