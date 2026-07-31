@@ -4,9 +4,14 @@ import { useEffect, useRef } from "react";
 import { LERP, documentTop, onLayoutChange, onScrollFrame, prefersReducedMotion } from "@/lib/motion";
 
 /**
- * Scroll-linked zvětšení kruhové fotky — 1:1 podle Circle šablony,
- * kde .circle-image roste ze scale(1) na scale(1.2) podle průchodu viewportem.
- * Hodnotu předává jako CSS proměnnou --s, samotný transform řeší CSS.
+ * Scroll-linked zvětšení fotky — 1:1 podle Circle šablony, kde obrázek roste
+ * ze scale(1) na scale(1.2) podle průchodu viewportem.
+ *
+ * Ven jdou dvě CSS proměnné a transform si složí CSS:
+ *  · `--s` je hodnota mezi `from` a `to`,
+ *  · `--p` je surový průchod 0→1, ze kterého se u hranatých fotek počítá
+ *    ještě svislý posun. Kdyby se dopočítával z `--s`, musela by CSS znát
+ *    rozsah — a ten je u kruhu a u hranaté fotky jiný.
  */
 export function ScrollScale({
   children,
@@ -62,6 +67,8 @@ export function ScrollScale({
       if (next !== last) {
         last = next;
         el.style.setProperty("--s", next);
+        // Průchod zpětně z vyhlazené hodnoty, ať posun a zvětšení jedou spolu.
+        el.style.setProperty("--p", ((cur - from) / (to - from)).toFixed(4));
       }
       return cur !== target;
     };
