@@ -318,3 +318,27 @@ export function getWork(slug: string): Work {
   if (!work) throw new Error(`Neznámá realizace: ${slug}`);
   return work;
 }
+
+/** Realizace, na kterých tahle služba doopravdy byla — podle štítků. */
+export function realizaceSeStitkem(slug: string): Work[] {
+  return works.filter((w) => w.stitky.includes(slug));
+}
+
+/**
+ * Realizace na podstránku služby.
+ *
+ * Napřed ty, které tu službu mají ve štítcích — tam je vazba doložená, ne
+ * jen redakční. Za nimi zůstane, co bylo u stránky vypsané ručně: ty výběry
+ * jsou volnější („tohle je k tématu"), ale na osmi službách jsou jediné,
+ * co tam je. Nahradit je štítky by ty stránky vyprázdnilo.
+ *
+ * Strop čtyři kusy: galerie je dvousloupcová a delší výčet už není ukázka,
+ * ale druhé portfolio uprostřed stránky o službě.
+ */
+export function realizaceProSluzbu(slug: string, rucne: string[]): Work[] {
+  const podleStitku = realizaceSeStitkem(slug);
+  const zbytek = rucne
+    .map(getWork)
+    .filter((w) => !podleStitku.some((x) => x.slug === w.slug));
+  return [...podleStitku, ...zbytek].slice(0, 4);
+}

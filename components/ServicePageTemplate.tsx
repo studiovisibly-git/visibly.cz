@@ -16,7 +16,7 @@ import {
   Split,
 } from "./Sections";
 import { TechNote } from "./TechStrip";
-import { getWork } from "@/lib/works";
+import { realizaceProSluzbu } from "@/lib/works";
 import { SITE_URL } from "@/lib/site";
 import { poptavkaUrl } from "@/lib/poptavka";
 import { serviceSchema } from "@/lib/schema";
@@ -39,7 +39,9 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
       ]
     : [{ label: page.navLabel, href: path }];
 
-  const works = page.works.map(getWork);
+  /* Realizace se štítkem téhle služby napřed, ručně vypsané za nimi.
+     Detaily v lib/works.ts. */
+  const works = realizaceProSluzbu(page.slug, page.works);
   /* Jen na službách, kde o výsledku rozhoduje konkrétní stroj. Který slug
      zmínku dostane, řeší lib/technika.ts — včetně důvodů, proč jinde není. */
   const technika = TECH_NOTES[page.slug];
