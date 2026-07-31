@@ -541,12 +541,10 @@ main {
     radial-gradient(120% 120% at 30% 20%, color-mix(in srgb, var(--ink) 4%, var(--surface)), var(--surface));
 }
 
+/* Jediný řádek — sloupec s mezerou a stropem šířky tu byl kvůli druhému
+   textu, který se zrušil. */
 .media__soon {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
   padding: 1.5rem;
-  max-width: 22rem;
 }
 
 .media__soon-eyebrow {
@@ -555,17 +553,6 @@ main {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
-}
-
-.media__soon-label {
-  font-size: var(--fs-small);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  /* Plná šedá, ne ztlumená: při 75 % vycházel kontrast 3,1:1, tedy pod AA.
-     Odstup od eyebrow nad ním drží velikost a verzálky, ne barva. */
-  color: var(--muted);
-  line-height: 1.5;
 }
 
 .media--circle {

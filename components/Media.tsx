@@ -35,13 +35,14 @@ export function Media({
     );
   }
 
-  // Placeholder — fotografii teprve doplníme. Očistíme redundantní předponu popisku.
-  const subject = media.label.replace(/^(kruhová\s+)?(fotografie|foto|video|obrázek)\s*·?\s*/i, "");
+  /* Placeholder — fotografii teprve doplníme. Vidět má být jen tahle jedna
+     věta: co přesně sem přijde, je poznámka pro nás, ne pro návštěvníka.
+     V `aria-label` popisek zůstává — kdo stránku neuvidí, se aspoň dozví,
+     co na tom místě má být. */
   return (
     <div className={`${cls} media--soon`} role="img" aria-label={media.label}>
       <span className="media__soon" aria-hidden="true">
         <span className="media__soon-eyebrow">Fotografie připravujeme</span>
-        {subject && <span className="media__soon-label">{subject}</span>}
       </span>
     </div>
   );
