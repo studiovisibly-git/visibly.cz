@@ -526,7 +526,11 @@ main {
   line-height: 1.6;
 }
 
+/* Pozor na přímého potomka: fotka může sedět ještě ve vrstvě, která se
+   při scrollu hýbe. Bez druhého selektoru z ní spadne object-fit na
+   výchozí `fill` a obrázek se roztáhne na poměr rámu. */
 .media > img,
+.media__parallax > img,
 .media__video {
   position: absolute;
   inset: 0;
@@ -4023,21 +4027,25 @@ a.stitek:focus-visible {
    Stejné gesto jako v Circle šabloně: fotka se při průchodu viewportem
    pomalu zvětšuje a posouvá, rám kolem ní stojí a ořezává.
 
-   Šablona jede scale 1 → 1,2 s posunem ±50 px, ale při scale 1 není posun
-   čím krýt a dole vykoukne pozadí rámu. Začínáme proto na 1,08: přesah je
-   4 % na každou stranu, posun je ±2 % a zbývá tak dvojnásobná rezerva.
-   Při 1,05 vycházely na 647px rámu poslední 3 px — na zaokrouhlování
-   subpixelů příliš těsné. Rozsah zvětšení zůstává 0,20 jako v originále. */
+   Posun je odvozený od zvětšení, ne nezávislý. Šablona jede pevných
+   ±50 px, jenže při scale 1 není posun čím krýt a dole vykoukne pozadí
+   rámu — v šabloně to na obrázcích níž na stránce opravdu nastává.
+   Takhle je posun vždycky nejvýš 80 % přesahu, který zvětšení vyrobilo,
+   takže mezera nemůže vzniknout v žádné poloze. A hlavně: na začátku
+   je scale 1 a posun 0, tedy fotka sedí v rámu přesně a nic se
+   neořezává. */
 
 .media__parallax {
   position: absolute;
-  inset: 0;
-  transform: translateY(calc((var(--p, 0.5) - 0.5) * 4%)) scale(var(--s, 1.08));
+  /* Vlasový přesah: na začátku je scale skoro přesně 1 a rezerva vychází
+     na desetiny pixelu. Jeden pixel na každou stranu ji udrží i při
+     zaokrouhlování subpixelů a na kompozici není vidět. */
+  inset: -1px;
+  transform: translateY(calc((var(--p, 0.5) - 0.5) * (var(--s, 1) - 1) * 80%))
+    scale(var(--s, 1));
   will-change: transform;
 }
 
-/* Bez pohybu ani zvětšení — jinak by fotka zůstala trvale oříznutá
-   o pět procent bez důvodu. */
 @media (prefers-reduced-motion: reduce) {
   .media__parallax {
     transform: none;
