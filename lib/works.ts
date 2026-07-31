@@ -2,6 +2,117 @@ import type { Work } from "./types";
 
 export const works: Work[] = [
   {
+    slug: "hotel-andante",
+    client: "HOTEL ANDANTE",
+    location: "Praha",
+    rok: "2024",
+    clientUrl: "https://andante.cz/",
+    title: "Hotel, který mluví jedním hlasem.",
+    summary:
+      "Redesign loga, jedenáctimetrový banner včetně držáku, dvě prostorová loga, polepy recepce a dveří a desítky fotoobrazů do pokojů.",
+    metaTitle: "Hotel Andante Praha — banner, 3D loga a fotoobrazy | Realizace Visibly",
+    metaDescription:
+      "Případová studie Hotel Andante z Prahy: redesign loga, jedenáctimetrový banner s vlastním držákem, dvě prostorová loga, polepy recepce a dveří z pískované fólie a desítky fotoobrazů. Výroba i montáž, Visibly.",
+    hero: {
+      label: "Fotografie · Hotel Andante — banner na fasádě",
+      variant: "tall",
+      src: "/images/realizace-andante-hero-optimized.jpg",
+      alt: "Jedenáctimetrový banner HOTEL ANDANTE na nároží domu v Praze",
+    },
+    intro:
+      "Hotel se návštěvníkovi představuje na deseti místech: z ulice, ve dveřích, na recepci, v kavárně a nakonec na pokoji. Andante mělo každé z nich vyřešené jinak a jindy. Sjednotili jsme je do jednoho hlasu — a všechno taky vyrobili a osadili.",
+    sections: [
+      {
+        heading: "Logo, které zůstalo Andante",
+        text: "Rukopisný podpis hotelu jsme nepředělávali, jen vyčistili — tahy, hvězdy i poměr k slovu HOTEL. Značka tak zůstala poznatelná pro stálé hosty a zároveň konečně funguje i v malých velikostech a v jedné barvě.",
+        media: {
+          label: "Prostorové logo v lobby",
+          variant: "square",
+          src: "/images/realizace-andante-logo-optimized.jpg",
+          alt: "Bronzové prostorové logo Andante Hotel na stěně hotelové lobby",
+        },
+      },
+      {
+        heading: "Držák dřív než banner",
+        text: "Jedenáct metrů plachty na nároží není grafika, ale konstrukce. Držák jsme navrhli a vyrobili na míru fasádě, s kotvením do nosné stěny a s rameny pro nasvícení. Teprve pak mělo smysl řešit, co bude na banneru vytištěné.",
+        media: {
+          label: "Držák banneru vyrobený na míru",
+          variant: "square",
+          src: "/images/realizace-andante-drzak-optimized.jpg",
+          alt: "Bílá ocelová konstrukce držáku banneru ukotvená do fasády",
+        },
+      },
+      {
+        heading: "Montáž nad chodníkem v centru",
+        text: "V centru Prahy se nedá jen tak přistavit plošina. Montáž jsme dělali z lešení, se zabraným kusem chodníku a s termínem domluveným tak, aby hotel mohl celou dobu normálně přijímat hosty.",
+        media: {
+          label: "Lešení před fasádou při montáži",
+          variant: "square",
+          src: "/images/realizace-andante-montaz-optimized.jpg",
+          alt: "Lešení postavené na chodníku před fasádou hotelu při montáži banneru",
+        },
+      },
+      {
+        heading: "Dveře, které nekřičí",
+        text: "Na vstupní i vnitřní dveře přišla řezaná fólie s pískovaným efektem. Ve skle drží značku v úrovni očí, aniž by z prosklení udělala reklamní ceduli — a proti odrazu ulice se čte líp než tisk.",
+        media: {
+          label: "Řezaná pískovaná fólie na vstupních dveřích",
+          variant: "square",
+          src: "/images/realizace-andante-dvere-optimized.jpg",
+          alt: "Vstupní dveře hotelu s logem Andante z pískované řezané fólie",
+        },
+      },
+      {
+        heading: "Recepce, která nese jméno",
+        text: "Pult i skříň za ním jsou polepené na míru — bílá na černé, ve stejném rukopisu jako banner venku. Host tak potvrzení, že je na správné adrese, dostane dřív, než položí kufr.",
+        media: {
+          label: "Polep recepčního pultu",
+          variant: "square",
+          src: "/images/realizace-andante-recepce-optimized.jpg",
+          alt: "Černý recepční pult hotelu Andante s bílým polepem loga",
+        },
+      },
+      {
+        heading: "Kavárna dostala stejný podpis",
+        text: "Druhé prostorové logo sedí na dřevěné lamelové stěně kavárny. Stejný tvar jako v lobby, jiná hloubka a odstín — aby na teplém dřevě drželo kontrast a nesplynulo s ním.",
+        media: {
+          label: "Prostorové logo v kavárně",
+          variant: "square",
+          src: "/images/realizace-andante-kavarna-optimized.jpg",
+          alt: "Prostorové logo Andante Hotel na dřevěné lamelové stěně kavárny",
+        },
+      },
+      {
+        heading: "Desítky obrazů, aby pokoje nebyly jen bílé",
+        text: "Do každého pokoje přišly fotoobrazy tištěné u nás. Motivy jsme ladili na barevnost interiéru, ne naopak — a protože je tiskneme sami, sedí odstíny napříč celou sérií i po dotisku.",
+        media: {
+          label: "Fotoobrazy na pokoji",
+          variant: "square",
+          src: "/images/realizace-andante-fotoobrazy-optimized.jpg",
+          alt: "Dva fotoobrazy ve zlatých rámech nad postelí hotelového pokoje",
+        },
+      },
+    ],
+    deliverables: [
+      "Redesign loga",
+      "Banner 11 m včetně tisku a návrhu",
+      "Držák banneru na míru",
+      "Dvě prostorová 3D loga",
+      "Polep recepce a skříně",
+      "Řezaná pískovaná fólie na dveře",
+      "Desítky fotoobrazů do pokojů",
+      "Montáž na místě",
+    ],
+    stitky: [
+      "navrh-loga-a-vizualni-identity",
+      "bannery-a-plachty",
+      "3d-loga",
+      "interierove-polepy",
+      "rezana-grafika",
+      "tisk-fotoobrazu",
+    ],
+  },
+  {
     slug: "ribenhouse",
     client: "RIBEN HOUSE",
     location: "Praha",
