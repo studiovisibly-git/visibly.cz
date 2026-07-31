@@ -45,7 +45,7 @@ export function Media({
         {sParallaxem ? (
           /* Rám ořezává (`.media` má overflow: hidden), hýbe se až vrstva
              uvnitř — ta je zároveň pozicovaným rodičem pro `fill`. */
-          <ScrollScale className="media__parallax" from={1} to={1.2}>
+          <ScrollScale className="media__parallax" from={1} to={1.1}>
             {obrazek}
           </ScrollScale>
         ) : (
