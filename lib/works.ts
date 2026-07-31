@@ -2,9 +2,81 @@ import type { Work } from "./types";
 
 export const works: Work[] = [
   {
+    slug: "ribenhouse",
+    client: "RIBEN HOUSE",
+    location: "Praha",
+    rok: "2023",
+    clientUrl: "https://ribenhouse.cz/",
+    title: "Dům, který se hostům představí dřív, než zazvoní.",
+    summary:
+      "Apartmánový dům v centru Prahy: výložní banner, prostorové logo, řezaná grafika na portálu a orientační cedulky z frézovaného dibondu. Výroba i montáž.",
+    metaTitle: "RIBEN HOUSE Praha — 3D logo, banner a orientační systém | Realizace Visibly",
+    metaDescription:
+      "Případová studie RIBEN HOUSE z Prahy: prostorové 3D logo, výložní banner, řezaná grafika na vstupním portálu a cedulky z frézovaného dibondu s UV tiskem. Výroba i montáž, Visibly Opava.",
+    hero: {
+      label: "Fotografie · RIBEN HOUSE — výložní banner",
+      variant: "tall",
+      src: "/images/realizace-ribenhouse-hero-optimized.jpg",
+      alt: "Zelený výložní banner RIBEN HOUSE na fasádě domu v centru Prahy",
+    },
+    intro:
+      "Apartmánový dům funguje jinak než hotel: recepce nemusí být obsazená a host se často orientuje sám. RIBEN HOUSE proto potřeboval značení, které mluví za personál — od banneru, který dům najde z ulice, po číslo dveří ve třetím patře.",
+    sections: [
+      {
+        heading: "Vstup, který dá tušit, co je uvnitř",
+        text: "Historický portál z kamene se nepolepuje na sílu. Řezaná grafika na skle nad dveřmi drží značku v úrovni očí, nechá průhled do vstupní haly a při pohledu z protějšího chodníku se čte proti světlu i proti odrazu ulice.",
+        media: {
+          label: "Řezaná grafika na vstupním portálu",
+          variant: "square",
+          src: "/images/realizace-ribenhouse-vstup-optimized.jpg",
+          alt: "Řezaná samolepka s logem RIBEN HOUSE na skle nad vchodovými dveřmi",
+        },
+      },
+      {
+        heading: "Logo, které drží celý prostor",
+        text: "Prostorový znak a písmena nad ním nesou stín — na bílé stěně tím vznikne hloubka, kterou plochý tisk nedá. Emblém i nápis jsme vyrobili tak, aby na sebe navazovaly ve stejné rovině a v barvě, která sedí se zbytkem interiéru.",
+        media: {
+          label: "Prostorové logo a nápis ve vstupní hale",
+          variant: "square",
+          src: "/images/realizace-ribenhouse-3d-logo-optimized.jpg",
+          alt: "Zelené prostorové logo RIBEN HOUSE a 3D písmena na bílé stěně",
+        },
+      },
+      {
+        heading: "Navigace, kterou host najde bez ptaní",
+        text: "Cedulky ke dveřím jsou frézované ze stříbrného dibondu a potištěné UV tiskem — čísla apartmánů a šipky tak drží barvu i po letech otírání. Zaoblené rohy a jeden formát pro celý dům dělají ze série systém, ne sadu cedulí.",
+        media: {
+          label: "Orientační cedulka z frézovaného dibondu",
+          variant: "square",
+          src: "/images/realizace-ribenhouse-cedulky-optimized.jpg",
+          alt: "Stříbrná cedulka RIBEN HOUSE s čísly apartmánů 102 a 103",
+        },
+      },
+      {
+        heading: "Montáž na místě, do milimetru",
+        text: "Prostorová písmena odpustí málo: jednou nalepená se nesundají bez stopy. Osazujeme je proto sami, podle vodováhy a nalepené linky — a se stavbou i správcem si termín domluvíme tak, aby dům mezitím fungoval.",
+        media: {
+          label: "Montáž prostorových písmen na místě",
+          variant: "square",
+          src: "/images/realizace-ribenhouse-montaz-optimized.jpg",
+          alt: "Montér lepí prostorová písmena RIBEN HOUSE podle vodováhy",
+        },
+      },
+    ],
+    deliverables: [
+      "Prostorové 3D logo a nápis",
+      "Výložní banner na fasádu",
+      "Řezaná grafika na vstupní portál",
+      "Orientační cedulky z frézovaného dibondu",
+      "Montáž na místě",
+    ],
+    stitky: ["3d-loga", "bannery-a-plachty", "orientacni-systemy", "rezana-grafika"],
+  },
+  {
     slug: "ps-green",
     client: "PS GREEN",
     location: "Opava",
+    rok: "2025–26",
     title: "Jedna značka. Od auta po tiskoviny.",
     summary: "Polep vozu, firemní textil, vizitky a tiskoviny propojené jedním vizuálním systémem.",
     metaTitle: "PS GREEN Opava — polep auta, textil a tiskoviny | Realizace Visibly",
@@ -36,6 +108,7 @@ export const works: Work[] = [
     slug: "reformlab",
     client: "REFORMLAB",
     location: "Brno",
+    rok: "2025",
     title: "Studio, které drží pohromadě online i na místě.",
     summary: "Identita, web, polepy výlohy, dárkové poukázky a tiskoviny v jednom systému.",
     metaTitle: "ReformLab Brno — identita, polep výlohy a tiskoviny | Realizace Visibly",
@@ -67,6 +140,7 @@ export const works: Work[] = [
     slug: "linealux",
     client: "LINEALUX",
     location: "Brno",
+    rok: "2025–26",
     title: "Čistý vizuální systém pro showroom.",
     summary: "Logo, identita, webová vizitka a značení showroomu s tiskovými podklady.",
     metaTitle: "LineaLux Brno — logo, identita a značení showroomu | Realizace Visibly",
@@ -98,6 +172,7 @@ export const works: Work[] = [
     slug: "rezani-betonu",
     client: "ŘEZÁNÍ BETONU",
     location: "Opava",
+    rok: "2025",
     title: "Technická značka čitelná v reálném provozu.",
     summary: "Identita, označení provozovny, banner a tisková data pro stavební řemeslo.",
     metaTitle: "Řezání betonu Opava — identita a označení provozovny | Realizace Visibly",

@@ -122,6 +122,7 @@ export default function RealizacePage() {
                   addressCountry: "CZ",
                 },
               },
+              temporalCoverage: work.rok.replace(/^(\d{2})(\d{2})[–-](\d{2})$/, "$1$2/$1$3"),
               keywords: stitky(work.stitky)
                 .map((s) => s.label)
                 .join(", "),

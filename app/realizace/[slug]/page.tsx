@@ -62,9 +62,23 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
             <span>{work.location}</span>
           </p>
           <p>
+            <strong>Rok</strong>
+            <span>{work.rok}</span>
+          </p>
+          <p>
             <strong>Dodáno</strong>
             <span>{work.deliverables.join(" · ")}</span>
           </p>
+          {work.clientUrl && (
+            <p>
+              <strong>Web klienta</strong>
+              <span>
+                <a href={work.clientUrl} target="_blank" rel="noopener">
+                  {new URL(work.clientUrl).hostname.replace(/^www\./, "")} ↗
+                </a>
+              </span>
+            </p>
+          )}
         </div>
 
         {/* Štítky služeb. Zároveň prolink na podstránky — kdo si prohlíží
@@ -181,6 +195,11 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
               addressCountry: "CZ",
             },
           },
+          /* „2025–26" není platné datum, proto interval v temporalCoverage;
+             dateCreated dostane jen zakázka s jedním rokem. */
+          ...(/^\d{4}$/.test(work.rok)
+            ? { dateCreated: work.rok, temporalCoverage: work.rok }
+            : { temporalCoverage: work.rok.replace(/^(\d{2})(\d{2})[–-](\d{2})$/, "$1$2/$1$3") }),
           keywords: sluzby.map((s) => s.label).join(", "),
           about: sluzby.map((s) => ({
             "@type": "Service",
@@ -188,7 +207,11 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
             url: `${SITE_URL}${s.href}`,
             provider: { "@id": BUSINESS_ID },
           })),
-          mentions: { "@type": "Organization", name: work.client },
+          mentions: {
+            "@type": "Organization",
+            name: work.client,
+            ...(work.clientUrl && { url: work.clientUrl }),
+          },
         }}
       />
     </>

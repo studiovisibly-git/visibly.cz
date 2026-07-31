@@ -112,6 +112,10 @@ export type Work = {
   client: string;
   /** Město, kde zakázka vznikla. Do drobného popisku i do structured dat. */
   location: string;
+  /** Rok realizace — jeden („2023"), nebo rozsah přes zimu („2025–26"). */
+  rok: string;
+  /** Web klienta. Nepovinný — u některých zakázek prostě není co ukázat. */
+  clientUrl?: string;
   title: string;
   summary: string;
   metaTitle: string;
