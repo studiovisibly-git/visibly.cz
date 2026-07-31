@@ -1,23 +1,32 @@
 import Image from "next/image";
 import { LazyVideo } from "./LazyVideo";
+import { ScrollScale } from "./ScrollScale";
 import type { MediaSpec } from "@/lib/types";
 
 /**
  * Fotografie, video, nebo elegantní placeholder se stejným poměrem stran.
  * `src` končící na .mp4 se vykreslí jako smyčkové video; jinak jako obrázek.
+ *
+ * Hranaté fotky se při scrollu pomalu zvětšují a posouvají — stejné gesto
+ * jako v Circle šabloně. Kruhy ho nedostávají: ty už se zvětšují v heru,
+ * kde ScrollScale řídí celý blok, a druhá vrstva by se s ní prala.
  */
 export function Media({
   media,
   className,
   sizes = "(max-width: 860px) 90vw, 40vw",
   priority = false,
+  parallax = true,
 }: {
   media: MediaSpec;
   className?: string;
   sizes?: string;
   priority?: boolean;
+  /** Vypnout tam, kde fotky stojí v těsném pásu vedle sebe. */
+  parallax?: boolean;
 }) {
   const cls = `media media--${media.variant}${media.blend ? " media--blend" : ""}${className ? ` ${className}` : ""}`;
+  const sParallaxem = parallax && media.variant !== "circle";
 
   if (media.src?.endsWith(".mp4")) {
     return (
@@ -28,9 +37,20 @@ export function Media({
   }
 
   if (media.src) {
+    const obrazek = (
+      <Image src={media.src} alt={media.alt ?? media.label} fill sizes={sizes} priority={priority} />
+    );
     return (
       <div className={cls}>
-        <Image src={media.src} alt={media.alt ?? media.label} fill sizes={sizes} priority={priority} />
+        {sParallaxem ? (
+          /* Rám ořezává (`.media` má overflow: hidden), hýbe se až vrstva
+             uvnitř — ta je zároveň pozicovaným rodičem pro `fill`. */
+          <ScrollScale className="media__parallax" from={1.08} to={1.28}>
+            {obrazek}
+          </ScrollScale>
+        ) : (
+          obrazek
+        )}
       </div>
     );
   }

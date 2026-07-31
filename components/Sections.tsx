@@ -402,7 +402,9 @@ export function WorkStrip({
       <div className="work-strip">
         {items.map((item) => (
           <Link href={item.href} className="work-strip__item" key={item.href}>
-            <Media media={item.media} />
+            {/* Pás jede vodorovně a fotky v něm stojí těsně vedle sebe —
+                zvětšování při scrollu by z toho udělalo neklidnou stěnu. */}
+            <Media media={item.media} parallax={false} />
             <div className="work-strip__caption">
               <span className="eyebrow">{item.eyebrow}</span>
               <strong>{item.title}</strong>
