@@ -4027,6 +4027,10 @@ a.stitek:focus-visible {
    Stejné gesto jako v Circle šabloně: fotka se při průchodu viewportem
    pomalu zvětšuje a posouvá, rám kolem ní stojí a ořezává.
 
+   Zvětšení je 1 → 1,1, tedy poloviční proti šabloně (ta jede do 1,2).
+   Posun se od něj odvozuje, takže se ztlumil spolu s ním — na 647px rámu
+   ujede 26 px místo 52.
+
    Posun je odvozený od zvětšení, ne nezávislý. Šablona jede pevných
    ±50 px, jenže při scale 1 není posun čím krýt a dole vykoukne pozadí
    rámu — v šabloně to na obrázcích níž na stránce opravdu nastává.
