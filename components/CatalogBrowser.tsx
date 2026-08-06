@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
+  CATALOG_PATH,
   PRIMARY_VIEW,
   productImage,
   productPath,
@@ -11,6 +12,13 @@ import {
   type MalfiniProduct,
   type PriceIndex,
 } from "@/lib/malfini";
+import {
+  PRICE_BANDS,
+  catalogCodebooks,
+  readFilters,
+  writeFilters,
+  type CatalogFilters,
+} from "@/lib/katalog-url";
 
 /** Kolik produktů ukázat, než si uživatel řekne o víc. */
 const PAGE = 24;
@@ -20,15 +28,6 @@ const czk = new Intl.NumberFormat("cs-CZ", {
   currency: "CZK",
   maximumFractionDigits: 0,
 });
-
-/** Cenová pásma — API filtr podle ceny nemá, filtrujeme podle vlastního indexu. */
-const PRICE_BANDS = [
-  { code: "", label: "Libovolná" },
-  { code: "0-150", label: "do 150 Kč", max: 150 },
-  { code: "150-300", label: "150–300 Kč", min: 150, max: 300 },
-  { code: "300-600", label: "300–600 Kč", min: 300, max: 600 },
-  { code: "600-", label: "nad 600 Kč", min: 600 },
-] as const;
 
 /**
  * Barva, kterou karta ukazuje. Když je zvolený filtr barvy a produkt ji má,
@@ -72,9 +71,78 @@ export function CatalogBrowser({
   const [band, setBand] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [group, setGroup] = useState(initial.groups[0]?.name ?? "");
+  const defaultGroup = initial.groups[0]?.name ?? "";
+  const [group, setGroup] = useState(defaultGroup);
   const [query, setQuery] = useState("");
   const [limit, setLimit] = useState(PAGE);
+  const [copied, setCopied] = useState(false);
+
+  /* Slovníky pro adresu se staví z nefiltrovaného katalogu — po zafiltrování
+     API vrací jen volby, které něčemu odpovídají. */
+  const books = useMemo(() => catalogCodebooks(initial), [initial]);
+
+  /**
+   * Dokud se adresa nepřečte, nemá se do ní co zapisovat.
+   *
+   * Musí to být stav, ne ref: efekty jednoho vykreslení proběhnou všechny
+   * dřív, než se stav z toho prvního projeví. Zápisový efekt by tedy stihl
+   * doběhnout ještě s prázdnými filtry a adresu, se kterou návštěvník přišel,
+   * by přepsal na holý katalog.
+   */
+  const [urlRead, setUrlRead] = useState(false);
+
+  const applyFilters = (f: CatalogFilters) => {
+    setCategory(f.category);
+    setTrademark(f.trademark);
+    setColor(f.color);
+    setBand(f.band);
+    setQuery(f.query);
+    setGroup(f.group || defaultGroup);
+    setLimit(PAGE);
+  };
+
+  /**
+   * Filtry se čtou z adresy až po připojení, ne na serveru: stránka se díky
+   * tomu dál předgeneruje a index cen se nepočítá při každém načtení.
+   * Odkaz se tedy na okamžik ukáže s celým katalogem, než se filtr projeví.
+   *
+   * `popstate` je tu kvůli návratu z produktu — prohlížeč obnoví adresu
+   * i s filtry a mřížka se podle ní musí srovnat.
+   */
+  useEffect(() => {
+    const fromUrl = () => {
+      if (window.location.pathname !== CATALOG_PATH) return;
+      const f = readFilters(window.location.search, books);
+      applyFilters(f);
+      setUrlRead(true);
+      /* Rovnou uklidíme, co v adrese nedávalo smysl — ať se dál posílá
+         jen to, co se opravdu vyfiltrovalo. */
+      const qs = writeFilters(f, books, defaultGroup);
+      if (window.location.search !== qs) {
+        window.history.replaceState(null, "", `${CATALOG_PATH}${qs}`);
+      }
+    };
+    fromUrl();
+    window.addEventListener("popstate", fromUrl);
+    return () => window.removeEventListener("popstate", fromUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [books, defaultGroup]);
+
+  /**
+   * Zpátky do adresy. `replaceState` schválně: filtr je pohled na katalog,
+   * ne krok v prohlížení — jinak by cesta zpátky znamenala odklikat každé
+   * písmeno v hledání. Adresu píšeme jen tehdy, když je vidět katalog;
+   * nad otevřeným produktem patří do řádku produkt.
+   */
+  useEffect(() => {
+    if (!urlRead) return;
+    if (window.location.pathname !== CATALOG_PATH) return;
+    const qs = writeFilters({ group, query, category, trademark, color, band }, books, defaultGroup);
+    if (window.location.search !== qs) {
+      window.history.replaceState(null, "", `${CATALOG_PATH}${qs}`);
+    }
+    setCopied(false);
+  }, [urlRead, group, query, category, trademark, color, band, books, defaultGroup]);
 
   /* Kategorii, značku i barvu umí odfiltrovat jen API — seznam produktů tyhle
      údaje neobsahuje. Při změně proto natáhneme nová data. */
@@ -154,6 +222,17 @@ export function CatalogBrowser({
     setLimit(PAGE);
   };
 
+  /* Adresa v řádku prohlížeče výběr nese sama, tlačítko ji jen zkrátí cestu
+     do schránky — „pošli mi červená trička" má být jedno kliknutí. */
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+    } catch {
+      /* Bez schránky (starší prohlížeč, http) zbývá adresní řádek — ten je správně. */
+    }
+  };
+
   return (
     <div className="cat">
       {/* Filtry vlevo, při scrollu se přilepí — mřížka je vedle. */}
@@ -167,6 +246,14 @@ export function CatalogBrowser({
               </button>
             )}
           </div>
+
+          {active && (
+            <p className="cat__share">
+              <button onClick={copyLink}>
+                {copied ? "Odkaz na výběr zkopírován" : "Zkopírovat odkaz na výběr"}
+              </button>
+            </p>
+          )}
 
           {catalog.groups.length > 1 && (
             <div className="cat__field cat__field--wide">

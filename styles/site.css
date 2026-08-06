@@ -990,6 +990,31 @@ main {
   cursor: pointer;
 }
 
+/* Nastavený výběr nese adresa sama — tohle je jen zkratka do schránky.
+   Ukazuje se až s filtrem, aby prázdný katalog nenabízel „sdílet nic". */
+.cat__share {
+  margin: -0.25rem 0 1.25rem;
+}
+
+.cat__share button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.25s var(--ease-out);
+}
+
+.cat__share button:hover {
+  color: var(--ink);
+}
+
 /* Mobil a tablet: filtry nad mřížkou, bez lepení. */
 @media (max-width: 900px) {
   .cat {

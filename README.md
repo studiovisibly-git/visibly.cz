@@ -34,6 +34,33 @@ Netlify i libovolný Node hosting; statický export (`output: "export"`) kvůli 
 - `public/` — obrázky (`/images`), loga klientů (`/logos`), video (`/video`), logo `visibly-logo.svg`
 - `app/fonts/` — Satoshi (Medium 500, Bold 700)
 
+## Odkazy do katalogu textilu
+
+Výběr v katalogu je celý v adrese, takže se dá poslat mailem i do chatu.
+Parametry se dají libovolně kombinovat a vynechávat:
+
+| parametr | co znamená | příklady |
+|---|---|---|
+| `komu` | skupina | `panske`, `unisex`, `damske`, `detske` |
+| `typ` | typ oblečení | `tricka`, `polokosile`, `mikiny`, `bundy-vesty` |
+| `znacka` | značka | `malfini`, `malfini-premium`, `rimeck`, `puma` |
+| `barva` | barva | `cervena`, `bila`, `namorni-modra` |
+| `cena` | cena za kus bez DPH | `do-150`, `150-300`, `300-600`, `nad-600` |
+| `hledat` | fulltext v názvu a kódu | `basic` |
+
+```
+/reklama/reklamni-textil/katalog-malfini?typ=tricka&barva=cervena
+/reklama/reklamni-textil/katalog-malfini?typ=mikiny&znacka=rimeck&cena=300-600
+```
+
+Hodnoty se odvozují z názvů, které posílá dodavatel — nedrží se ručně. Kde je
+název dvojznačný (tři různé „bílé"), dostane ho ta nejpočetnější volba a na
+zbylé zbude kód dodavatele. Kód se dá napsat i ručně (`?barva=07`) a adresa se
+sama přepíše do čitelného tvaru. Nesmysl se tiše zahodí.
+
+Jednotlivý produkt má vlastní adresu `…/katalog-malfini/<kód>/<barva>`. Z mřížky
+se otevírá v modálu (zachycená trasa), přímý odkaz vede na celou stránku.
+
 ## SEO
 
 - Unikátní `title` + `description` + `canonical` na každé stránce
