@@ -1,15 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   PRIMARY_VIEW,
-  fileUrl,
-  inquiryHref,
   productImage,
+  productPath,
   type MalfiniCatalog,
-  type MalfiniDetail,
-  type MalfiniPrice,
   type BrandIndex,
   type MalfiniProduct,
   type PriceIndex,
@@ -34,12 +31,16 @@ const PRICE_BANDS = [
 ] as const;
 
 /**
- * Fotka produktu. U obuvi je „a" podrážka, proto primárně „c".
- * Když je zvolený filtr barvy a produkt ji má, ukážeme rovnou tu barvu —
- * jinak by karta lákala na bílé tričko, které jste si nevybrali.
+ * Barva, kterou karta ukazuje. Když je zvolený filtr barvy a produkt ji má,
+ * ukážeme rovnou tu — jinak by karta lákala na bílé tričko, které jste si
+ * nevybrali. Stejná barva pak vede i v odkazu, ať otevřený produkt vypadá
+ * jako to, na co člověk klikl.
  */
-function CardImage({ product, preferColor }: { product: MalfiniProduct; preferColor?: string }) {
-  const color = preferColor && product.colors.includes(preferColor) ? preferColor : (product.colors[0] ?? "00");
+const cardColor = (product: MalfiniProduct, preferColor?: string) =>
+  preferColor && product.colors.includes(preferColor) ? preferColor : (product.colors[0] ?? "00");
+
+/** Fotka produktu. U obuvi je „a" podrážka, proto primárně „c". */
+function CardImage({ product, color }: { product: MalfiniProduct; color: string }) {
   const [view, setView] = useState(PRIMARY_VIEW);
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -74,7 +75,6 @@ export function CatalogBrowser({
   const [group, setGroup] = useState(initial.groups[0]?.name ?? "");
   const [query, setQuery] = useState("");
   const [limit, setLimit] = useState(PAGE);
-  const [open, setOpen] = useState<MalfiniProduct | null>(null);
 
   /* Kategorii, značku i barvu umí odfiltrovat jen API — seznam produktů tyhle
      údaje neobsahuje. Při změně proto natáhneme nová data. */
@@ -292,9 +292,23 @@ export function CatalogBrowser({
 
         <div className="cat__grid">
           {shown.map((p) => (
-            <button className="cat-card" key={p.code} onClick={() => setOpen(p)}>
+            /* Karta je odkaz na vlastní adresu produktu — jde zkopírovat,
+               otevřít na nové kartě i poslat dál. Z mřížky se přesto otevře
+               v modálu: tu adresu zachytává souběžná trasa vedle.
+               Bez prefetch — na obrazovce jich je pořád 24 a každá by jinak
+               při načtení sáhla na ceník dodavatele. */
+            <Link
+              className="cat-card"
+              key={p.code}
+              href={productPath(p.code, cardColor(p, color))}
+              prefetch={false}
+              /* Modál je fixní přes celou obrazovku, takže skok na začátek
+                 stránky není vidět — zato po zavření by člověk skončil na
+                 začátku mřížky místo u karty, ze které vyšel. */
+              scroll={false}
+            >
               <span className="cat-card__img">
-                <CardImage product={p} preferColor={color} />
+                <CardImage product={p} color={cardColor(p, color)} />
               </span>
               <span className="cat-card__body">
                 <span className="cat-card__sub">{p.subName}</span>
@@ -310,7 +324,7 @@ export function CatalogBrowser({
                   <span className="cat-card__price">od {czk.format(priceIndex[p.code])} bez DPH</span>
                 )}
               </span>
-            </button>
+            </Link>
           ))}
         </div>
 
@@ -321,239 +335,6 @@ export function CatalogBrowser({
             </button>
           </div>
         )}
-      </div>
-
-      {open && (
-        <ProductModal
-          product={open}
-          colors={catalog.colors}
-          initialColor={color}
-          brand={brandIndex[open.code]}
-          onClose={() => setOpen(null)}
-        />
-      )}
-    </div>
-  );
-}
-
-function ProductModal({
-  product,
-  colors,
-  initialColor,
-  brand,
-  onClose,
-}: {
-  product: MalfiniProduct;
-  colors: MalfiniCatalog["colors"];
-  /** Barva zvolená ve filtru — otevřeme detail rovnou v ní. */
-  initialColor?: string;
-  /** Značka produktu — API ji v detailu nevrací, chodí z indexu. */
-  brand?: string;
-  onClose: () => void;
-}) {
-  const [color, setColor] = useState(
-    initialColor && product.colors.includes(initialColor) ? initialColor : (product.colors[0] ?? "00"),
-  );
-  const [view, setView] = useState(PRIMARY_VIEW);
-  const [detail, setDetail] = useState<MalfiniDetail | null>(null);
-  const [prices, setPrices] = useState<MalfiniPrice[] | null>(null);
-  const [failed, setFailed] = useState(false);
-  const closeRef = useRef<HTMLButtonElement>(null);
-
-  /* Zavření Escapem + zámek scrollu pod modálem. */
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    document.addEventListener("keydown", onKey);
-    const prev = document.documentElement.style.overflow;
-    document.documentElement.style.overflow = "hidden";
-    closeRef.current?.focus();
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.documentElement.style.overflow = prev;
-    };
-  }, [onClose]);
-
-  useEffect(() => {
-    let alive = true;
-    setDetail(null);
-    setFailed(false);
-    fetch(`/api/katalog?code=${encodeURIComponent(product.code)}&color=${encodeURIComponent(color)}`)
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: MalfiniDetail) => {
-        if (!alive) return;
-        setDetail(d);
-        setView(d.views?.[0] ?? PRIMARY_VIEW);
-      })
-      .catch(() => alive && setFailed(true));
-    return () => {
-      alive = false;
-    };
-  }, [product.code, color]);
-
-  /* Ceny jsou na produkt, ne na barvu — načítáme je jen jednou. */
-  useEffect(() => {
-    let alive = true;
-    setPrices(null);
-    fetch(`/api/katalog/ceny?code=${encodeURIComponent(product.code)}`)
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((p: MalfiniPrice[]) => alive && setPrices(p))
-      .catch(() => alive && setPrices([]));
-    return () => {
-      alive = false;
-    };
-  }, [product.code]);
-
-  const colorName = colors[color]?.name ?? "";
-  const from = prices && prices.length > 0 ? Math.min(...prices.map((p) => p.value)) : null;
-
-  return (
-    <div className="modal" role="dialog" aria-modal="true" aria-label={`${product.subName} ${product.name}`}>
-      <div className="modal__backdrop" onClick={onClose} />
-      <div className="modal__panel">
-        <button ref={closeRef} className="modal__close" onClick={onClose} aria-label="Zavřít">
-          ✕
-        </button>
-
-        <div className="modal__media">
-          {/* Fotka potřebuje vlastní světlou plochu, na které splyne její bílé
-              pozadí. Nestačí ji dát obrázku — multiply se míchá s tím, co je
-              pod ním, ne s jeho vlastním pozadím. */}
-          <span className="modal__stage">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={productImage(product.code, color, view, 900)}
-              alt={`${product.subName} ${product.name} — ${colorName}`}
-              width={900}
-              height={900}
-            />
-          </span>
-          {detail && detail.views.length > 1 && (
-            <div className="modal__views">
-              {detail.views.map((v) => (
-                <button
-                  key={v}
-                  className={`modal__view${v === view ? " is-on" : ""}`}
-                  onClick={() => setView(v)}
-                  aria-label={`Pohled ${v.toUpperCase()}`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={productImage(product.code, color, v, 120)} alt="" width={120} height={120} />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="modal__copy">
-          <span className="eyebrow">{product.subName}</span>
-          <h2 className="h2">{product.name}</h2>
-          <p className="modal__code">
-            {brand && <>{brand} · </>}
-            kód produktu <strong>{product.code}</strong>
-            {colorName && <> · barva {colorName}</>}
-          </p>
-
-          {from !== null && (
-            <p className="modal__price">
-              od <strong>{czk.format(from)}</strong> bez DPH / kus
-              <span className="modal__price-note">samotný textil, bez potisku</span>
-            </p>
-          )}
-
-          <div className="modal__colors">
-            <span className="modal__label">Barvy ({product.colors.length})</span>
-            <div className="modal__swatches">
-              {product.colors.map((c) => (
-                <button
-                  key={c}
-                  className={`modal__swatch${c === color ? " is-on" : ""}`}
-                  onClick={() => setColor(c)}
-                  title={colors[c]?.name ?? c}
-                  aria-label={colors[c]?.name ?? c}
-                  aria-pressed={c === color}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={productImage(product.code, c, PRIMARY_VIEW, 80)}
-                    alt=""
-                    width={80}
-                    height={80}
-                    loading="lazy"
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {prices && prices.length > 0 && (
-            <div className="modal__sizes">
-              <span className="modal__label">Velikosti, ceny a sklad</span>
-              <div className="modal__table-wrap">
-                <table className="modal__table">
-                  <thead>
-                    <tr>
-                      <th>Velikost</th>
-                      <th>Bez DPH</th>
-                      <th>S DPH</th>
-                      <th>Skladem</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {prices.map((p) => (
-                      <tr key={p.size}>
-                        <td>{p.size}</td>
-                        <td>{czk.format(p.value)}</td>
-                        <td>{czk.format(p.valueWithVat)}</td>
-                        <td>{p.availability > 0 ? `${p.availability.toLocaleString("cs-CZ")} ks` : "—"}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {failed && <p className="modal__note">Podrobnosti se teď nepodařilo načíst — kód produktu ale platí.</p>}
-
-          {detail && (
-            <>
-              {detail.attributes.length > 0 && (
-                <ul className="modal__attrs">
-                  {/* Titulek se opakuje (dodavatel posílá „Materiálové složení"
-                      víckrát), takže sám o sobě není jedinečný klíč. */}
-                  {detail.attributes.slice(0, 6).map((a, i) => (
-                    <li key={`${a.title}-${i}`}>
-                      <strong>{a.title}</strong>
-                      <span>{a.text}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {detail.specificationHtml && (
-                <div className="modal__rte" dangerouslySetInnerHTML={{ __html: detail.specificationHtml }} />
-              )}
-              {detail.descriptionHtml && (
-                <div className="modal__rte" dangerouslySetInnerHTML={{ __html: detail.descriptionHtml }} />
-              )}
-              {detail.sizeChartPdf && (
-                <p className="modal__note">
-                  <a href={fileUrl(detail.sizeChartPdf)} target="_blank" rel="noopener">
-                    Tabulka velikostí (PDF){" "}
-                    <span className="arr" aria-hidden="true">
-                      ↗
-                    </span>
-                  </a>
-                </p>
-              )}
-            </>
-          )}
-
-          <div className="modal__cta">
-            <Link href={inquiryHref(product, colorName)} className="btn btn--solid">
-              Přidat do poptávky
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -1250,7 +1250,7 @@ main {
 /* Světlá plocha pod fotkou — stejný princip jako u karet a kruhu v heru.
    Musí být na rodiči: multiply se míchá s tím, co je pod prvkem, ne s jeho
    vlastním pozadím. Kdyby byla na obrázku, v tmavém režimu by zčernal. */
-.modal__stage {
+.prod__stage {
   display: block;
   background: var(--plate);
   isolation: isolate;
@@ -1258,7 +1258,7 @@ main {
   overflow: hidden;
 }
 
-.modal__stage img {
+.prod__stage img {
   width: 100%;
   height: 100%;
   display: block;
@@ -1266,14 +1266,14 @@ main {
   mix-blend-mode: multiply;
 }
 
-.modal__views {
+.prod__views {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.75rem;
   flex-wrap: wrap;
 }
 
-.modal__view {
+.prod__view {
   width: 4rem;
   height: 4rem;
   padding: 0;
@@ -1283,24 +1283,24 @@ main {
   overflow: hidden;
 }
 
-.modal__view.is-on {
+.prod__view.is-on {
   border-color: var(--ink);
 }
 
-.modal__view img {
+.prod__view img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
 }
 
-.modal__code {
+.prod__code {
   font-size: var(--fs-small);
   font-weight: 700;
   margin-top: 0.5rem;
 }
 
-.modal__label {
+.prod__label {
   display: block;
   font-size: var(--fs-eyebrow);
   font-weight: 700;
@@ -1310,7 +1310,7 @@ main {
 }
 
 /* Cena „od" — první číslo, které zákazník hledá. */
-.modal__price {
+.prod__price {
   margin-top: 0.9rem;
   padding: 0.75rem 0.9rem;
   border: 2px solid var(--ink);
@@ -1319,47 +1319,47 @@ main {
   line-height: 1.3;
 }
 
-.modal__price strong {
+.prod__price strong {
   font-size: 1.375rem;
 }
 
-.modal__price-note {
+.prod__price-note {
   display: block;
   font-size: var(--fs-small);
   color: var(--muted);
   margin-top: 0.15rem;
 }
 
-.modal__colors {
+.prod__colors {
   margin-top: 1.25rem;
 }
 
 /* Velikosti s cenou a skladem. */
-.modal__sizes {
+.prod__sizes {
   margin-top: 1.5rem;
 }
 
-.modal__table-wrap {
+.prod__table-wrap {
   max-height: 16rem;
   overflow: auto;
   border: 2px solid var(--ink);
 }
 
-.modal__table {
+.prod__table {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--fs-small);
   font-weight: 700;
 }
 
-.modal__table th,
-.modal__table td {
+.prod__table th,
+.prod__table td {
   padding: 0.5rem 0.7rem;
   text-align: left;
   white-space: nowrap;
 }
 
-.modal__table thead th {
+.prod__table thead th {
   position: sticky;
   top: 0;
   background: var(--ink);
@@ -1369,15 +1369,15 @@ main {
   text-transform: uppercase;
 }
 
-.modal__table tbody tr + tr td {
+.prod__table tbody tr + tr td {
   border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
 }
 
-.modal__table td:last-child {
+.prod__table td:last-child {
   color: var(--muted);
 }
 
-.modal__swatches {
+.prod__swatches {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
@@ -1385,7 +1385,7 @@ main {
   overflow: auto;
 }
 
-.modal__swatch {
+.prod__swatch {
   width: 2.75rem;
   height: 2.75rem;
   padding: 0;
@@ -1395,18 +1395,18 @@ main {
   overflow: hidden;
 }
 
-.modal__swatch.is-on {
+.prod__swatch.is-on {
   border-color: var(--ink);
 }
 
-.modal__swatch img {
+.prod__swatch img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
 }
 
-.modal__attrs {
+.prod__attrs {
   list-style: none;
   padding: 0;
   margin: 1.25rem 0 0;
@@ -1414,44 +1414,80 @@ main {
   gap: 0.5rem;
 }
 
-.modal__attrs li {
+.prod__attrs li {
   display: flex;
   gap: 0.5rem;
   font-size: var(--fs-small);
   font-weight: 700;
 }
 
-.modal__attrs strong {
+.prod__attrs strong {
   min-width: 11rem;
   flex: none;
 }
 
-.modal__rte {
+.prod__rte {
   margin-top: 1rem;
   font-size: var(--fs-small);
   font-weight: 700;
   line-height: 1.45;
 }
 
-.modal__rte ul {
+.prod__rte ul {
   padding-left: 1.1rem;
   display: grid;
   gap: 0.3rem;
 }
 
-.modal__note {
+.prod__note {
   margin-top: 1rem;
   font-size: var(--fs-small);
   font-weight: 700;
 }
 
-.modal__note a {
+.prod__note a {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.modal__cta {
+.prod__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
   margin-top: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* Zkopírování odkazu je pomocná akce, ne druhé tlačítko — tón jako „Zrušit"
+   u filtrů, ať nesoupeří s poptávkou. */
+.prod__share {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color 0.25s var(--ease-out);
+}
+
+.prod__share:hover {
+  color: var(--ink);
+}
+
+.prod__title {
+  margin-top: 0.25rem;
+}
+
+/* Barvy mění cenu — bez téhle věty vypadá ceník jako cena celého modelu. */
+.prod__colors-note {
+  margin-top: 0.6rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--muted);
 }
 
 @media (max-width: 860px) {
@@ -1459,6 +1495,52 @@ main {
     grid-template-columns: 1fr;
     max-height: 94vh;
   }
+}
+
+/* ---------- Produkt na vlastní stránce ---------- */
+
+/* Tělo je stejné jako v modálu, mění se jen rám: sdílený odkaz má vypadat
+   jako stránka, ne jako vyskočené okno. */
+.prod--page {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+/* Na vlastní stránce není důvod ceník ořezávat — místa je dost a zákazník
+   chce vidět všechny velikosti naráz. */
+.prod--page .prod__table-wrap {
+  max-height: none;
+}
+
+/* Na šířku je stěna barev přehled, ne překážka — vejde se vedle fotky. */
+.prod--page .prod__swatches {
+  max-height: none;
+}
+
+@media (max-width: 860px) {
+  .prod--page {
+    grid-template-columns: 1fr;
+  }
+
+  /* Na mobilu ale 48 barev pod sebou odsune ceník o obrazovku níž,
+     tak se vrací k rolování jako v modálu. */
+  .prod--page .prod__swatches {
+    max-height: 14rem;
+    overflow: auto;
+  }
+}
+
+/* Cesta zpátky do mřížky — po příchodu z odkazu je to jediné, co katalog
+   nabídne, takže nesmí být schované až v patičce. */
+.prod-back {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* ---------- Vložený katalog dodavatele (iframe) ---------- */

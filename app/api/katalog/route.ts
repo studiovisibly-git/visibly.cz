@@ -9,12 +9,13 @@ export const revalidate = 43200;
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
-  const color = searchParams.get("color") ?? "";
+  const color = searchParams.get("color");
 
   if (!code || !/^[a-z0-9-]{1,20}$/i.test(code)) {
     return Response.json({ error: "bad code" }, { status: 400 });
   }
-  if (color && !/^[a-z0-9]{1,6}$/i.test(color)) {
+  /* Detail je vždycky detail konkrétní barvy — bez ní API vrátí prázdno. */
+  if (!color || !/^[a-z0-9]{1,6}$/i.test(color)) {
     return Response.json({ error: "bad color" }, { status: 400 });
   }
 
