@@ -2271,16 +2271,16 @@ a.circle-chip:hover small {
   display: none;
 }
 
-/* Strop 30rem pás na širokém monitoru zastavil: fotky zůstaly stejné a jen
-   jich bylo vidět víc. Roste dál s šířkou okna, jen ne donekonečna. */
+/* 30vw je míra z původní šablony: přes okno jsou vidět 3,3 fotky. Nehádat od
+   oka — čtvrtá fotka v pásu se má zprava nakousnout, ne skoro vejít. */
 .work-strip__item {
   flex: 0 0 auto;
-  width: clamp(18rem, 34vw, 40rem);
+  width: clamp(18rem, 30vw, 36rem);
   scroll-snap-align: start;
 }
 
-/* Čtverec, ne 4:3. Fotky jsou tak výrazně vyšší a pás drží pohromadě jako
-   plocha — na šířku se sotva co změní, takže se nic nezmenší. */
+/* Čtverec, ne 4:3 — pás pak drží pohromadě jako plocha, ne jako řada
+   širokých okének. */
 .work-strip__item .media {
   aspect-ratio: 1;
   border-radius: 0;
