@@ -78,6 +78,26 @@ const cs = (v: Localized | string | undefined | null): string =>
   typeof v === "string" ? v : (v?.cs ?? "");
 
 /**
+ * Kód, jak ho chce API. Na kartě produktu svítí velkými („F29"), jenže ceník
+ * i detail rozumí jen malému tvaru — `seoName`, což je vždycky totéž malými.
+ * S velkým kódem ceník vrátí chybu, ne prázdno; proto to dřív u ~160 produktů
+ * vypadalo, že cenu prostě nemají. Totéž platí pro kódy barev („a1" vs „A1").
+ */
+const apiCode = (code: string): string => code.toLowerCase();
+
+/**
+ * Spustí úkoly s omezenou souběžností. `Promise.all` po dávkách čeká vždy na
+ * nejpomalejší kus dávky — u tří tisíc požadavků na ceník je to znát.
+ */
+async function pool<T>(items: readonly T[], limit: number, run: (item: T) => Promise<void>) {
+  let next = 0;
+  const worker = async () => {
+    while (next < items.length) await run(items[next++]);
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+}
+
+/**
  * Hlavní pohled na produkt. API vrací pohledy v pořadí a „c" je konzistentně
  * první — u obuvi je to bota z boku, kdežto „a" je podrážka.
  */
@@ -173,27 +193,37 @@ export async function getCatalog(filters: CatalogFilters = {}): Promise<MalfiniC
 }
 
 /**
- * Nejnižší cena každého produktu. API filtr podle ceny nemá — nemá ho ani
- * původní katalog dodavatele — takže si index postavíme sami a filtrujeme
- * podle něj na klientovi. Souběžnost 20 zvládne celý katalog za ~6 s
- * a výsledek se drží v cache stejně dlouho jako katalog.
+ * Nejnižší cena každého produktu — tedy nejlevnější velikost té nejlevnější
+ * barvy. Ceník je po barvách a rozdíly nejsou drobné (u trika Basic stojí
+ * bordó 85,80 Kč, bílá 87,28 Kč a zbytek 95,34 Kč), takže „od" nejde spočítat
+ * z jedné barvy — musí se projít všechny.
+ *
+ * API filtr podle ceny nemá — nemá ho ani původní katalog dodavatele — takže
+ * podle tohohle indexu filtrujeme na klientovi. Přes tři tisíce kombinací
+ * produkt+barva se souběžností 24 stáhne za ~50 s a drží se v cache stejně
+ * dlouho jako katalog, takže návštěvník na to nikdy nečeká.
  */
 export async function getPriceIndex(catalog: MalfiniCatalog): Promise<PriceIndex> {
-  const codes = [...new Set(catalog.groups.flatMap((g) => g.products.map((p) => p.code)))];
-  const index: PriceIndex = {};
-  const BATCH = 20;
-
-  for (let i = 0; i < codes.length; i += BATCH) {
-    const slice = codes.slice(i, i + BATCH);
-    const results = await Promise.all(
-      slice.map(async (code) => {
-        const prices = await getPrices(code);
-        if (!prices || prices.length === 0) return null;
-        return [code, Math.min(...prices.map((p) => p.value))] as const;
-      }),
-    );
-    for (const r of results) if (r) index[r[0]] = r[1];
+  const seen = new Set<string>();
+  const pairs: { code: string; color: string }[] = [];
+  for (const g of catalog.groups) {
+    for (const p of g.products) {
+      for (const color of p.colors) {
+        const key = `${p.code}|${color}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        pairs.push({ code: p.code, color });
+      }
+    }
   }
+
+  const index: PriceIndex = {};
+  await pool(pairs, 24, async ({ code, color }) => {
+    const prices = await getPrices(code, color);
+    if (!prices || prices.length === 0) return;
+    const min = Math.min(...prices.map((p) => p.value));
+    if (index[code] == null || min < index[code]) index[code] = min;
+  });
 
   return index;
 }
@@ -225,12 +255,20 @@ export async function getBrandIndex(catalog: MalfiniCatalog): Promise<BrandIndex
   return index;
 }
 
-/** Ceny a dostupnost po velikostech. Bez nich zákazník netuší, na čem je. */
-export async function getPrices(code: string): Promise<MalfiniPrice[] | null> {
+/**
+ * Ceny a dostupnost po velikostech pro jednu barvu. Bez nich zákazník netuší,
+ * na čem je. Barva je povinná schválně: ceník je po barvách a bez ní vrátí
+ * API ceny první barvy v řadě — tedy skoro vždy něčeho jiného, než co má
+ * zákazník na obrazovce.
+ */
+export async function getPrices(code: string, colorCode: string): Promise<MalfiniPrice[] | null> {
   try {
-    const res = await fetch(`${API}/product/${encodeURIComponent(code)}/price/CZK`, {
-      next: { revalidate: CATALOG_REVALIDATE },
-    });
+    const res = await fetch(
+      `${API}/product/${encodeURIComponent(apiCode(code))}/price/CZK?colorCode=${encodeURIComponent(apiCode(colorCode))}`,
+      {
+        next: { revalidate: CATALOG_REVALIDATE },
+      },
+    );
     if (!res.ok) return null;
     const raw = await res.json();
     if (!Array.isArray(raw)) return null;
@@ -259,7 +297,7 @@ export async function getProductDetail(
 ): Promise<MalfiniDetail | null> {
   try {
     const res = await fetch(
-      `${API}/product/${encodeURIComponent(code)}/detail?colorCode=${encodeURIComponent(colorCode)}`,
+      `${API}/product/${encodeURIComponent(apiCode(code))}/detail?colorCode=${encodeURIComponent(apiCode(colorCode))}`,
       { next: { revalidate: CATALOG_REVALIDATE } },
     );
     if (!res.ok) return null;
@@ -277,8 +315,16 @@ export async function getProductDetail(
           text: cs(a.text as Localized),
         }))
         .filter((a: MalfiniAttribute) => a.title && a.text),
+      /* Detail posílá u barvy `code` velkými („A1") — jenže ceník i slovník
+         barev znají jen malý tvar `seoName`. Sjednocujeme na něj. */
       colors: (d.colors ?? []).map((c: unknown) =>
-        typeof c === "string" ? c : String((c as Record<string, unknown>).code ?? ""),
+        typeof c === "string"
+          ? apiCode(c)
+          : apiCode(
+              String(
+                (c as Record<string, unknown>).seoName ?? (c as Record<string, unknown>).code ?? "",
+              ),
+            ),
       ),
       views: (d.views ?? ["a"]) as string[],
       sizeChartPdf: (d.sizeChartPdf as string) ?? null,
@@ -293,4 +339,57 @@ export function inquiryHref(product: { code: string; name: string; subName: stri
   const parts = [`${product.subName} ${product.name}`.trim(), `kód ${product.code}`];
   if (colorName) parts.push(`barva ${colorName}`);
   return `/kontakt?produkt=${encodeURIComponent(parts.join(", "))}#poptavka`;
+}
+
+export const CATALOG_PATH = "/reklama/reklamni-textil/katalog-malfini";
+
+/**
+ * Vlastní adresa produktu — aby šel výběr poslat kolegovi nebo nám do poptávky.
+ * Barva je v ní schválně: ceny se po barvách liší, takže odkaz bez ní by
+ * ukazoval něco jiného, než co odesílatel viděl. Tvar kopíruje katalog
+ * dodavatele (kód/barva), protože kódy jsou stabilní — názvy se přejmenovávají.
+ */
+export function productPath(code: string, colorCode?: string): string {
+  const base = `${CATALOG_PATH}/${apiCode(code)}`;
+  return colorCode ? `${base}/${apiCode(colorCode)}` : base;
+}
+
+/** Vše, co potřebuje stránka i modál produktu — poskládané na serveru. */
+export type ProductPage = {
+  product: MalfiniProduct;
+  colors: Record<string, MalfiniColor>;
+  brand?: string;
+  /** Barva, kterou stránka opravdu ukazuje — z adresy, nebo první v řadě. */
+  color: string;
+  detail: MalfiniDetail | null;
+  prices: MalfiniPrice[] | null;
+};
+
+/**
+ * Produkt podle kódu z adresy. Katalog, značky i ceny jsou v cache, takže je
+ * to prakticky zdarma — a data jdou rovnou do HTML, ne až po doběhnutí JS.
+ * Vrací null, když kód nesedí; stránka na to odpoví 404.
+ */
+export async function getProductPage(code: string, colorCode?: string): Promise<ProductPage | null> {
+  const catalog = await getCatalog();
+  if (!catalog) return null;
+
+  const wanted = apiCode(code);
+  const product = catalog.groups
+    .flatMap((g) => g.products)
+    .find((p) => apiCode(p.code) === wanted);
+  if (!product) return null;
+
+  /* Barvu z adresy bereme jen tehdy, když ji produkt opravdu má — jinak by
+     ceník i fotka byly prázdné. */
+  const asked = colorCode ? apiCode(colorCode) : "";
+  const color = asked && product.colors.includes(asked) ? asked : (product.colors[0] ?? "");
+
+  const [brands, detail, prices] = await Promise.all([
+    getBrandIndex(catalog),
+    getProductDetail(product.code, color),
+    getPrices(product.code, color),
+  ]);
+
+  return { product, colors: catalog.colors, brand: brands[product.code], color, detail, prices };
 }

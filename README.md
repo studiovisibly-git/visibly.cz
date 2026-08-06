@@ -17,7 +17,10 @@ npm run build
 npm run start
 ```
 
-Build je plně statický (SSG) — 61 stránek. Vhodné pro Vercel, Netlify i libovolný Node hosting.
+Build je statický (SSG) — 74 stránek. Výjimkou je katalog textilu: produktové adresy
+(`/reklama/reklamni-textil/katalog-malfini/<kód>/<barva>`) se vykreslují na vyžádání a drží
+se v cache 12 h, protože kombinací produkt × barva jsou přes tři tisíce. Vhodné pro Vercel,
+Netlify i libovolný Node hosting; statický export (`output: "export"`) kvůli tomu nejde.
 
 ## Struktura
 
@@ -41,6 +44,9 @@ Build je plně statický (SSG) — 61 stránek. Vhodné pro Vercel, Netlify i li
 - `areaServed` pokrývá celý Moravskoslezský kraj (Opava, **Ostrava**, Krnov, Havířov,
   Karviná, Frýdek-Místek, Nový Jičín, Bruntál a další) + ČR
 - Kanonická doména `https://www.visibly.cz` (apex → www redirect v `next.config.ts`)
+- Produktové stránky katalogu textilu mají `noindex` — existují kvůli sdílení odkazu,
+  obsah je dodavatelův. Záměrně **ne** přes `robots.txt`: zákaz procházení by vyhledávači
+  zabránil tu hlavičku vůbec uvidět.
 
 ## Co ještě doplnit
 
