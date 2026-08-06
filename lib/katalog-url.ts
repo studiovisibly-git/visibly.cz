@@ -55,6 +55,18 @@ const KEYS = {
   band: "cena",
 } as const;
 
+/**
+ * Přepis adresy bez překreslení stránky.
+ *
+ * `history.state` se musí předat dál, ne nahradit `null`. Next si do něj ukládá,
+ * jakou stránku ten záznam v historii ukazuje — a bez toho se po stisku „zpět"
+ * nemá k čemu vrátit. Prakticky: modál produktu nad katalogem zůstane viset,
+ * i když je v adresním řádku zase katalog.
+ */
+export function replaceUrl(url: string): void {
+  window.history.replaceState(window.history.state, "", url);
+}
+
 /** „Bundy-vesty" → `bundy-vesty`, „MALFINI Premium®" → `malfini-premium`. */
 export function slug(text: string): string {
   return text

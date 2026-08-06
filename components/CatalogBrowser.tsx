@@ -16,6 +16,7 @@ import {
   PRICE_BANDS,
   catalogCodebooks,
   readFilters,
+  replaceUrl,
   writeFilters,
   type CatalogFilters,
 } from "@/lib/katalog-url";
@@ -118,9 +119,7 @@ export function CatalogBrowser({
       /* Rovnou uklidíme, co v adrese nedávalo smysl — ať se dál posílá
          jen to, co se opravdu vyfiltrovalo. */
       const qs = writeFilters(f, books, defaultGroup);
-      if (window.location.search !== qs) {
-        window.history.replaceState(null, "", `${CATALOG_PATH}${qs}`);
-      }
+      if (window.location.search !== qs) replaceUrl(`${CATALOG_PATH}${qs}`);
     };
     fromUrl();
     window.addEventListener("popstate", fromUrl);
@@ -138,9 +137,7 @@ export function CatalogBrowser({
     if (!urlRead) return;
     if (window.location.pathname !== CATALOG_PATH) return;
     const qs = writeFilters({ group, query, category, trademark, color, band }, books, defaultGroup);
-    if (window.location.search !== qs) {
-      window.history.replaceState(null, "", `${CATALOG_PATH}${qs}`);
-    }
+    if (window.location.search !== qs) replaceUrl(`${CATALOG_PATH}${qs}`);
     setCopied(false);
   }, [urlRead, group, query, category, trademark, color, band, books, defaultGroup]);
 
