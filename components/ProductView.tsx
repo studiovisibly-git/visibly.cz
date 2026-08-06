@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { replaceUrl } from "@/lib/katalog-url";
 import {
   PRIMARY_VIEW,
   fileUrl,
@@ -106,7 +107,7 @@ export function ProductView({
      by v historii znamenalo 48 kroků zpátky, než se člověk vrátí do katalogu. */
   useEffect(() => {
     const path = productPath(product.code, color);
-    if (window.location.pathname !== path) window.history.replaceState(null, "", path);
+    if (window.location.pathname !== path) replaceUrl(path);
     setCopied(false);
   }, [product.code, color]);
 
