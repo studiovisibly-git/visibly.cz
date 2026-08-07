@@ -123,7 +123,7 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
           <div className="stagger-gallery">
             {works.map((work) => (
               <Link href={`/realizace/${work.slug}`} className="work-card" key={work.slug} data-reveal>
-                <Media media={{ ...work.hero, variant: "wide" }} />
+                <Media media={work.hero} />
                 <div className="work-card__meta">
                   <span className="eyebrow">
                     {work.client} · {work.location}

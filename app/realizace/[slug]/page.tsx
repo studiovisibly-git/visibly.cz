@@ -153,7 +153,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
         <div className="stagger-gallery">
           {others.map((other) => (
             <Link href={`/realizace/${other.slug}`} className="work-card" key={other.slug} data-reveal>
-              <Media media={{ ...other.hero, variant: "wide" }} />
+              <Media media={other.hero} />
               <div className="work-card__meta">
                 <span className="eyebrow">{other.client}</span>
                 <h3>{other.title}</h3>

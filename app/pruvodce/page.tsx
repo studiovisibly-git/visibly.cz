@@ -42,7 +42,7 @@ export default function PruvodcePage() {
               key={guide.slug}
               data-reveal
             >
-              <Media media={{ label: `Ilustrační foto · ${guide.title}`, variant: "wide" }} />
+              <Media media={{ label: `Ilustrační foto · ${guide.title}`, variant: "square" }} />
               <div className="work-card__meta">
                 <span className="eyebrow">{guide.category}</span>
                 <h3>{guide.title}</h3>

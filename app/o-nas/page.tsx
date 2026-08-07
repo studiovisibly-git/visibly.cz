@@ -139,7 +139,7 @@ export default function ONasPage() {
             <WorkCard
               key={work.slug}
               href={`/realizace/${work.slug}`}
-              media={{ ...work.hero, variant: "wide" }}
+              media={work.hero}
               eyebrow={work.client}
               title={work.title}
             />
