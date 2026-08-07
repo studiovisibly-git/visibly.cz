@@ -74,7 +74,7 @@ export const polepyServices: ServicePage[] = [
       { label: "Jak dlouho vydrží polep auta", href: "/pruvodce/jak-dlouho-vydrzi-polep-auta" },
       { label: "Jak připravit auto před polepem", href: "/pruvodce/jak-pripravit-auto-pred-polepem" },
     ],
-    works: ["ps-green"],
+    works: ["ps-green", "witwit"],
     finalTitle: "Chcete auto, které dělá reklamu?",
     finalCta: "Poptat polep auta",
   },

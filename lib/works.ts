@@ -283,6 +283,74 @@ export const works: Work[] = [
     stitky: ["3d-loga", "bannery-a-plachty", "orientacni-systemy", "rezana-grafika"],
   },
   {
+    slug: "witwit",
+    client: "WIT WIT",
+    location: "Praha",
+    rok: "2025–26",
+    clientUrl: "https://witwit.cz/",
+    title: "Auto, které rozváží prádlo i značku.",
+    summary:
+      "Celopolep rozvozové dodávky do matné černé fólie, logo z řezané samolepky na skla a návrh i tisk letáků pro hotely a apartmány.",
+    metaTitle: "WIT WIT Praha — celopolep dodávky a tisk letáků | Realizace Visibly",
+    metaDescription:
+      "Případová studie prádelny WIT WIT z Prahy: celopolep rozvozové dodávky do matné černé fólie, logo z řezané bílé samolepky a návrh i tisk letáků pro hotely, penziony a apartmány. Polep a tisk Visibly Opava.",
+    hero: {
+      label: "Fotografie · WIT WIT — dodávka po celopolepu",
+      variant: "tall",
+      src: "/images/realizace-witwit-hero-optimized.jpg",
+      alt: "Rozvozová dodávka WIT WIT v matné černé fólii na silnici u řepkového pole",
+    },
+    intro:
+      "WIT WIT pere pro pražské hotely, penziony a apartmány a prádlo si rozváží sám — nonstop, sedm dní v týdnu. Auto tak každý den zastavuje před desítkami adres v centru. Byla to nejlevnější reklamní plocha, jakou prádelna měla, a nesla cizí značku.",
+    sections: [
+      {
+        heading: "Auto s cizí minulostí",
+        text: "Elektrická dodávka přišla z druhé ruky a vypadala podle toho: modrý lak, výstražné šrafy přes kapotu i boky a logo předchozího provozovatele. Přelakovat karoserii by znamenalo týdny bez auta a cenu, kterou rozvoz nezaplatí. Fólie to zvládne za dny — a až auto půjde dál, jde dolů bez stopy na laku.",
+        media: {
+          label: "Vůz před polepem",
+          variant: "square",
+          src: "/images/realizace-witwit-pred-optimized.jpg",
+          alt: "Modrá užitková dodávka s výstražnými šrafy a cizím logem před polepem",
+        },
+      },
+      {
+        heading: "Matná černá po celém autě",
+        text: "Celopolep šel přes všechny plochy včetně sloupků, prahů, klik i kol, aby nikde nezůstal pruh původní modré. Matná fólie tu není pro efekt: neodráží ulici ani výlohy, takže bílé logo na ní drží kontrast i v poledním slunci a auto působí jako jednolitý tvar, ne jako polepený lak.",
+      },
+      {
+        heading: "Logo z řezané samolepky, ne z tisku",
+        text: "Značku jsme řezali z bílé fólie a lepili napřímo na černou plochu. Řezaná grafika nemá tištěné pozadí, které by na matné černé prosvítalo jako světlejší obdélník — zůstane jen čtvercový rám a písmo. Na zádi a bočních sklech se tak čte i z auta, které za dodávkou stojí v koloně.",
+        media: {
+          label: "Řezané logo na zádi vozu",
+          variant: "square",
+          src: "/images/realizace-witwit-logo-optimized.jpg",
+          alt: "Zadní část černé dodávky s bílým logem WIT WIT z řezané fólie",
+        },
+      },
+      {
+        heading: "Letáky, které skončí na recepci",
+        text: "Prádelna neoslovuje kolemjdoucí, ale provozní hotelů a majitele apartmánů. Leták proto stojí na tom, co tihle lidé řeší: fotky z provozu, důvody pro pravidelný svoz a ceník položku po položce, aby si příjemce spočítal cenu sám a nemusel volat kvůli nabídce. Navrhli jsme ho i vytiskli.",
+        media: {
+          label: "Letáky WIT WIT",
+          variant: "square",
+          src: "/images/realizace-witwit-letaky-optimized.jpg",
+          alt: "Stoh letáků prádelny WIT WIT s ceníkem, fotkami provozu a kontakty",
+        },
+      },
+      {
+        heading: "Jedna dílna místo tří dodavatelů",
+        text: "Auto i tiskoviny vznikly u nás v Opavě — návrh, tisk, řezání fólie i aplikace. Prádelna řešila jeden termín a jedno předání místo grafika, tiskárny a polepové firmy zvlášť. A až přijde dotisk nebo druhé auto do rozvozu, podklady i postup máme uložené.",
+      },
+    ],
+    deliverables: [
+      "Celopolep dodávky do matné černé fólie",
+      "Logo z řezané bílé samolepky",
+      "Návrh letáku",
+      "Tisk letáků",
+    ],
+    stitky: ["polepy-dodavek", "rezana-grafika", "tiskoviny"],
+  },
+  {
     slug: "ps-green",
     client: "PS GREEN",
     location: "Opava",
