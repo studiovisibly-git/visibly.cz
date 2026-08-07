@@ -33,11 +33,14 @@ export default function RealizacePage() {
         scroll={{ label: "Prohlédnout naše práce", href: "#prace" }}
       />
 
+      {/* Čtverec, ne 4:5 z `hero`. Ten poměr je stavěný pro kruh v heru
+          případovky; tady stojí dva sloupce vedle sebe a na výšku by mezi
+          nimi vznikly zbytečně dlouhé sloupce fotek. */}
       <section className="section--tight section--rule container" id="prace">
         <div className="stagger-gallery">
           {works.slice(0, 2).map((work) => (
             <Link href={`/realizace/${work.slug}`} className="work-card" key={work.slug} data-reveal>
-              <Media media={work.hero} />
+              <Media media={{ ...work.hero, variant: "square" }} />
               <div className="work-card__meta">
                 <span className="eyebrow">
                   {work.client} · {work.location}
@@ -67,7 +70,7 @@ export default function RealizacePage() {
         <div className="stagger-gallery">
           {works.slice(2).map((work) => (
             <Link href={`/realizace/${work.slug}`} className="work-card" key={work.slug} data-reveal>
-              <Media media={work.hero} />
+              <Media media={{ ...work.hero, variant: "square" }} />
               <div className="work-card__meta">
                 <span className="eyebrow">
                   {work.client} · {work.location}
