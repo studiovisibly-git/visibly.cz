@@ -2322,7 +2322,13 @@ a.circle-chip:hover small {
   display: block;
 }
 
+/* Ořez si drží karta, ne data. Fotky realizací mají v `hero` poměr stavěný
+   pro kruh v heru případovky (4:5) a každé místo, kde karta stojí, si ho
+   dřív přebíjelo po svém — na jednom se na to zapomnělo a mřížka vypadala
+   jinak než zbytek. Čtverec je vlastnost tohohle bloku: dva sloupce vedle
+   sebe drží pohromadě jako plocha, ne jako pruhy různých výšek. */
 .work-card .media {
+  aspect-ratio: 1;
   transition: transform 0.7s var(--ease-out);
 }
 
