@@ -2,16 +2,16 @@ import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { Accordion } from "@/components/Accordion";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Media } from "@/components/Media";
 import { Directory, FinalCta, Process, SectionHead, Split } from "@/components/Sections";
 import { VYROBCI } from "@/components/TechStrip";
 import { buildMetadata } from "@/lib/seo";
 import { INQUIRY_URL } from "@/lib/site";
+import { strojovyPark, type TechKarta } from "@/lib/technologie";
 
 export const metadata = buildMetadata({
-  title: "Technologie — vlastní výroba v Opavě | Visibly",
+  title: "Technologie — vlastní výroba v Opavě | Visibly",
   description:
-    "Strojový park Visibly: desetibarevný velkoformátový tisk Epson SureColor, UV tisk Agfa, řezací ploter Roland. Výroba, která hlídá výsledek od dat po předání.",
+    "Strojový park Visibly: velkoformátový solventní tisk Epson SureColor, UV tisk Agfa na desky i role do 3,2 m, řezací ploter Roland. Parametry i produkty u každé technologie.",
   path: "/technologie",
 });
 
@@ -38,88 +38,62 @@ const techFaq = [
   },
 ];
 
-/* `brand` je klíč do VYROBCI — logo výrobce v hlavičce karty. Procesy bez
-   značkového stroje (laminace, termolis, kompletace) ho schválně nemají;
-   dokreslovat jim logo by bylo zavádějící. */
-type Tech = {
-  num: string;
-  name: string;
-  brand?: keyof typeof VYROBCI;
-  points: { title: string; text: string }[];
-};
+/**
+ * Karta jednoho stroje.
+ *
+ * Technologie s vlastní stránkou je celá odkazem, zbytek (laminace,
+ * termolis, kompletace) zůstává obyčejnou kartou. Rozdíl je vidět: karta
+ * s odkazem má dole šipku a na hover se zvedne — kdyby vypadaly stejně,
+ * lidé by klikali i tam, kde není kam jít.
+ */
+function TechCard({ tech }: { tech: TechKarta }) {
+  const obsah = (
+    <>
+      <div className="tech-item__head">
+        <span className="eyebrow">{tech.num}</span>
+        <h3>{tech.name}</h3>
+        {tech.brand && (
+          /* Logo výrobce jako podpis pod jméno stroje — oddělené
+             vlasovkou, aby to čtelo jako údaj, ne jako reklama. */
+          <span className="tech-item__brand">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={VYROBCI[tech.brand].logo} alt={VYROBCI[tech.brand].name} loading="lazy" />
+          </span>
+        )}
+      </div>
+      <div className="tech-item__points">
+        {tech.points.map((point) => (
+          <div key={point.title}>
+            <strong>{point.title}</strong>
+            <p>{point.text}</p>
+          </div>
+        ))}
+        {tech.slug && (
+          <span className="tech-item__cta">
+            Parametry a produkty{" "}
+            <span className="arr" aria-hidden="true">
+              ↗
+            </span>
+          </span>
+        )}
+      </div>
+    </>
+  );
 
-const techList: Tech[] = [
-  {
-    num: "01 · Velkoformátový tisk",
-    name: "Epson SureColor SC-S80610",
-    brand: "epson",
-    points: [
-      {
-        title: "Deset barev, ne čtyři",
-        text: "Ke CMYK přidává světlé odstíny, oranžovou a červenou. Fotka pak vypadá jako fotka, ne jako tisk.",
-      },
-      { title: "Materiál podle místa", text: "Fólie, bannery, papíry — povrch podle použití." },
-      { title: "Více typů výstupu", text: "Od samolepky po backlit do světelného rámu." },
-    ],
-  },
-  {
-    num: "02 · Hybridní UV tisk",
-    name: "Agfa Anapurna M2050i",
-    brand: "agfa",
-    points: [
-      { title: "Deska i role", text: "Tiskne přímo na Dibond, sklo, hliník, keramiku i fólie." },
-      { title: "Bílá barva", text: "Podklad pod barvy i tisk na průhledné materiály." },
-      { title: "Ven i dovnitř", text: "UV LED odolnost pro výlohy, cedule i interiér." },
-    ],
-  },
-  {
-    num: "03 · Rolový UV tisk",
-    name: "Agfa Anapurna RTR3200i LED",
-    brand: "agfa",
-    points: [
-      { title: "Až 3,2 metru", text: "Bannery a plachty v jednom kuse, bez spojů." },
-      { title: "Dvě role zároveň", text: "Vyšší průchodnost u velkých sérií a formátů." },
-      { title: "Šetrné vytvrzení", text: "UV LED zvládne i teplem citlivé fólie a plachty." },
-    ],
-  },
-  {
-    num: "04 · Přesný řez",
-    name: "Roland CAMM-1 GR2-640",
-    brand: "roland",
-    points: [
-      { title: "Čisté hrany", text: "Detail odpovídá datům, ne náladě nože." },
-      { title: "Tvar podle grafiky", text: "Logo nemusí končit obdélníkem." },
-      { title: "Připraveno k aplikaci", text: "S aplikační fólií, části na sebe navazují." },
-    ],
-  },
-  {
-    num: "05 · Ochrana povrchu",
-    name: "Velkoplošná laminace",
-    points: [
-      { title: "Odolnější povrch", text: "UV, oděr i mytí bez ztráty barev." },
-      { title: "Mat nebo lesk", text: "Vzhled podle použití a světla." },
-      { title: "Součást řešení", text: "Doporučíme, jen kde dává smysl." },
-    ],
-  },
-  {
-    num: "06 · Firemní textil",
-    name: "Termolis",
-    points: [
-      { title: "Správná pozice", text: "Logo přesně tam, kde má být." },
-      { title: "Menší série", text: "Od jednoho kusu, bez příplatků za málo." },
-      { title: "Jednotná značka", text: "Textil ladí s autem i tiskovinami." },
-    ],
-  },
-  {
-    num: "07 · Dokončení na místě",
-    name: "Kompletace a aplikace",
-    points: [
-      { title: "Složení zakázky", text: "Kampaně balíme po pobočkách." },
-      { title: "Čistá aplikace", text: "Polepy bez bublin, montáž bez děr navíc." },
-      { title: "Kontrola v kontextu", text: "Výsledek posuzujeme na místě, ne od stolu." },
-    ],
-  },
-];
+  if (!tech.slug) {
+    return (
+      <article className="tech-item" data-reveal>
+        {obsah}
+      </article>
+    );
+  }
+
+  return (
+    <Link href={`/technologie/${tech.slug}`} className="tech-item tech-item--odkaz" data-reveal>
+      {obsah}
+    </Link>
+  );
+}
 
 export default function TechnologiePage() {
   return (
@@ -154,36 +128,12 @@ export default function TechnologiePage() {
       <section className="section section--rule container" id="stroje">
         <SectionHead
           title="Stroje jsou prostředek. Výsledek je měřítko."
+          text="U tiskáren a plotru najdete pod odkazem parametry, materiály i výčet toho, co se na nich dá vyrobit."
           indent={1}
         />
         <div>
-          {techList.map((tech) => (
-            <article className="tech-item" key={tech.name} data-reveal>
-              <div className="tech-item__head">
-                <span className="eyebrow">{tech.num}</span>
-                <h3>{tech.name}</h3>
-                {tech.brand && (
-                  /* Logo výrobce jako podpis pod jméno stroje — oddělené
-                     vlasovkou, aby to čtelo jako údaj, ne jako reklama. */
-                  <span className="tech-item__brand">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={VYROBCI[tech.brand].logo}
-                      alt={VYROBCI[tech.brand].name}
-                      loading="lazy"
-                    />
-                  </span>
-                )}
-              </div>
-              <div className="tech-item__points">
-                {tech.points.map((point) => (
-                  <div key={point.title}>
-                    <strong>{point.title}</strong>
-                    <p>{point.text}</p>
-                  </div>
-                ))}
-              </div>
-            </article>
+          {strojovyPark.map((tech) => (
+            <TechCard tech={tech} key={tech.name} />
           ))}
         </div>
       </section>
@@ -207,7 +157,7 @@ export default function TechnologiePage() {
           items={[
             { title: "Tisk", text: "Bannery, samolepky, plakáty, tiskoviny.", href: "/tisk", cta: "Prohlédnout tisk" },
             { title: "Polepy", text: "Auta, výlohy a interiéry.", href: "/polepy", cta: "Prohlédnout polepy" },
-            { title: "Reklama", text: "Cedule, světlo a 3D loga.", href: "/reklama", cta: "Prohlédnout reklamu" },
+            { title: "Reklama", text: "Cedule, světlo a 3D loga.", href: "/reklama", cta: "Prohlédnout reklamu" },
           ]}
         />
       </section>

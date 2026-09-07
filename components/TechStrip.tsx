@@ -130,15 +130,22 @@ export function TechStrip({
  *
  * Devízy visí na značkách ve VYROBCI, ne na stránkách. Devatenáct podstránek
  * tak nemusí opisovat totéž jinými slovy a při změně stačí jedno místo.
+ *
+ * Kam blok vede, rozhoduje `lib/technika.ts`. Kde o výsledku rozhoduje
+ * jediný stroj, míří rovnou na jeho stránku — je to konkrétnější slib
+ * i pro člověka, i pro vyhledávač. Kde stroje spolupracují, vede na
+ * rozcestník: vybrat jeden z nich by druhý zamlčelo.
  */
 export function TechNote({
   title,
   brands,
   text,
+  odkaz,
 }: {
   title: string;
   brands: (keyof typeof VYROBCI)[];
   text: string;
+  odkaz?: { href: string; cta: string };
 }) {
   return (
     <TechStrip
@@ -150,8 +157,8 @@ export function TechNote({
         what: VYROBCI[key].deviza.title,
         note: VYROBCI[key].deviza.note,
       }))}
-      href="/technologie"
-      cta="Projít technologie"
+      href={odkaz?.href ?? "/technologie"}
+      cta={odkaz?.cta ?? "Projít technologie"}
     />
   );
 }

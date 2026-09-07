@@ -97,7 +97,12 @@ export function ServicePageTemplate({ page }: { page: ServicePage }) {
       {/* Doklad, na čem se to vyrobí — hned za postojem, dřív než varianty. */}
       {technika && (
         <section className="section--tight container">
-          <TechNote title={technika.title} brands={technika.brands} text={technika.text} />
+          <TechNote
+            title={technika.title}
+            brands={technika.brands}
+            text={technika.text}
+            odkaz={technika.odkaz}
+          />
         </section>
       )}
 

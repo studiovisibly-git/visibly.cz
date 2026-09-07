@@ -509,3 +509,16 @@ export function realizaceProSluzbu(slug: string, rucne: string[]): Work[] {
     .filter((w) => !podleStitku.some((x) => x.slug === w.slug));
   return [...podleStitku, ...zbytek].slice(0, 4);
 }
+
+/**
+ * Realizace na stránku technologie.
+ *
+ * Vazba se odvozuje ze štítků: zakázka patří ke stroji, na kterém vznikly
+ * její služby. Ruční výčet by se rozešel s realitou hned, jak přibude nová
+ * realizace — takhle se doplní sama.
+ *
+ * Strop stejný jako u služeb: čtyři kusy, dvousloupcová galerie.
+ */
+export function realizaceProTechnologii(slugySluzeb: string[]): Work[] {
+  return works.filter((w) => w.stitky.some((s) => slugySluzeb.includes(s))).slice(0, 4);
+}

@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { allGuides } from "@/lib/guides";
 import { allServices } from "@/lib/services";
 import { SITE_URL } from "@/lib/site";
+import { technologie } from "@/lib/technologie";
 import { works } from "@/lib/works";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -26,11 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const servicePaths = allServices.map((s) => (s.hub ? `/${s.hub}/${s.slug}` : `/${s.slug}`));
+  const techPaths = technologie.map((t) => `/technologie/${t.slug}`);
   const workPaths = works.map((w) => `/realizace/${w.slug}`);
   const guidePaths = allGuides.map((g) => `/pruvodce/${g.slug}`);
 
   const now = new Date();
-  return [...staticPaths, ...servicePaths, ...workPaths, ...guidePaths].map((path) => ({
+  return [...staticPaths, ...techPaths, ...servicePaths, ...workPaths, ...guidePaths].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: now,
     changeFrequency: path === "" ? "weekly" : "monthly",
