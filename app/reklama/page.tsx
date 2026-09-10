@@ -144,12 +144,13 @@ export default function ReklamaPage() {
           <CatalogStrip />
         <TechStrip
           eyebrow="Vlastní výroba"
-          title="Cedule tiskneme přímo na materiál."
+          title="Cedule i předměty tiskneme přímo na materiál."
           text="Bez podlepování fólií. Písmena a tvary si vyřežeme sami, takže drží i termín."
           items={[
             { ...VYROBCI.agfa, what: "Přímo na Dibond i sklo" },
             { ...VYROBCI.epson, what: "Backlit do světelných rámů" },
             { ...VYROBCI.roland, what: "Písmena a tvary na míru" },
+            { ...VYROBCI.mutoh, what: "Potisk předmětů od kusu" },
           ]}
           href="/technologie"
           cta="Projít technologie"

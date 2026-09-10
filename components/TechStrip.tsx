@@ -5,20 +5,23 @@ import Link from "next/link";
  * načítání webu tak nezávisí na Wikimedii.
  *
  * `width` je optické doladění, ne chyba: značky mají hodně rozdílné poměry
- * stran (Agfa 3,9:1 · Epson 4,1:1 · Roland 6,6:1). Kdyby se sázely na stejnou
- * šířku, Roland by v kruhu vypadal jako nitka. Sjednocujeme tedy dojem,
- * ne čísla.
+ * stran (Agfa 3,9:1 · Epson 4,1:1 · Mutoh 4,9:1 · Roland 6,6:1). Kdyby se
+ * sázely na stejnou šířku, Roland by v kruhu vypadal jako nitka. Sjednocujeme
+ * tedy dojem, ne čísla — šířka vychází tak, aby všechna loga měla přibližně
+ * stejnou optickou výšku. Roland je jediná výjimka: na tu výšku by potřeboval
+ * přes sto procent šířky, takže je zastropovaný.
  *
  * `deviza` je jedna věc, kterou ten stroj umí a jiné neumí — patří ke značce,
  * ne k textu stránky. Tak se objeví všude, kde značka je, a věta na stránce
  * ji nemusí na deseti místech opisovat jinými slovy. Dvojice tvrzení + důkaz
- * je schválně: „fotorealistická barva" sama je reklama, „deset inkoustů"
+ * je schválně: „fotorealistická barva" sama je reklama, „devět inkoustů"
  * je ověřitelný důvod, proč to tak je.
  */
 /**
- * Výrobce stroje. `logo` je nepovinné schválně: značku přidáváme ve chvíli,
- * kdy stroj koupíme, a logo doháníme až podle toho, co nám výrobce pošle.
- * Do té doby se sází jméno — viz ZnackaVyrobce.
+ * Výrobce stroje. `logo` zůstává nepovinné schválně: značka na web přibude
+ * ve chvíli, kdy stroj koupíme, a logo doháníme podle toho, co nám výrobce
+ * pošle. Do té doby se sází jméno — viz ZnackaVyrobce. Teď ho mají všichni
+ * čtyři, ale u pátého stroje se ta mezera zase otevře.
  */
 export type Vyrobce = {
   name: string;
@@ -32,7 +35,7 @@ export const VYROBCI = {
     name: "Epson",
     logo: "/logos/vyrobci/epson.svg",
     width: "70%",
-    deviza: { title: "Fotorealistická barva", note: "Deset inkoustů, ne jen CMYK" },
+    deviza: { title: "Fotorealistická barva", note: "Devět inkoustů, ne jen CMYK" },
   },
   agfa: {
     name: "Agfa",
@@ -46,10 +49,10 @@ export const VYROBCI = {
     width: "86%",
     deviza: { title: "Přesný řez do tvaru", note: "Kontura přesně podle dat" },
   },
-  /* Logo zatím nemáme. Až přijde, stačí do /public/logos/vyrobci/ položit
-     mutoh.svg a doplnit sem `logo` — kód se měnit nemusí. */
   mutoh: {
     name: "Mutoh",
+    logo: "/logos/vyrobci/mutoh.svg",
+    width: "84%",
     deviza: { title: "Tisk přímo na předmět", note: "Krycí bílá, lak i reliéf" },
   },
   /* `satisfies` místo `as const`: klíče zůstanou konkrétní (keyof funguje),
@@ -157,7 +160,7 @@ export function TechStrip({
  *
  * Je to tentýž pás jako na rozcestích, ne jeho příbuzný — stejná komponenta,
  * stejné CSS. Liší se jen obsahem: nadpis mluví o téhle jedné službě a pod
- * značkou stojí navíc důkaz („Deset inkoustů, ne jen CMYK"). Kdo přijde
+ * značkou stojí navíc důkaz („Devět inkoustů, ne jen CMYK"). Kdo přijde
  * z /tisk na /tisk/bannery, pozná blok okamžitě a čte jen to, co je nové.
  *
  * Devízy visí na značkách ve VYROBCI, ne na stránkách. Devatenáct podstránek
