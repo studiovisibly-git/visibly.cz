@@ -114,9 +114,10 @@ export default function ProAgenturyPage() {
           title="Naše stroje, váš termín."
           text="Žádný mezičlánek, který by přehazoval odpovědnost. Co stojí na dílně, to naceníme i vyrobíme."
           items={[
-            { ...VYROBCI.epson, what: "Deset barev, ne jen CMYK" },
+            { ...VYROBCI.epson, what: "Devět barev, ne jen CMYK" },
             { ...VYROBCI.agfa, what: "UV na desku i roli" },
             { ...VYROBCI.roland, what: "Přesný řez do tvaru" },
+            { ...VYROBCI.mutoh, what: "Potisk předmětů a cen" },
           ]}
           href="/technologie"
           cta="Projít technologie"

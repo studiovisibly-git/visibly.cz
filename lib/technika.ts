@@ -7,6 +7,16 @@ export type TechNote = {
   brands: (keyof typeof VYROBCI)[];
   /** Jedna věta. Ne co máme, ale co z toho zákazník má. */
   text: string;
+  /**
+   * Kam blok odkazuje. Konkrétní technologie jen tam, kde o výsledku
+   * rozhoduje jediný stroj — u dvou značek by odkaz musel vybrat jednu
+   * z nich a druhou zamlčet. Bez téhle položky vede blok na rozcestník.
+   *
+   * Adresy jsou vypsané ručně, ne odvozené z `lib/technologie.ts`: čte to
+   * devatenáct podstránek a odvozování by sem přitáhlo celá data strojů
+   * kvůli dvěma řetězcům.
+   */
+  odkaz?: { href: string; cta: string };
 };
 
 /**
@@ -18,9 +28,8 @@ export type TechNote = {
  *  · tiskoviny — vizitky, letáky a brožury jsou práce pro ofset nebo
  *    produkční digitál, který nemáme; velkoformátový Epson je na to
  *    nesprávná odpověď,
- *  · 3D loga — plastická písmena se frézují, náš Roland je řezací ploter
- *    na fólie do 640 mm,
- *  · reklamní předměty — nakupované zboží, ne naše výroba,
+ *  · 3D loga — plastická písmena se frézují z desky, náš Roland řeže
+ *    fólii (číslo v názvu GR2-640 je 64 palců řezné šířky, ne 640 mm),
  *  · reklamní textil — termolis, ke kterému logo výrobce nemáme; stránka
  *    navíc už má vlastní panel katalogu,
  *  · logo, identita, web — tam žádný stroj nerozhoduje.
@@ -38,6 +47,7 @@ export const TECH_NOTES: Record<string, TechNote> = {
     title: "Plachta bez spoje. Z jedné role.",
     brands: ["agfa"],
     text: "Bannery jedou z rolového UV do šířky 3,2 m, takže velké plachty jsou bez spoje.",
+    odkaz: { href: "/technologie/rolovy-uv-tisk", cta: "Projít rolový UV tisk" },
   },
   "samolepky-a-folie": {
     title: "Tisk a řez pod jednou střechou.",
@@ -48,21 +58,25 @@ export const TECH_NOTES: Record<string, TechNote> = {
     title: "Tapeta na míru vaší stěně.",
     brands: ["epson"],
     text: "Tapetu tiskneme u sebe, v pruzích na míru vaší stěně.",
+    odkaz: { href: "/technologie/solventni-tisk", cta: "Projít solventní tisk" },
   },
   "roll-upy": {
     title: "Grafika, která drží barvu.",
     brands: ["epson"],
     text: "Grafiku tiskneme na vlastním Epsonu — sytá barva i na plné ploše.",
+    odkaz: { href: "/technologie/solventni-tisk", cta: "Projít solventní tisk" },
   },
   "billboardy-a-citylighty": {
     title: "Velká plocha v jednom kuse.",
     brands: ["agfa"],
     text: "Velké formáty tiskneme z role do 3,2 m, takže plocha drží v jednom kuse.",
+    odkaz: { href: "/technologie/rolovy-uv-tisk", cta: "Projít rolový UV tisk" },
   },
   plakaty: {
     title: "Fotografická kvalita od jednoho kusu.",
     brands: ["epson"],
     text: "Plakáty tiskneme na vlastním Epsonu, takže i jediný kus jde ve fotografické kvalitě.",
+    odkaz: { href: "/technologie/solventni-tisk", cta: "Projít solventní tisk" },
   },
   "pos-materialy": {
     title: "Tisk na desku, řez do tvaru.",
@@ -95,6 +109,7 @@ export const TECH_NOTES: Record<string, TechNote> = {
     title: "Čistá hrana podle dat.",
     brands: ["roland"],
     text: "Řežeme na vlastním Rolandu — čisté hrany a tvar podle dat.",
+    odkaz: { href: "/technologie/rezaci-ploter", cta: "Projít řezací ploter" },
   },
 
   /* ---------- Reklama ---------- */
@@ -102,16 +117,19 @@ export const TECH_NOTES: Record<string, TechNote> = {
     title: "Tisk přímo na Dibond.",
     brands: ["agfa"],
     text: "Ceduli tiskneme přímo na Dibond. Bez podlepené fólie, která se po letech krčí.",
+    odkaz: { href: "/technologie/uv-tisk-na-desky", cta: "Projít UV tisk na desky" },
   },
   "svetelna-reklama": {
     title: "Backlit nastavený na prosvícení.",
     brands: ["epson"],
     text: "Backlit do světelných rámů tiskneme u sebe, s barvou nastavenou na prosvícení.",
+    odkaz: { href: "/technologie/solventni-tisk", cta: "Projít solventní tisk" },
   },
   "venkovni-reklama": {
     title: "Odolnost bez mezivrstvy.",
     brands: ["agfa"],
-    text: "UV LED tisk jde přímo na materiál — bez mezivrstvy, která se venku odlepuje.",
+    text: "UV tisk jde přímo na materiál — bez mezivrstvy, která se venku odlepuje.",
+    odkaz: { href: "/technologie/uv-tisk-na-desky", cta: "Projít UV tisk na desky" },
   },
   "interierova-reklama": {
     title: "Deska i fólie, řez do tvaru.",
@@ -120,8 +138,15 @@ export const TECH_NOTES: Record<string, TechNote> = {
   },
   "orientacni-systemy": {
     title: "Série, která drží pohromadě.",
-    brands: ["agfa", "roland"],
-    text: "Tabulky tiskneme přímo na materiál a vyřežeme na jeden rozměr, ať série drží pohromadě.",
+    brands: ["agfa", "roland", "mutoh"],
+    text: "Tabule tiskneme na desku, dveřní cedulky rovnou na materiál a vyřežeme je na jeden rozměr.",
+  },
+
+  "reklamni-predmety": {
+    title: "Potisk u nás, ne u dodavatele.",
+    brands: ["mutoh"],
+    text: "Předměty tiskneme na vlastním UV stroji — i jeden kus a i s bílou na tmavém povrchu.",
+    odkaz: { href: "/technologie/uv-tisk-na-predmety", cta: "Projít UV tisk na předměty" },
   },
 
   /* ---------- Studio ---------- */
@@ -129,5 +154,6 @@ export const TECH_NOTES: Record<string, TechNote> = {
     title: "Barvy pod kontrolou před tiskem.",
     brands: ["epson"],
     text: "Fotoobraz tiskneme na vlastním Epsonu, s kontrolou barev před tiskem.",
+    odkaz: { href: "/technologie/solventni-tisk", cta: "Projít solventní tisk" },
   },
 };

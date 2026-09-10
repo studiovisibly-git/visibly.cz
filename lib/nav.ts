@@ -35,6 +35,20 @@ export const reklamaLinks: LinkItem[] = [
   { label: "Reklamní předměty", href: "/reklama/reklamni-predmety" },
 ];
 
+/**
+ * Technologie s vlastní stránkou. Výčet je tu schválně ručně, i když
+ * `lib/technologie.ts` zná totéž: navigaci čte hlavička, tedy klientský
+ * kód, a import dat technologií by do bundlu přibalil parametry, přednosti
+ * i celé FAQ všech čtyř strojů. Kdo přidá technologii, přidá i řádek sem.
+ */
+export const technologieLinks: LinkItem[] = [
+  { label: "Solventní tisk", href: "/technologie/solventni-tisk" },
+  { label: "UV tisk na desky", href: "/technologie/uv-tisk-na-desky" },
+  { label: "Rolový UV tisk", href: "/technologie/rolovy-uv-tisk" },
+  { label: "UV tisk na předměty", href: "/technologie/uv-tisk-na-predmety" },
+  { label: "Řezací ploter", href: "/technologie/rezaci-ploter" },
+];
+
 export const studioLinks: LinkItem[] = [
   { label: "Návrh loga a vizuální identity", href: "/navrh-loga-a-vizualni-identity" },
   { label: "Webdesign", href: "/webdesign" },
@@ -46,7 +60,7 @@ export const mainNav: NavItem[] = [
   { label: "Polepy", href: "/polepy", children: polepyLinks },
   { label: "Reklama", href: "/reklama", children: reklamaLinks },
   { label: "Realizace", href: "/realizace" },
-  { label: "Technologie", href: "/technologie" },
+  { label: "Technologie", href: "/technologie", children: technologieLinks },
   { label: "O nás", href: "/o-nas" },
   { label: "Kontakt", href: "/kontakt" },
 ];

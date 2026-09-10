@@ -2521,6 +2521,351 @@ a.circle-chip:hover small {
   }
 }
 
+/* Karta stroje, který má vlastní stránku. Odkazem je celá karta, ale gesto
+   zůstává typografické jako u rozcestníku — podtržení pod výzvou a posun
+   šipky. Posouvat celou kartu nejde: transformaci na ní už drží
+   scroll-reveal a obě by se praly o stejnou vlastnost. */
+
+.tech-item--odkaz {
+  display: grid; /* <a> je inline — mřížku z .tech-item si musí vzít zpět. */
+  color: inherit;
+}
+
+.tech-item__cta {
+  position: relative;
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: 0.5rem;
+  display: inline-flex;
+  gap: 0.4em;
+  font-size: var(--fs-small);
+  font-weight: 700;
+}
+
+.tech-item__cta::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2em;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--dur-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.tech-item--odkaz:hover .tech-item__cta::before,
+.tech-item--odkaz:focus-visible .tech-item__cta::before {
+  transform: scaleX(1);
+}
+
+.tech-item__cta .arr {
+  transition: translate 0.3s var(--ease-out);
+}
+
+.tech-item--odkaz:hover .tech-item__cta .arr {
+  translate: 0.25em -0.25em;
+}
+
+/* ---------- Detail technologie ----------
+   Stránka o stroji má číst jako list parametrů, ne jako prodejní leták:
+   velká čísla, vlasovky, žádné plochy navíc. Karty si web šetří na
+   rozcestníky — tady by z ověřitelných údajů udělaly dlaždice. */
+
+/* Čtyři čísla hned pod hero. Kdo přišel ověřit šířku role, nemusí kvůli
+   tomu číst celou stránku. */
+.tech-klic {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin: 0;
+}
+
+/* V HTML stojí popisek před hodnotou (dt, pak dd — jinak by seznam nebyl
+   platný a čtečka by četla „1 626 mm" bez toho, čeho se týká). Opačné
+   pořadí je jen optika: číslo nahoře, popisek pod ním. */
+.tech-klic__item {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.7rem;
+  padding-top: clamp(0.9rem, 1.8vw, 1.25rem);
+  border-top: 1px solid var(--line);
+}
+
+.tech-klic__val {
+  margin: 0;
+  font-size: clamp(2.25rem, 4.4vw, 3.5rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Jednotka zůstává v malých písmenech: „MM" je megametr, „mm" milimetr.
+   Verzálky by tu byly hezčí, ale tiskárna si nemůže dovolit sázet
+   jednotky špatně. Odliší ji tedy velikost a šeď, ne velká písmena. */
+.tech-klic__unit {
+  margin-left: 0.24em;
+  font-size: 0.3em;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.tech-klic__label {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--muted);
+  max-width: 16em;
+}
+
+/* Značka výrobce, u kterého ještě nemáme logo. Drží stejný plech i výšku
+   jako logo, takže řádek nepoklesne, až logo přibude. Plech je světlý
+   v obou režimech, proto je text natvrdo tmavý a ne přes --ink. */
+.tech-item__brand .znacka-text,
+.tech-klic__logo .znacka-text {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  background: var(--plate);
+  color: var(--l-ink);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.tech-item__brand .znacka-text {
+  height: clamp(1.375rem, 2.4vw, 1.875rem);
+}
+
+.tech-klic__logo .znacka-text {
+  height: 1.375rem;
+  padding: 0.35rem 0.5rem;
+}
+
+/* Podpis pod čísly: čí je to stroj. Logo na plechu jako na kartách —
+   v tmavém režimu by barevné logo na tmavé ploše zmizelo. */
+.tech-klic__stroj {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.tech-klic__logo img {
+  height: 1.375rem;
+  width: auto;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  background: var(--plate);
+  box-sizing: content-box;
+}
+
+/* Přednosti: tvrzení vlevo, důkaz vpravo. Stejné dělení jako karta stroje
+   na rozcestníku, jen bez plochy pod tím. */
+.tech-vyhody {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.tech-vyhoda {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(0.75rem, 4vw, 4rem);
+  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--line);
+}
+
+.tech-vyhoda:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.tech-vyhoda__num {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.tech-vyhoda h3 {
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.tech-vyhoda p {
+  font-weight: 700;
+  color: var(--muted);
+  max-width: 34em;
+}
+
+/* Materiály — tytéž čipy jako štítky na realizacích, jen bez odkazu. */
+.tech-materialy {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.tech-materialy__note {
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-size: var(--fs-small);
+  color: var(--muted);
+  max-width: 34em;
+}
+
+/* Rozcestník produktů — kvůli téhle sekci většina lidí přišla. Sloupce po
+   rozcestích webu, aby bylo poznat, kam odkaz vede, ještě než se klikne. */
+/* Tři pevné sloupce jako u rozcestníku, ne auto-fit: technologie se dvěma
+   skupinami by jinak dostala dva sloupce přes celou šířku a text by v nich
+   plaval. Takhle drží stránky stejný rastr bez ohledu na počet skupin. */
+.tech-produkty {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem) var(--grid-gap);
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.tech-produkty__skupina h3 {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+}
+
+.tech-produkty__skupina > p {
+  margin-top: 0.5rem;
+  font-size: var(--fs-small);
+  color: var(--muted);
+  max-width: 24em;
+}
+
+.tech-produkty__skupina ul {
+  list-style: none;
+  margin: clamp(1rem, 2vw, 1.4rem) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.8rem;
+  justify-items: start;
+}
+
+.tech-produkty a {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  font-weight: 700;
+}
+
+.tech-produkty a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2em;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--dur-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.tech-produkty a:hover::before,
+.tech-produkty a:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.tech-produkty a .arr {
+  font-size: 0.85em;
+  transition: translate 0.3s var(--ease-out);
+}
+
+.tech-produkty a:hover .arr {
+  translate: 0.25em -0.25em;
+}
+
+/* Co vlastní stránku nemá. Věta místo odkazů, které by nikam nevedly. */
+.tech-produkty__dal {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  max-width: 46em;
+  color: var(--muted);
+}
+
+.tech-produkty__dal .arrow-link {
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* Tabulka parametrů. Ne <table>: dvousloupcová tabulka s dlouhými
+   hodnotami se na mobilu láme po slabikách. Definiční seznam se zalomí
+   pod popisek a zůstane čitelný. */
+.parametry {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: clamp(2rem, 4vw, 3.5rem) var(--grid-gap);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.parametry__blok h3 {
+  margin-bottom: 0.9rem;
+}
+
+.parametry__blok dl {
+  margin: 0;
+}
+
+.parametry__radek {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: 0.35rem 1.5rem;
+  padding-block: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.parametry__radek:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.parametry__radek dt {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.parametry__radek dd {
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.35;
+  font-variant-numeric: tabular-nums;
+}
+
+.parametry__zdroj {
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+  font-size: var(--fs-small);
+  color: var(--muted);
+  max-width: 44em;
+}
+
+@media (max-width: 760px) {
+  .tech-vyhoda,
+  .tech-produkty {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .parametry__radek {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- FAQ akordeon — bez linek, rytmus dělá mezera ---------- */
 
 .faq {

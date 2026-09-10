@@ -5,22 +5,37 @@ import Link from "next/link";
  * načítání webu tak nezávisí na Wikimedii.
  *
  * `width` je optické doladění, ne chyba: značky mají hodně rozdílné poměry
- * stran (Agfa 3,9:1 · Epson 4,1:1 · Roland 6,6:1). Kdyby se sázely na stejnou
- * šířku, Roland by v kruhu vypadal jako nitka. Sjednocujeme tedy dojem,
- * ne čísla.
+ * stran (Agfa 3,9:1 · Epson 4,1:1 · Mutoh 4,9:1 · Roland 6,6:1). Kdyby se
+ * sázely na stejnou šířku, Roland by v kruhu vypadal jako nitka. Sjednocujeme
+ * tedy dojem, ne čísla — šířka vychází tak, aby všechna loga měla přibližně
+ * stejnou optickou výšku. Roland je jediná výjimka: na tu výšku by potřeboval
+ * přes sto procent šířky, takže je zastropovaný.
  *
  * `deviza` je jedna věc, kterou ten stroj umí a jiné neumí — patří ke značce,
  * ne k textu stránky. Tak se objeví všude, kde značka je, a věta na stránce
  * ji nemusí na deseti místech opisovat jinými slovy. Dvojice tvrzení + důkaz
- * je schválně: „fotorealistická barva" sama je reklama, „deset inkoustů"
+ * je schválně: „fotorealistická barva" sama je reklama, „devět inkoustů"
  * je ověřitelný důvod, proč to tak je.
  */
+/**
+ * Výrobce stroje. `logo` zůstává nepovinné schválně: značka na web přibude
+ * ve chvíli, kdy stroj koupíme, a logo doháníme podle toho, co nám výrobce
+ * pošle. Do té doby se sází jméno — viz ZnackaVyrobce. Teď ho mají všichni
+ * čtyři, ale u pátého stroje se ta mezera zase otevře.
+ */
+export type Vyrobce = {
+  name: string;
+  logo?: string;
+  width?: string;
+  deviza: { title: string; note: string };
+};
+
 export const VYROBCI = {
   epson: {
     name: "Epson",
     logo: "/logos/vyrobci/epson.svg",
     width: "70%",
-    deviza: { title: "Fotorealistická barva", note: "Deset inkoustů, ne jen CMYK" },
+    deviza: { title: "Fotorealistická barva", note: "Devět inkoustů, ne jen CMYK" },
   },
   agfa: {
     name: "Agfa",
@@ -34,7 +49,15 @@ export const VYROBCI = {
     width: "86%",
     deviza: { title: "Přesný řez do tvaru", note: "Kontura přesně podle dat" },
   },
-} as const;
+  mutoh: {
+    name: "Mutoh",
+    logo: "/logos/vyrobci/mutoh.svg",
+    width: "84%",
+    deviza: { title: "Tisk přímo na předmět", note: "Krycí bílá, lak i reliéf" },
+  },
+  /* `satisfies` místo `as const`: klíče zůstanou konkrétní (keyof funguje),
+     ale značka smí přijít bez loga. */
+} satisfies Record<string, Vyrobce>;
 
 export type TechItem = {
   name: string;
@@ -45,6 +68,18 @@ export type TechItem = {
   logo?: string;
   width?: string;
 };
+
+/**
+ * Značka výrobce u jména stroje — logo, a dokud ho nemáme, jeho jméno.
+ * Používá to karta na rozcestníku i hlavička detailu technologie, ať se
+ * chybějící logo řeší na jednom místě a ne třikrát.
+ */
+export function ZnackaVyrobce({ brand }: { brand: keyof typeof VYROBCI }) {
+  const vyrobce: Vyrobce = VYROBCI[brand];
+  if (!vyrobce.logo) return <span className="znacka-text">{vyrobce.name}</span>;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={vyrobce.logo} alt={vyrobce.name} loading="lazy" />;
+}
 
 /** Logo výrobce, nebo jeho název, dokud logo nemáme. */
 function BrandMark({ item }: { item: TechItem }) {
@@ -125,20 +160,27 @@ export function TechStrip({
  *
  * Je to tentýž pás jako na rozcestích, ne jeho příbuzný — stejná komponenta,
  * stejné CSS. Liší se jen obsahem: nadpis mluví o téhle jedné službě a pod
- * značkou stojí navíc důkaz („Deset inkoustů, ne jen CMYK"). Kdo přijde
+ * značkou stojí navíc důkaz („Devět inkoustů, ne jen CMYK"). Kdo přijde
  * z /tisk na /tisk/bannery, pozná blok okamžitě a čte jen to, co je nové.
  *
  * Devízy visí na značkách ve VYROBCI, ne na stránkách. Devatenáct podstránek
  * tak nemusí opisovat totéž jinými slovy a při změně stačí jedno místo.
+ *
+ * Kam blok vede, rozhoduje `lib/technika.ts`. Kde o výsledku rozhoduje
+ * jediný stroj, míří rovnou na jeho stránku — je to konkrétnější slib
+ * i pro člověka, i pro vyhledávač. Kde stroje spolupracují, vede na
+ * rozcestník: vybrat jeden z nich by druhý zamlčelo.
  */
 export function TechNote({
   title,
   brands,
   text,
+  odkaz,
 }: {
   title: string;
   brands: (keyof typeof VYROBCI)[];
   text: string;
+  odkaz?: { href: string; cta: string };
 }) {
   return (
     <TechStrip
@@ -150,8 +192,8 @@ export function TechNote({
         what: VYROBCI[key].deviza.title,
         note: VYROBCI[key].deviza.note,
       }))}
-      href="/technologie"
-      cta="Projít technologie"
+      href={odkaz?.href ?? "/technologie"}
+      cta={odkaz?.cta ?? "Projít technologie"}
     />
   );
 }

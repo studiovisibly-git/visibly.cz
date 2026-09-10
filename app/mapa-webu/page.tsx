@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ParallaxHeading } from "@/components/ParallaxHeading";
 import { allGuides } from "@/lib/guides";
-import { polepyLinks, reklamaLinks, studioLinks, tiskLinks } from "@/lib/nav";
+import { polepyLinks, reklamaLinks, studioLinks, technologieLinks, tiskLinks } from "@/lib/nav";
 import { buildMetadata } from "@/lib/seo";
 import { works } from "@/lib/works";
 
@@ -73,6 +73,10 @@ export default function MapaWebuPage() {
           <LinkList
             title="Reklama"
             items={[{ label: "Reklama — přehled", href: "/reklama" }, ...reklamaLinks]}
+          />
+          <LinkList
+            title="Technologie"
+            items={[{ label: "Technologie — přehled", href: "/technologie" }, ...technologieLinks]}
           />
           <LinkList title="Studio" items={studioLinks} />
           <LinkList title="Působnost" items={pusobnostPages} />
