@@ -15,6 +15,18 @@ import Link from "next/link";
  * je schválně: „fotorealistická barva" sama je reklama, „deset inkoustů"
  * je ověřitelný důvod, proč to tak je.
  */
+/**
+ * Výrobce stroje. `logo` je nepovinné schválně: značku přidáváme ve chvíli,
+ * kdy stroj koupíme, a logo doháníme až podle toho, co nám výrobce pošle.
+ * Do té doby se sází jméno — viz ZnackaVyrobce.
+ */
+export type Vyrobce = {
+  name: string;
+  logo?: string;
+  width?: string;
+  deviza: { title: string; note: string };
+};
+
 export const VYROBCI = {
   epson: {
     name: "Epson",
@@ -34,7 +46,15 @@ export const VYROBCI = {
     width: "86%",
     deviza: { title: "Přesný řez do tvaru", note: "Kontura přesně podle dat" },
   },
-} as const;
+  /* Logo zatím nemáme. Až přijde, stačí do /public/logos/vyrobci/ položit
+     mutoh.svg a doplnit sem `logo` — kód se měnit nemusí. */
+  mutoh: {
+    name: "Mutoh",
+    deviza: { title: "Tisk přímo na předmět", note: "Krycí bílá, lak i reliéf" },
+  },
+  /* `satisfies` místo `as const`: klíče zůstanou konkrétní (keyof funguje),
+     ale značka smí přijít bez loga. */
+} satisfies Record<string, Vyrobce>;
 
 export type TechItem = {
   name: string;
@@ -45,6 +65,18 @@ export type TechItem = {
   logo?: string;
   width?: string;
 };
+
+/**
+ * Značka výrobce u jména stroje — logo, a dokud ho nemáme, jeho jméno.
+ * Používá to karta na rozcestníku i hlavička detailu technologie, ať se
+ * chybějící logo řeší na jednom místě a ne třikrát.
+ */
+export function ZnackaVyrobce({ brand }: { brand: keyof typeof VYROBCI }) {
+  const vyrobce: Vyrobce = VYROBCI[brand];
+  if (!vyrobce.logo) return <span className="znacka-text">{vyrobce.name}</span>;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={vyrobce.logo} alt={vyrobce.name} loading="lazy" />;
+}
 
 /** Logo výrobce, nebo jeho název, dokud logo nemáme. */
 function BrandMark({ item }: { item: TechItem }) {

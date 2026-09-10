@@ -63,6 +63,12 @@ export type Technologie = TechKarta & {
   klic: KlicovyUdaj[];
   split: { title: string; text: string; media: MediaSpec };
   prednosti: Prednost[];
+  /**
+   * Nadpis sekce materiálů. V datech, ne v šabloně: „Na co tiskneme" sedí
+   * tiskárnám, ploteru ale ne — a s každým dalším strojem by v komponentě
+   * rostl ternární výraz.
+   */
+  materialyTitle: string;
   /** Na co se na tom tiskne nebo řeže. Čipy, ne věty. */
   materialy: string[];
   /** Rozcestník: co se na téhle technologii dá vyrobit. */
@@ -142,6 +148,7 @@ export const technologie: Technologie[] = [
         text: "Fólie monomerní, polymerní i litá, bannerovina, backlit, blockout, papír, tapeta. Který z nich zvolit, řešíme dřív než cenu — vydrží se tím rozhodne.",
       },
     ],
+    materialyTitle: "Na co na ní tiskneme.",
     materialy: [
       "Monomerní fólie",
       "Polymerní a litá fólie",
@@ -344,6 +351,7 @@ export const technologie: Technologie[] = [
         text: "Hybrid zvládne obojí. Série cedulí a banner ke stejné akci proto vyjdou ve stejné barvě, ne ve dvou odstínech.",
       },
     ],
+    materialyTitle: "Na co na ní tiskneme.",
     materialy: [
       "Dibond a kompozit",
       "Hliník",
@@ -527,6 +535,7 @@ export const technologie: Technologie[] = [
         text: "I na velké plachtě drží drobný text: kontakt, podmínky soutěže, patička s adresou. Nemusíte je z grafiky vyhazovat jen proto, že je plocha velká.",
       },
     ],
+    materialyTitle: "Na co na ní tiskneme.",
     materialy: [
       "PVC bannerovina",
       "Mesh / průvětrná síťovina",
@@ -654,8 +663,207 @@ export const technologie: Technologie[] = [
 
   /* ---------------------------------------------------------------- 04 */
   {
+    slug: "uv-tisk-na-predmety",
+    num: "04 · Tisk na předměty",
+    name: "Mutoh XpertJet 461UF",
+    brand: "mutoh",
+    navLabel: "UV tisk na předměty",
+    nazevVeVete: "UV tisk na předměty",
+    metaTitle: "Potisk předmětů Opava — UV tisk na sklo, dřevo i kov | Visibly",
+    metaDescription:
+      "Přímý UV tisk na předměty v Opavě na Mutoh XpertJet 461UF. Sklo, dřevo, kov, plast i kůže do výšky 150 mm. Krycí bílá, parciální lak a reliéf. Už od jednoho kusu.",
+    eyebrow: "Technologie · Tisk na předměty",
+    h1: "Potisk rovnou na věc, ne na nálepku.",
+    intro:
+      "Sklo, dřevo, kov, plast, kůže. Mutoh tiskne přímo na předmět do výšky 150 mm — s krycí bílou, aby grafika držela i na tmavém, a s lakem, který jde nahmatat. Už od jednoho kusu.",
+    heroMedia: { label: "Fotografie · potisk předmětu na Mutohu", variant: "circle" },
+    points: [
+      {
+        title: "Přímo na předmět",
+        text: "Sklo, dřevo, kov i kůže. Bez nálepky, která má hranu a po roce se odchlipuje.",
+      },
+      { title: "Krycí bílá", text: "Barva drží i na černém pouzdře a na průhledném skle." },
+      { title: "Od jednoho kusu", text: "Bez síta a bez formy — minimální série neexistuje." },
+    ],
+    materialyTitle: "Na co na něm tiskneme.",
+    klic: [
+      { value: "A3+", label: "Tisková plocha 483 × 329 mm" },
+      { value: "150", unit: "mm", label: "Maximální výška předmětu" },
+      { value: "6", unit: "barev", label: "CMYK, krycí bílá a lak" },
+      { value: "1", unit: "kus", label: "Nejmenší možná série" },
+    ],
+    split: {
+      title: "Nálepka na dárku je vidět. Tisk ne.",
+      text: "Samolepka na skle má hranu, chytá za nehet a po roce se v rohu zvedne. UV tisk jde přímo do povrchu předmětu a vytvrdí se pod LED lampou v tomtéž okamžiku. Není tam nic nalepeného, takže není co by se odchlíplo.",
+      media: { label: "Detail · potištěné sklo a dřevo", variant: "circle" },
+    },
+    prednosti: [
+      {
+        title: "Tisk přímo na předmět",
+        text: "Sklo, dřevo, kov, plast, kůže, keramika. Grafika sedne do povrchu, ne na fólii přelepenou přes něj — nedrhne na hraně a nemá se kde začít odlepovat.",
+      },
+      {
+        title: "Krycí bílá pod barvou",
+        text: "Na tmavém dřevě, černém pouzdře i na průhledném skle drží barvy jen tehdy, když je pod nimi bílá. Mutoh ji tiskne v tomtéž průjezdu, takže tmavý ani průhledný předmět není překážka.",
+      },
+      {
+        title: "Lak, který jde nahmatat",
+        text: "Parciální lak v lesku, polomatu i matu na jednom předmětu a v jednom průjezdu. Ve vrstvách z něj vznikne struktura nebo reliéf — třeba Braillovo písmo na dveřní cedulce.",
+      },
+      {
+        title: "Předmět do výšky 150 mm",
+        text: "Na stole 70 mm, bez stolu až 150 mm. Vejde se tedy krabice, láhev naležato i špalek dřeva, ne jenom ploché desky.",
+      },
+      {
+        title: "Od jednoho kusu, bez přípravy formy",
+        text: "Žádné síto, žádný tampon, žádný minimální odběr. Jeden kus na zkoušku stojí čas stroje, ne přípravu výroby — a druhá varianta grafiky je jenom jiný soubor.",
+      },
+    ],
+    materialy: [
+      "Sklo",
+      "Plexisklo a polykarbonát",
+      "Keramika a porcelán",
+      "Dřevo a překližka",
+      "Kov a hliník",
+      "Plast a ABS",
+      "Kůže a koženka",
+      "Kámen a břidlice",
+      "Dibond a forex",
+      "Kapa deska a kartón",
+      "Papír a fotopapír",
+    ],
+    produkty: [
+      {
+        title: "Reklama",
+        text: "Věci, které si zákazník odnese domů nebo pověsí na dveře.",
+        items: [
+          { label: "Reklamní předměty", href: "/reklama/reklamni-predmety" },
+          { label: "Orientační systémy", href: "/reklama/orientacni-systemy" },
+          { label: "Interiérová reklama", href: "/reklama/interierova-reklama" },
+          { label: "Reklamní cedule", href: "/reklama/reklamni-cedule" },
+        ],
+      },
+      {
+        title: "Tisk",
+        text: "Malé série a kusovky, kde se velký formát nevyplatí.",
+        items: [
+          { label: "POS materiály", href: "/tisk/pos-materialy" },
+          { label: "Tisk fotoobrazů", href: "/tisk-fotoobrazu" },
+        ],
+      },
+    ],
+    produktyDal:
+      "Dál z něj jdou ceny a plakety, jmenovky a dveřní štítky, dárkové sady, potisk krabiček a obalů, vzorkovníky, cedulky s Braillovým písmem i jednotlivé kusy na zkoušku.",
+    jinak: [
+      {
+        slug: "uv-tisk-na-desky",
+        kdyz: "Když je deska větší než A3+ nebo jich je celá série — velký formát je práce pro Anapurnu.",
+      },
+      {
+        slug: "rezaci-ploter",
+        kdyz: "Když má na hotový předmět jít jednobarevná řezaná fólie místo tisku.",
+      },
+      {
+        slug: "solventni-tisk",
+        kdyz: "Když jde o fólii z role, samolepku nebo polep — tam patří Epson.",
+      },
+    ],
+    parametry: [
+      {
+        title: "Tisk",
+        radky: [
+          { label: "Technologie", value: "UV LED inkoustový tisk přímo na předmět" },
+          { label: "Barevnost", value: "6 barev — CMYK + krycí bílá + lak" },
+          {
+            label: "Inkousty",
+            value: "Mutoh UV LED — UH21 (tvrdý) a US11 (flexibilní), volíme podle předmětu",
+          },
+          { label: "Tisková hlava", value: "Piezoelektrická, on-demand, s proměnnou velikostí kapky" },
+          { label: "Rozlišení", value: "720 / 1 080 / 1 440 dpi" },
+          {
+            label: "Vytvrzení",
+            value: "UV LED lampa s lokálním stmíváním — lesk, polomat i mat v jednom průjezdu",
+          },
+        ],
+      },
+      {
+        title: "Předmět",
+        radky: [
+          { label: "Tisková plocha", value: "483 × 329 mm (A3+)" },
+          {
+            label: "Maximální výška předmětu",
+            value: "70 mm na standardním i vakuovém stole, 150 mm bez stolu",
+          },
+          { label: "Maximální hmotnost", value: "5 kg" },
+          { label: "Vakuový stůl", value: "Ano, sání v pěti stupních" },
+          {
+            label: "Materiály",
+            value: "Sklo, dřevo, kov, plast, kůže, keramika, kámen, kompozit, papír",
+          },
+        ],
+      },
+      {
+        title: "Provoz",
+        radky: [
+          { label: "Objem náplní", value: "220 ml" },
+          { label: "RIP", value: "Mutoh VerteLith" },
+          { label: "Rozhraní", value: "Gigabit Ethernet" },
+        ],
+      },
+    ],
+    parametryZdroj:
+      "Údaje podle listu parametrů Mutoh pro XpertJet 461UF. Rozlišení a maximální hmotnost předmětu jsou z podkladů dodavatele.",
+    priprava: {
+      title: "Od předmětu po hotový potisk.",
+      steps: [
+        {
+          title: "Předmět a povrch",
+          text: "Pošlete kus na zkoušku, nebo aspoň fotku a rozměr. Na povrchu záleží víc než na grafice.",
+        },
+        {
+          title: "Zkouška přilnavosti",
+          text: "Na materiálu, který jsme neměli v ruce, tiskneme vzorek dřív než sérii.",
+        },
+        {
+          title: "Data, bílá a lak",
+          text: "U tmavých a průhledných předmětů nastavíme krycí bílou, u laku řekneme, kde má být lesk.",
+        },
+        { title: "Tisk a předání", text: "Vytvrzení je okamžité, předmět jde rovnou zabalit." },
+      ],
+    },
+    faq: [
+      {
+        q: "Potisknete i tmavý nebo průhledný předmět?",
+        a: "Ano, přesně kvůli tomu má stroj krycí bílou. Tiskne se pod barvu v tomtéž průjezdu, takže grafika na černém pouzdře i na skle drží barvu a neprosvítá skrz.",
+      },
+      {
+        q: "Kolik kusů musím objednat?",
+        a: "Jeden. Nepřipravuje se síto ani tampon, takže minimální série neexistuje. Vyplatí se to hlavně u vzorků, cen a věcí, kde má každý kus jiné jméno — proměnný text je pro stroj jenom jiný soubor.",
+      },
+      {
+        q: "Vydrží potisk venku?",
+        a: "Záleží na inkoustu, a proto máme oba. Tvrdý UH21 je stavěný do interiéru — venku by na teplotních výkyvech popraskal. Flexibilní US11 venek zvládne, u dlouhodobé expozice k němu doporučíme primer nebo přelakování. Řekněte, kde předmět skončí, a inkoust vybereme podle toho.",
+      },
+      {
+        q: "Co je ten lak a k čemu je dobrý?",
+        a: "Bezbarvá vrstva navíc, která umí tři věci: zvýraznit část grafiky leskem na jinak matném povrchu, dodat povrchu strukturu, kterou nahmatáte, a ve více vrstvách vytvořit reliéf — třeba Braillovo písmo na dveřní cedulce.",
+      },
+      {
+        q: "Na jaký materiál to jde?",
+        a: "Na většinu pevných: sklo, dřevo, kov, plast, keramiku, kůži, kámen i kompozitní desky. U materiálu, který jsme ještě neměli v ruce, uděláme zkoušku přilnavosti dřív, než se pustíme do série — vyjde to levněji než reklamace.",
+      },
+      {
+        q: "Můžu přinést vlastní předměty?",
+        a: "Můžete a je to běžné. Řekněte dopředu počet kusů a jaký mají povrch, ať víme, jestli potřebují primer. Předměty umíme i dodat — pak máte nákup i potisk na jedné faktuře.",
+      },
+    ],
+    finalTitle: "Potřebujete potisknout předměty?",
+  },
+
+  /* ---------------------------------------------------------------- 05 */
+  {
     slug: "rezaci-ploter",
-    num: "04 · Přesný řez",
+    num: "05 · Přesný řez",
     name: "Roland CAMM-1 GR2-640",
     brand: "roland",
     navLabel: "Řezací ploter",
@@ -706,6 +914,7 @@ export const technologie: Technologie[] = [
         text: "Sérii samolepek nebo sadu nápisů zvládneme mezi tiskem a montáží. Řez tak není samostatný týden v termínu zakázky.",
       },
     ],
+    materialyTitle: "Co na ní řežeme.",
     materialy: [
       "Řezací fólie monomerní",
       "Polymerní a litá fólie",
@@ -843,7 +1052,7 @@ export const technologie: Technologie[] = [
  */
 export const doplnky: TechKarta[] = [
   {
-    num: "05 · Ochrana povrchu",
+    num: "06 · Ochrana povrchu",
     name: "Velkoplošná laminace",
     points: [
       { title: "Odolnější povrch", text: "UV, oděr i mytí bez ztráty barev." },
@@ -852,7 +1061,7 @@ export const doplnky: TechKarta[] = [
     ],
   },
   {
-    num: "06 · Firemní textil",
+    num: "07 · Firemní textil",
     name: "Termolis",
     points: [
       { title: "Správná pozice", text: "Logo přesně tam, kde má být." },
@@ -861,7 +1070,7 @@ export const doplnky: TechKarta[] = [
     ],
   },
   {
-    num: "07 · Dokončení na místě",
+    num: "08 · Dokončení na místě",
     name: "Kompletace a aplikace",
     points: [
       { title: "Složení zakázky", text: "Kampaně balíme po pobočkách." },

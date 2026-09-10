@@ -3,7 +3,7 @@ import { Hero } from "@/components/Hero";
 import { Accordion } from "@/components/Accordion";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Directory, FinalCta, Process, SectionHead, Split } from "@/components/Sections";
-import { VYROBCI } from "@/components/TechStrip";
+import { ZnackaVyrobce } from "@/components/TechStrip";
 import { buildMetadata } from "@/lib/seo";
 import { INQUIRY_URL } from "@/lib/site";
 import { strojovyPark, type TechKarta } from "@/lib/technologie";
@@ -56,8 +56,7 @@ function TechCard({ tech }: { tech: TechKarta }) {
           /* Logo výrobce jako podpis pod jméno stroje — oddělené
              vlasovkou, aby to čtelo jako údaj, ne jako reklama. */
           <span className="tech-item__brand">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={VYROBCI[tech.brand].logo} alt={VYROBCI[tech.brand].name} loading="lazy" />
+            <ZnackaVyrobce brand={tech.brand} />
           </span>
         )}
       </div>

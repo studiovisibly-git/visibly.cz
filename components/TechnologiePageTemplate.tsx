@@ -5,7 +5,7 @@ import { JsonLd } from "./JsonLd";
 import { Media } from "./Media";
 import { Hero } from "./Hero";
 import { Directory, FinalCta, Process, SectionHead, Split } from "./Sections";
-import { VYROBCI } from "./TechStrip";
+import { ZnackaVyrobce } from "./TechStrip";
 import { SITE_URL } from "@/lib/site";
 import { poptavkaUrl } from "@/lib/poptavka";
 import { serviceSchema } from "@/lib/schema";
@@ -73,9 +73,7 @@ export function TechnologiePageTemplate({ tech }: { tech: Technologie }) {
         {tech.brand && (
           <p className="tech-klic__stroj">
             <span className="tech-klic__logo">
-              {/* Loga jsou SVG — optimalizátor by je jen protáhl bez užitku. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={VYROBCI[tech.brand].logo} alt={VYROBCI[tech.brand].name} loading="lazy" />
+              <ZnackaVyrobce brand={tech.brand} />
             </span>
             {tech.name} · vlastní výroba v Opavě
           </p>
@@ -118,7 +116,7 @@ export function TechnologiePageTemplate({ tech }: { tech: Technologie }) {
       <section className="section--tight container">
         <SectionHead
           eyebrow="Materiály"
-          title={tech.slug === "rezaci-ploter" ? "Co na ní řežeme." : "Na co na ní tiskneme."}
+          title={tech.materialyTitle}
         />
         <ul className="stitky tech-materialy">
           {tech.materialy.map((m) => (

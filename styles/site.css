@@ -2620,6 +2620,33 @@ a.circle-chip:hover small {
   max-width: 16em;
 }
 
+/* Značka výrobce, u kterého ještě nemáme logo. Drží stejný plech i výšku
+   jako logo, takže řádek nepoklesne, až logo přibude. Plech je světlý
+   v obou režimech, proto je text natvrdo tmavý a ne přes --ink. */
+.tech-item__brand .znacka-text,
+.tech-klic__logo .znacka-text {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  background: var(--plate);
+  color: var(--l-ink);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.tech-item__brand .znacka-text {
+  height: clamp(1.375rem, 2.4vw, 1.875rem);
+}
+
+.tech-klic__logo .znacka-text {
+  height: 1.375rem;
+  padding: 0.35rem 0.5rem;
+}
+
 /* Podpis pod čísly: čí je to stroj. Logo na plechu jako na kartách —
    v tmavém režimu by barevné logo na tmavé ploše zmizelo. */
 .tech-klic__stroj {

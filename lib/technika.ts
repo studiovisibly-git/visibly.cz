@@ -30,7 +30,6 @@ export type TechNote = {
  *    nesprávná odpověď,
  *  · 3D loga — plastická písmena se frézují z desky, náš Roland řeže
  *    fólii (číslo v názvu GR2-640 je 64 palců řezné šířky, ne 640 mm),
- *  · reklamní předměty — nakupované zboží, ne naše výroba,
  *  · reklamní textil — termolis, ke kterému logo výrobce nemáme; stránka
  *    navíc už má vlastní panel katalogu,
  *  · logo, identita, web — tam žádný stroj nerozhoduje.
@@ -139,8 +138,15 @@ export const TECH_NOTES: Record<string, TechNote> = {
   },
   "orientacni-systemy": {
     title: "Série, která drží pohromadě.",
-    brands: ["agfa", "roland"],
-    text: "Tabulky tiskneme přímo na materiál a vyřežeme na jeden rozměr, ať série drží pohromadě.",
+    brands: ["agfa", "roland", "mutoh"],
+    text: "Tabule tiskneme na desku, dveřní cedulky rovnou na materiál a vyřežeme je na jeden rozměr.",
+  },
+
+  "reklamni-predmety": {
+    title: "Potisk u nás, ne u dodavatele.",
+    brands: ["mutoh"],
+    text: "Předměty tiskneme na vlastním UV stroji — i jeden kus a i s bílou na tmavém povrchu.",
+    odkaz: { href: "/technologie/uv-tisk-na-predmety", cta: "Projít UV tisk na předměty" },
   },
 
   /* ---------- Studio ---------- */

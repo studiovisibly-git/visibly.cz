@@ -45,6 +45,7 @@ export const technologieLinks: LinkItem[] = [
   { label: "Solventní tisk", href: "/technologie/solventni-tisk" },
   { label: "UV tisk na desky", href: "/technologie/uv-tisk-na-desky" },
   { label: "Rolový UV tisk", href: "/technologie/rolovy-uv-tisk" },
+  { label: "UV tisk na předměty", href: "/technologie/uv-tisk-na-predmety" },
   { label: "Řezací ploter", href: "/technologie/rezaci-ploter" },
 ];
 
